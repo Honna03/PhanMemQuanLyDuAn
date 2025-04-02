@@ -12,9 +12,9 @@ TRACE;DEBUG;NET;NET9_0;NETCOREAPP;WINDOWS;WINDOWS7_0;NET5_0_OR_GREATER;NET6_0_OR
 D:\TTTN\Cty\Project\QuanLyDuAnTrenWindows\QuanLyDuAn\App.xaml
 18-731495896
 
-23-1982837693
+24-1347160069
 202-1861049030
 Forms\BaoCao.xaml;Forms\ChiTietCongViec.xaml;Forms\ChiTietNhanVien.xaml;Forms\CongThucKPI.xaml;Forms\DanhSachCongViec.xaml;Forms\DanhSachNhanVien.xaml;Forms\EditIssue.xaml;Forms\Edit_CongThuc.xaml;Forms\Edit_DuAn.xaml;Forms\Edit_KPI.xaml;Forms\Edit_Luong.xaml;Forms\KPI.xaml;Forms\Login.xaml;Forms\Luong.xaml;Forms\MainWindow.xaml;Forms\ProjectsControl.xaml;Forms\Register.xaml;Forms\TrangChu.xaml;
 
-True
+False
 

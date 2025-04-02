@@ -1,0 +1,193 @@
+﻿<UserControl x:Class="QuanLyDuAn.Forms.CongThucKPI"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:QuanLyDuAn.Forms"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid Background="#ab99f2">
+        <!-- Tiêu đề -->
+        <TextBlock Text="Danh sách Công thức KPI" 
+                   FontSize="20" FontWeight="Bold" Foreground="White"
+                   Margin="10,10,0,0"/>
+
+        <!-- Nút Thêm mới -->
+        <Button Content="+ Thêm công thức KPI" 
+                HorizontalAlignment="Right" 
+                VerticalAlignment="Top"
+                Margin="0,10,10,0" 
+                Padding="10,5"
+                Background="#27AE60" Foreground="White"
+                FontWeight="Bold"
+                x:Name="btn_AddCongThucKPI"
+                BorderThickness="0" Cursor="Hand" Click="btn_AddCongThucKPI_Click"/>
+
+        <Button Content="+ Thêm KPI" 
+        HorizontalAlignment="Right" 
+        VerticalAlignment="Top"
+        Margin="0,10,190,0" 
+        Padding="10,5"
+        Background="#27AE60" Foreground="White"
+        FontWeight="Bold"
+        x:Name="btn_AddKPI"
+        BorderThickness="0" Cursor="Hand" Click="btn_AddKPI_Click"/>
+
+        <!-- Grid chứa DataGrid và phân trang -->
+        <Grid Margin="0,50,0,0">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <!-- DataGrid -->
+                <RowDefinition Height="31.2"/>
+                <!-- Phân trang và tổng số bản ghi -->
+            </Grid.RowDefinitions>
+
+            <!-- DataGrid -->
+            <DataGrid Name="dgCongThucKPI" AutoGenerateColumns="False" 
+                      HeadersVisibility="Column"
+                      CanUserAddRows="False"
+                      SelectionMode="Single"
+                      Background="White" BorderBrush="#E0E0E0" BorderThickness="1"
+                      GridLinesVisibility="Horizontal" HorizontalGridLinesBrush="#E0E0E0"
+                      RowBackground="White" AlternatingRowBackground="#F9F9F9"
+                      Margin="0,0,0,19">
+                <DataGrid.Columns>
+                    <!-- Cột STT -->
+                    <DataGridTextColumn Header="STT" Binding="{Binding STT}" Width="50" IsReadOnly="True">
+                        <DataGridTextColumn.ElementStyle>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="HorizontalAlignment" Value="Center"/>
+                                <Setter Property="VerticalAlignment" Value="Center"/>
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                        <DataGridTextColumn.HeaderStyle>
+                            <Style TargetType="DataGridColumnHeader">
+                                <Setter Property="Background" Value="#2D2D2D"/>
+                                <Setter Property="Foreground" Value="White"/>
+                                <Setter Property="BorderThickness" Value="0"/>
+                                <Setter Property="Padding" Value="5"/>
+                            </Style>
+                        </DataGridTextColumn.HeaderStyle>
+                    </DataGridTextColumn>
+
+                    <!-- Cột Mã công thức -->
+                    <DataGridTextColumn Header="Mã công thức" Binding="{Binding MaCongThuc}" Width="1*">
+                        <DataGridTextColumn.ElementStyle>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="Margin" Value="5,0"/>
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                        <DataGridTextColumn.HeaderStyle>
+                            <Style TargetType="DataGridColumnHeader">
+                                <Setter Property="Background" Value="#2D2D2D"/>
+                                <Setter Property="Foreground" Value="White"/>
+                                <Setter Property="BorderThickness" Value="0"/>
+                                <Setter Property="Padding" Value="5"/>
+                            </Style>
+                        </DataGridTextColumn.HeaderStyle>
+                    </DataGridTextColumn>
+
+                    <!-- Cột Tên công thức -->
+                    <DataGridTextColumn Header="Tên công thức" Binding="{Binding TenCongThuc}" Width="2*">
+                        <DataGridTextColumn.ElementStyle>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="Margin" Value="5,0"/>
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                        <DataGridTextColumn.HeaderStyle>
+                            <Style TargetType="DataGridColumnHeader">
+                                <Setter Property="Background" Value="#2D2D2D"/>
+                                <Setter Property="Foreground" Value="White"/>
+                                <Setter Property="BorderThickness" Value="0"/>
+                                <Setter Property="Padding" Value="5"/>
+                            </Style>
+                        </DataGridTextColumn.HeaderStyle>
+                    </DataGridTextColumn>
+
+                    <!-- Cột Loại công thức -->
+                    <DataGridTextColumn Header="Loại công thức" Binding="{Binding LoaiCongThuc}" Width="1*">
+                        <DataGridTextColumn.ElementStyle>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="Margin" Value="5,0"/>
+                                <Setter Property="HorizontalAlignment" Value="Center"/>
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                        <DataGridTextColumn.HeaderStyle>
+                            <Style TargetType="DataGridColumnHeader">
+                                <Setter Property="Background" Value="#2D2D2D"/>
+                                <Setter Property="Foreground" Value="White"/>
+                                <Setter Property="BorderThickness" Value="0"/>
+                                <Setter Property="Padding" Value="5"/>
+                            </Style>
+                        </DataGridTextColumn.HeaderStyle>
+                    </DataGridTextColumn>
+
+                    <!-- Cột Mô tả -->
+                    <DataGridTextColumn Header="Mô tả" Binding="{Binding MoTa}" Width="2*">
+                        <DataGridTextColumn.ElementStyle>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="Margin" Value="5,0"/>
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                        <DataGridTextColumn.HeaderStyle>
+                            <Style TargetType="DataGridColumnHeader">
+                                <Setter Property="Background" Value="#2D2D2D"/>
+                                <Setter Property="Foreground" Value="White"/>
+                                <Setter Property="BorderThickness" Value="0"/>
+                                <Setter Property="Padding" Value="5"/>
+                            </Style>
+                        </DataGridTextColumn.HeaderStyle>
+                    </DataGridTextColumn>
+
+                    <!-- Cột Ngày tạo -->
+                    <DataGridTextColumn Header="Ngày tạo" Binding="{Binding NgayTao, StringFormat={}{0:dd/MM/yyyy}}" Width="1*">
+                        <DataGridTextColumn.ElementStyle>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="Margin" Value="5,0"/>
+                                <Setter Property="HorizontalAlignment" Value="Center"/>
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                        <DataGridTextColumn.HeaderStyle>
+                            <Style TargetType="DataGridColumnHeader">
+                                <Setter Property="Background" Value="#2D2D2D"/>
+                                <Setter Property="Foreground" Value="White"/>
+                                <Setter Property="BorderThickness" Value="0"/>
+                                <Setter Property="Padding" Value="5"/>
+                            </Style>
+                        </DataGridTextColumn.HeaderStyle>
+                    </DataGridTextColumn>
+
+                    <!-- Cột Người tạo -->
+                    <DataGridTextColumn Header="Người tạo" Binding="{Binding NguoiTao}" Width="1*">
+                        <DataGridTextColumn.ElementStyle>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="Margin" Value="5,0"/>
+                                <Setter Property="HorizontalAlignment" Value="Center"/>
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                        <DataGridTextColumn.HeaderStyle>
+                            <Style TargetType="DataGridColumnHeader">
+                                <Setter Property="Background" Value="#2D2D2D"/>
+                                <Setter Property="Foreground" Value="White"/>
+                                <Setter Property="BorderThickness" Value="0"/>
+                                <Setter Property="Padding" Value="5"/>
+                            </Style>
+                        </DataGridTextColumn.HeaderStyle>
+                    </DataGridTextColumn>
+
+                    
+                </DataGrid.Columns>
+            </DataGrid>
+
+            <!-- Phân trang cho DataGrid -->
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom" Grid.Row="1">
+                <Button x:Name="btnPrevPageCongThucKPI" Content="&lt;" Width="25" Height="25" Margin="0,0,0,5"/>
+                <TextBlock x:Name="txtPaginationCongThucKPI" Text="1 trong 1" VerticalAlignment="Center" Margin="5,0,5,5"/>
+                <Button x:Name="btnNextPageCongThucKPI" Content="&gt;" Width="25" Height="25" Margin="0,0,0,5"/>
+            </StackPanel>
+
+            <!-- Tổng số bản ghi -->
+            <TextBlock x:Name="txtTotalRecords" Text="Tổng số bản ghi: 0" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="10,0,0,5" Foreground="White" FontSize="14"/>
+        </Grid>
+    </Grid>
+</UserControl>

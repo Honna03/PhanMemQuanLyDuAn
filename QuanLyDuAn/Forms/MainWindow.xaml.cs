@@ -71,7 +71,14 @@ namespace QuanLyDuAn
 
         private void btn_BaoCao_Click(object sender, RoutedEventArgs e)
         {
-            MainContent.Content = new BaoCao();
+            try
+            {
+                MainContent.Content = new BaoCao(1);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Không thể mở form báo cáo: {ex.Message}", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         private void UserButton_Click(object sender, RoutedEventArgs e)

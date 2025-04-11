@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using System.Configuration;
@@ -369,7 +370,7 @@ public partial class ThucTapQuanLyDuAnContext : DbContext
                 .HasMaxLength(50)
                 .HasColumnName("q_Ten");
         });
-        /*
+
         modelBuilder.Entity<ThongBao>(entity =>
         {
             entity.HasKey(e => e.TbId);
@@ -396,20 +397,26 @@ public partial class ThucTapQuanLyDuAnContext : DbContext
                 .HasDefaultValue(false)
                 .HasColumnName("tb_TinhTrang");
 
-            entity.HasOne(d => d.NvIdNguoiGuiNavigation).WithMany(p => p.ThongBaoNvIdNguoiGuiNavigations)
-                .HasForeignKey(d => d.NvIdNguoiGui)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_ThongBao_NhanVien_NguoiGui");
+            // Cấu hình mối quan hệ với NhanVien (NvIdNguoiGui)
+            entity.HasOne(d => d.NvIdNguoiGuiNavigation)
+                  .WithMany(p => p.ThongBaoNvIdNguoiGuiNavigations)
+                  .HasForeignKey(d => d.NvIdNguoiGui)
+                  .OnDelete(DeleteBehavior.ClientSetNull)
+                  .HasConstraintName("FK_ThongBao_NhanVien_NguoiGui");
 
-            entity.HasOne(d => d.NvIdNguoiNhanNavigation).WithMany(p => p.ThongBaoNvIdNguoiNhanNavigations)
-                .HasForeignKey(d => d.NvIdNguoiNhan)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_ThongBao_NhanVien_NguoiNhan");
+            // Cấu hình mối quan hệ với NhanVien (NvIdNguoiNhan)
+            entity.HasOne(d => d.NvIdNguoiNhanNavigation)
+                  .WithMany(p => p.ThongBaoNvIdNguoiNhanNavigations)
+                  .HasForeignKey(d => d.NvIdNguoiNhan)
+                  .OnDelete(DeleteBehavior.ClientSetNull)
+                  .HasConstraintName("FK_ThongBao_NhanVien_NguoiNhan");
 
-            entity.HasOne(d => d.CongViec).WithMany(p => p.ThongBaos)
-                .HasForeignKey(d => new { d.CvId, d.DaId })
-                .HasConstraintName("FK_ThongBao_CongViec");
-        });*/
+            // Cấu hình mối quan hệ với CongViec
+            entity.HasOne(d => d.CongViec)
+                  .WithMany(p => p.ThongBaos)
+                  .HasForeignKey(d => new { d.CvId, d.DaId })
+                  .HasConstraintName("FK_ThongBao_CongViec");
+        });
 
         modelBuilder.Entity<TrangThai>(entity =>
         {

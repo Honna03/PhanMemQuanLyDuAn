@@ -1,11 +1,11 @@
 ﻿<UserControl x:Class="QuanLyDuAn.Forms.BaoCao"
-                 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-                 xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-                 xmlns:local="clr-namespace:QuanLyDuAn.Forms"
-                 mc:Ignorable="d" 
-                 d:DesignHeight="600" d:DesignWidth="800" Background="#F5F5F5">
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:QuanLyDuAn.Forms"
+             mc:Ignorable="d" 
+             d:DesignHeight="900" d:DesignWidth="900" Background="#FFFFFF">
     <ScrollViewer VerticalScrollBarVisibility="Auto">
         <Grid Margin="20" >
             <Grid.RowDefinitions>
@@ -16,13 +16,13 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-            <!-- Tiêu đề -->
-            <TextBlock Grid.Row="0" Text="Báo Cáo Tiến Độ Dự Án" FontSize="24" FontWeight="Bold" 
-                       Foreground="#333333" HorizontalAlignment="Center" Margin="0,0,0,20"/>
-            <!-- Nút in báo cáo -->
-            <Button Grid.Row="0" Content="In báo cáo" Width="120" Height="35" HorizontalAlignment="Right" Margin="0,0,0,20"
-                        Background="#4CAF50" Foreground="White" FontWeight="SemiBold" BorderThickness="0"
-                        Click="PrintReport_Click">
+
+            <!-- Tiêu đề và Nút in -->
+            <TextBlock Grid.Row="0" Text="Báo Cáo Tiến Độ Dự Án" FontSize="26" FontWeight="Bold" 
+                       Foreground="#2C3E50" HorizontalAlignment="Center" Margin="0,0,0,20"/>
+            <Button Grid.Row="0" Content="In Báo Cáo" Width="120" Height="35" HorizontalAlignment="Right" Margin="0,0,0,20"
+                    Background="#3498DB" Foreground="White" FontWeight="SemiBold" BorderThickness="0"
+                    Click="PrintReport_Click">
                 <Button.Style>
                     <Style TargetType="Button">
                         <Setter Property="Template">
@@ -36,7 +36,7 @@
                         </Setter>
                         <Style.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="Background" Value="#45A049"/>
+                                <Setter Property="Background" Value="#2980B9"/>
                             </Trigger>
                         </Style.Triggers>
                     </Style>
@@ -44,141 +44,125 @@
             </Button>
 
             <!-- Thông tin dự án -->
-            <GroupBox Grid.Row="1" Header="Thông tin dự án" Margin="0,0,0,20" Padding="10" Background="White" BorderBrush="#E0E0E0">
+            <GroupBox Grid.Row="1" Header="Thông Tin Dự Án" Margin="0,0,0,20" Padding="15" Background="White" BorderBrush="#BDC3C7">
                 <StackPanel>
                     <Grid Margin="0,5">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="160"/>
+                            <ColumnDefinition Width="200"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <TextBlock Text="Tên dự án:" FontSize="14" Foreground="#333333" VerticalAlignment="Center"/>
-                        <TextBox Grid.Column="1" x:Name="ProjectName" IsReadOnly="True" Height="30" Margin="10,0" BorderBrush="#E0E0E0" VerticalContentAlignment="Center"/>
+                        <TextBlock Text="Tên dự án:" FontSize="14" Foreground="#2C3E50" VerticalAlignment="Center"/>
+                        <TextBox Grid.Column="1" x:Name="ProjectName" IsReadOnly="True" Height="30" Margin="10,0" BorderBrush="#BDC3C7" VerticalContentAlignment="Center"/>
                     </Grid>
                     <Grid Margin="0,5">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="160"/>
+                            <ColumnDefinition Width="200"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <TextBlock Text="Mã dự án:" FontSize="14" Foreground="#333333" VerticalAlignment="Center"/>
-                        <TextBox Grid.Column="1" x:Name="ProjectCode" IsReadOnly="True" Height="30" Margin="10,0" BorderBrush="#E0E0E0" VerticalContentAlignment="Center"/>
+                        <TextBlock Text="Mã dự án:" FontSize="14" Foreground="#2C3E50" VerticalAlignment="Center"/>
+                        <TextBox Grid.Column="1" x:Name="ProjectCode" IsReadOnly="True" Height="30" Margin="10,0" BorderBrush="#BDC3C7" VerticalContentAlignment="Center"/>
                     </Grid>
                     <Grid Margin="0,5">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="160"/>
+                            <ColumnDefinition Width="200"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <TextBlock Text="Ngày bắt đầu:" FontSize="14" Foreground="#333333" VerticalAlignment="Center"/>
-                        <TextBox Grid.Column="1" x:Name="StartDate" IsReadOnly="True" Height="30" Margin="10,0" BorderBrush="#E0E0E0" VerticalContentAlignment="Center"/>
+                        <TextBlock Text="Ngày bắt đầu:" FontSize="14" Foreground="#2C3E50" VerticalAlignment="Center"/>
+                        <TextBox Grid.Column="1" x:Name="StartDate" IsReadOnly="True" Height="30" Margin="10,0" BorderBrush="#BDC3C7" VerticalContentAlignment="Center"/>
                     </Grid>
                     <Grid Margin="0,5">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="160"/>
+                            <ColumnDefinition Width="200"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <TextBlock Text="Ngày kết thúc dự kiến:" FontSize="14" Foreground="#333333" VerticalAlignment="Center"/>
-                        <TextBox Grid.Column="1" x:Name="EndDate" IsReadOnly="True" Height="30" Margin="10,0" BorderBrush="#E0E0E0" VerticalContentAlignment="Center"/>
+                        <TextBlock Text="Ngày kết thúc dự kiến:" FontSize="14" Foreground="#2C3E50" VerticalAlignment="Center"/>
+                        <TextBox Grid.Column="1" x:Name="EndDate" IsReadOnly="True" Height="30" Margin="10,0" BorderBrush="#BDC3C7" VerticalContentAlignment="Center"/>
                     </Grid>
                     <Grid Margin="0,5">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="160"/>
+                            <ColumnDefinition Width="200"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <TextBlock Text="Trạng thái:" FontSize="14" Foreground="#333333" VerticalAlignment="Center"/>
-                        <ComboBox Grid.Column="1" x:Name="ProjectStatus" IsEnabled="False" Height="30" Margin="10,0" BorderBrush="#E0E0E0" VerticalContentAlignment="Center">
-                            <ComboBoxItem Content="Đang thực hiện"/>
-                            <ComboBoxItem Content="Hoàn thành"/>
-                            <ComboBoxItem Content="Tạm hoãn"/>
-                        </ComboBox>
+                        <TextBlock Text="Trạng thái:" FontSize="14" Foreground="#2C3E50" VerticalAlignment="Center"/>
+                        <TextBox Grid.Column="1" x:Name="ProjectStatus" IsReadOnly="True" Height="30" Margin="10,0" BorderBrush="#BDC3C7" VerticalContentAlignment="Center"/>
+                    </Grid>
+                    <Grid Margin="0,5">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="200"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="Người tạo:" FontSize="14" Foreground="#2C3E50" VerticalAlignment="Center"/>
+                        <TextBox Grid.Column="1" x:Name="CreatorName" IsReadOnly="True" Height="30" Margin="10,0" BorderBrush="#BDC3C7" VerticalContentAlignment="Center"/>
                     </Grid>
                 </StackPanel>
             </GroupBox>
 
-            <!-- Tiến độ công việc -->
-            <GroupBox Grid.Row="2" Header="Tiến độ công việc" Margin="0,0,0,20" Padding="10" Background="White" BorderBrush="#E0E0E0">
+            <!-- Tiến độ dự án -->
+            <GroupBox Grid.Row="2" Header="Tiến Độ Dự Án" Margin="0,0,0,20" Padding="15" Background="White" BorderBrush="#BDC3C7">
                 <StackPanel>
                     <Grid Margin="0,5">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="160"/>
+                            <ColumnDefinition Width="200"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <TextBlock Text="Phần trăm hoàn thành:" FontSize="14" Foreground="#333333" VerticalAlignment="Center"/>
-                        <StackPanel Grid.Column="1" Margin="10,0">
-                            <ProgressBar x:Name="Progress" Height="25" Maximum="100" Foreground="#4CAF50" Background="#E0E0E0" BorderThickness="0"/>
-                            <TextBlock x:Name="ProgressText" Text="0%" TextAlignment="Center" Margin="0,5" FontSize="12" Foreground="#333333"/>
+                        <TextBlock Text="Phần trăm hoàn thành:" FontSize="14" Foreground="#2C3E50" VerticalAlignment="Center"/>
+                        <StackPanel Grid.Column="1" Orientation="Horizontal" Margin="10,0">
+                            <ProgressBar x:Name="Progress" Height="25" Width="400" Maximum="100" Foreground="#90EE90" Background="#ECF0F1" BorderThickness="0"/>
+                            <TextBlock x:Name="ProgressText" Text="0%" Margin="10,0,0,0" FontSize="14" Foreground="#2C3E50" VerticalAlignment="Center"/>
                         </StackPanel>
                     </Grid>
                     <Grid Margin="0,5">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="160"/>
+                            <ColumnDefinition Width="200"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <TextBlock Text="Nhiệm vụ hoàn thành:" FontSize="14" Foreground="#333333" VerticalAlignment="Center"/>
-                        <TextBox Grid.Column="1" x:Name="TasksCompleted" IsReadOnly="True" Height="30" Margin="10,0" BorderBrush="#E0E0E0" VerticalContentAlignment="Center"/>
+                        <TextBlock Text="Tổng số công việc:" FontSize="14" Foreground="#2C3E50" VerticalAlignment="Center"/>
+                        <TextBox Grid.Column="1" x:Name="TotalTasks" IsReadOnly="True" Height="30" Margin="10,0" BorderBrush="#BDC3C7" VerticalContentAlignment="Center"/>
+                    </Grid>
+                    <Grid Margin="0,5">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="200"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="Công việc hoàn thành:" FontSize="14" Foreground="#2C3E50" VerticalAlignment="Center"/>
+                        <TextBox Grid.Column="1" x:Name="TasksCompleted" IsReadOnly="True" Height="30" Margin="10,0" BorderBrush="#BDC3C7" VerticalContentAlignment="Center"/>
                     </Grid>
                 </StackPanel>
+            </GroupBox>
+
+            <!-- Danh sách công việc -->
+            <GroupBox Grid.Row="3" Header="Danh Sách Công Việc" Margin="0,0,0,20" Padding="15" Background="White" BorderBrush="#BDC3C7">
+                <ListView x:Name="TaskList" Height="150" BorderBrush="#BDC3C7" SelectionMode="Single">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Header="Mã CV" Width="80" DisplayMemberBinding="{Binding TaskCode}"/>
+                            <GridViewColumn Header="Tên công việc" Width="200" DisplayMemberBinding="{Binding TaskName}"/>
+                            <GridViewColumn Header="Ngày bắt đầu" Width="120" DisplayMemberBinding="{Binding StartDate}"/>
+                            <GridViewColumn Header="Ngày kết thúc" Width="120" DisplayMemberBinding="{Binding EndDate}"/>
+                            <GridViewColumn Header="Trạng thái" Width="100" DisplayMemberBinding="{Binding Status}"/>
+                            <GridViewColumn Header="Người thực hiện" Width="150" DisplayMemberBinding="{Binding AssignedTo}"/>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
             </GroupBox>
 
             <!-- Tài nguyên -->
-            <GroupBox Grid.Row="3" Header="Tài nguyên" Margin="0,0,0,20" Padding="10" Background="White" BorderBrush="#E0E0E0">
+            <GroupBox Grid.Row="4" Header="Tài Nguyên" Margin="0,0,0,20" Padding="15" Background="White" BorderBrush="#BDC3C7">
                 <StackPanel>
                     <Grid Margin="0,5">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="160"/>
+                            <ColumnDefinition Width="200"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <TextBlock Text="Số nhân sự:" FontSize="14" Foreground="#333333" VerticalAlignment="Center"/>
-                        <TextBox Grid.Column="1" x:Name="TeamSize" IsReadOnly="True" Height="30" Margin="10,0" BorderBrush="#E0E0E0" VerticalContentAlignment="Center"/>
+                        <TextBlock Text="Số nhân sự tham gia:" FontSize="14" Foreground="#2C3E50" VerticalAlignment="Center"/>
+                        <TextBox Grid.Column="1" x:Name="TeamSize" IsReadOnly="True" Height="30" Margin="10,0" BorderBrush="#BDC3C7" VerticalContentAlignment="Center"/>
                     </Grid>
-                    <Grid Margin="0,5">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="160"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        <TextBlock Text="Ngân sách đã sử dụng / Tổng:" FontSize="14" Foreground="#333333" VerticalAlignment="Center"/>
-                        <TextBox Grid.Column="1" x:Name="Budget" IsReadOnly="True" Height="30" Margin="10,0" BorderBrush="#E0E0E0" VerticalContentAlignment="Center"/>
-                    </Grid>
-                </StackPanel>
-            </GroupBox>
-
-            <!-- Rủi ro và vấn đề -->
-            <GroupBox Grid.Row="4" Header="Rủi ro và vấn đề" Margin="0,0,0,20" Padding="10" Background="White" BorderBrush="#E0E0E0">
-                <StackPanel>
-                    <ListView x:Name="IssuesList" Height="120" BorderBrush="#E0E0E0" SelectionMode="Single" SelectionChanged="IssuesList_SelectionChanged">
-                        <ListView.View>
-                            <GridView>
-                                <GridViewColumn Header="Mô tả" Width="450" DisplayMemberBinding="{Binding Description}"/>
-                                <GridViewColumn Header="Mức độ" Width="150" DisplayMemberBinding="{Binding Severity}"/>
-                            </GridView>
-                        </ListView.View>
-                    </ListView>
-                    <StackPanel Orientation="Horizontal" Margin="0,10,0,0" HorizontalAlignment="Right">
-                        <Button Content="Quản lý rủi ro" Width="120" Height="30" Background="#2196F3" Foreground="White" BorderThickness="0" Click="ManageIssues_Click">
-                            <Button.Style>
-                                <Style TargetType="Button">
-                                    <Setter Property="Template">
-                                        <Setter.Value>
-                                            <ControlTemplate TargetType="Button">
-                                                <Border Background="{TemplateBinding Background}" CornerRadius="5">
-                                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                                </Border>
-                                            </ControlTemplate>
-                                        </Setter.Value>
-                                    </Setter>
-                                    <Style.Triggers>
-                                        <Trigger Property="IsMouseOver" Value="True">
-                                            <Setter Property="Background" Value="#1976D2"/>
-                                        </Trigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </Button.Style>
-                        </Button>
-                    </StackPanel>
                 </StackPanel>
             </GroupBox>
 
             <!-- Ghi chú -->
-            <GroupBox Grid.Row="5" Header="Ghi chú" Padding="10" Background="White" BorderBrush="#E0E0E0">
-                <TextBox x:Name="Notes" AcceptsReturn="True" AcceptsTab="True" Height="120" BorderBrush="#E0E0E0" VerticalScrollBarVisibility="Auto"/>
+            <GroupBox Grid.Row="5" Header="Ghi Chú" Margin="0,0,0,20" Padding="15" Background="White" BorderBrush="#BDC3C7">
+                <TextBox x:Name="Notes" AcceptsReturn="True" AcceptsTab="True" Height="100" BorderBrush="#BDC3C7" VerticalScrollBarVisibility="Auto"/>
             </GroupBox>
         </Grid>
     </ScrollViewer>

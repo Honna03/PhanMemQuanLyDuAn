@@ -12,27 +12,37 @@
                    FontSize="20" FontWeight="Bold" Foreground="White"
                    Margin="10,10,0,0"/>
 
-        <!-- Nút Thêm nhân viên -->
-        <Button Content="+ Thêm nhân viên" 
-                HorizontalAlignment="Right" 
-                VerticalAlignment="Top"
-                Margin="0,10,240,0" 
-                Padding="10,5"
-                Background="#27AE60" Foreground="White"
-                FontWeight="Bold"
-                x:Name="btn_AddNhanVien"
-                BorderThickness="0" Cursor="Hand" Click="btn_AddNhanVien_Click"/>
+        <!-- DatePicker tìm kiếm theo tháng/năm -->
+        <DatePicker x:Name="dpSearchMonthYear" 
+            HorizontalAlignment="Right" 
+            VerticalAlignment="Top"
+            Margin="0,10,400,0" 
+            Width="120"
+            DisplayDateStart="2020-01-01"
+            SelectedDateFormat="Short"/>
 
-        <!-- Nút Thêm KPI -->
-        <Button Content="+ Thêm Lương" 
+        <!-- Nút Tìm kiếm -->
+        <Button Content="Tìm kiếm" 
+        HorizontalAlignment="Right" 
+        VerticalAlignment="Top"
+        Margin="0,10,300,0" 
+        Padding="10,5"
+        Background="#27AE60" Foreground="White"
+        FontWeight="Bold"
+        x:Name="btn_SearchByMonthYear"
+        BorderThickness="0" Cursor="Hand"
+        Click="btn_SearchByMonthYear_Click"/>
+
+        <!-- Nút Chỉnh sửa lương -->
+        <Button Content="Chỉnh sửa lương" 
                 HorizontalAlignment="Right" 
                 VerticalAlignment="Top"
-                Margin="0,10,110,0" 
+                Margin="0,10,150,0" 
                 Padding="10,5"
                 Background="#27AE60" Foreground="White"
                 FontWeight="Bold"
-                x:Name="btn_AddLuong"
-                BorderThickness="0" Cursor="Hand" Click="btn_AddLuong_Click"/>
+                x:Name="btn_EditLuong"
+                BorderThickness="0" Cursor="Hand" Click="btn_EditLuong_Click"/>
 
         <!-- Nút Xuất Excel -->
         <Button Content="Xuất Excel" 
@@ -43,7 +53,8 @@
                 Background="#27AE60" Foreground="White"
                 FontWeight="Bold"
                 x:Name="btn_ExportExcel"
-                BorderThickness="0" Cursor="Hand"/>
+                BorderThickness="0" Cursor="Hand"
+                Click="btn_ExportExcel_Click"/>
 
         <!-- Grid chứa DataGrid và phân trang -->
         <Grid Margin="0,50,0,0">
@@ -58,11 +69,13 @@
             <DataGrid Name="dgLuong" AutoGenerateColumns="False" 
                       HeadersVisibility="Column"
                       CanUserAddRows="False"
+                      IsReadOnly="True"
                       SelectionMode="Single"
                       Background="White" BorderBrush="#E0E0E0" BorderThickness="1"
                       GridLinesVisibility="Horizontal" HorizontalGridLinesBrush="#E0E0E0"
                       RowBackground="White" AlternatingRowBackground="#F9F9F9"
-                      Margin="0,0,0,19">
+                      Margin="0,0,0,19"
+                      MouseDoubleClick="dgLuong_MouseDoubleClick">
                 <DataGrid.Columns>
                     <!-- Cột STT -->
                     <DataGridTextColumn Header="STT" Binding="{Binding STT}" Width="50" IsReadOnly="True">
@@ -156,6 +169,24 @@
                         <DataGridTextColumn.ElementStyle>
                             <Style TargetType="TextBlock">
                                 <Setter Property="Margin" Value="5,0"/>
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                        <DataGridTextColumn.HeaderStyle>
+                            <Style TargetType="DataGridColumnHeader">
+                                <Setter Property="Background" Value="#2D2D2D"/>
+                                <Setter Property="Foreground" Value="White"/>
+                                <Setter Property="BorderThickness" Value="0"/>
+                                <Setter Property="Padding" Value="5"/>
+                            </Style>
+                        </DataGridTextColumn.HeaderStyle>
+                    </DataGridTextColumn>
+                    
+                    <!-- Cột Tháng/Năm -->
+                    <DataGridTextColumn Header="Tháng/Năm" Binding="{Binding ThangNam}" Width="1*">
+                        <DataGridTextColumn.ElementStyle>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="Margin" Value="5,0"/>
+                                <Setter Property="HorizontalAlignment" Value="Center"/>
                             </Style>
                         </DataGridTextColumn.ElementStyle>
                         <DataGridTextColumn.HeaderStyle>

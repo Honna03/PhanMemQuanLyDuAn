@@ -5,52 +5,129 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:QuanLyDuAn.Forms"
         mc:Ignorable="d"
-        Title="Login" Height="650" Width="500" WindowStartupLocation="CenterScreen">
+        Title="Đăng Nhập" Height="650" Width="500" WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize" Background="Transparent" AllowsTransparency="True"
+        WindowStyle="None">
     <Window.Resources>
-        <!-- Styles giữ nguyên như trong UserControl -->
+        <!-- Màu sắc và tài nguyên chung -->
+        <SolidColorBrush x:Key="PrimaryColor" Color="#FF7B68EE"/>
+        <SolidColorBrush x:Key="SecondaryColor" Color="#FF483D8B"/>
+        <SolidColorBrush x:Key="TextColor" Color="White"/>
+        <SolidColorBrush x:Key="ErrorColor" Color="#FFFF5555"/>
+        <SolidColorBrush x:Key="LinkColor" Color="#FF87CEEB"/>
+
+        <!-- Style cho TextBox -->
         <Style x:Key="TextBoxStyle" TargetType="TextBox">
             <Setter Property="Background" Value="Transparent"/>
-            <Setter Property="Foreground" Value="White"/>
-            <Setter Property="BorderBrush" Value="White"/>
+            <Setter Property="Foreground" Value="{StaticResource TextColor}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource TextColor}"/>
             <Setter Property="BorderThickness" Value="0,0,0,1"/>
             <Setter Property="FontSize" Value="16"/>
             <Setter Property="Padding" Value="5"/>
-        </Style>
-        <Style x:Key="PasswordBoxStyle" TargetType="PasswordBox">
-            <Setter Property="Background" Value="Transparent"/>
-            <Setter Property="Foreground" Value="White"/>
-            <Setter Property="BorderBrush" Value="White"/>
-            <Setter Property="BorderThickness" Value="0,0,0,1"/>
-            <Setter Property="FontSize" Value="16"/>
-            <Setter Property="Padding" Value="5"/>
-            <Setter Property="Height" Value="30"/>
-        </Style>
-        <Style x:Key="ButtonStyle" TargetType="Button">
-            <Setter Property="Background" Value="#FF6A5ACD"/>
-            <Setter Property="Foreground" Value="White"/>
-            <Setter Property="FontSize" Value="16"/>
-            <Setter Property="Padding" Value="20,10"/>
-            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Height" Value="40"/>
             <Setter Property="Template">
                 <Setter.Value>
-                    <ControlTemplate TargetType="Button">
-                        <Border Background="{TemplateBinding Background}" CornerRadius="20">
-                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <ControlTemplate TargetType="TextBox">
+                        <Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" CornerRadius="5">
+                            <ScrollViewer x:Name="PART_ContentHost" VerticalAlignment="Center"/>
                         </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsFocused" Value="True">
+                                <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource PrimaryColor}"/>
+                            </Trigger>
+                            <Trigger Property="Tag" Value="Error">
+                                <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource ErrorColor}"/>
+                                <Setter TargetName="border" Property="BorderThickness" Value="0,0,0,2"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
         </Style>
+
+        <!-- Style cho PasswordBox -->
+        <Style x:Key="PasswordBoxStyle" TargetType="PasswordBox">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="{StaticResource TextColor}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource TextColor}"/>
+            <Setter Property="BorderThickness" Value="0,0,0,1"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="Padding" Value="5"/>
+            <Setter Property="Height" Value="40"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="PasswordBox">
+                        <Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" CornerRadius="5">
+                            <ScrollViewer x:Name="PART_ContentHost" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsFocused" Value="True">
+                                <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource PrimaryColor}"/>
+                            </Trigger>
+                            <Trigger Property="Tag" Value="Error">
+                                <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource ErrorColor}"/>
+                                <Setter TargetName="border" Property="BorderThickness" Value="0,0,0,2"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Style cho Button -->
+        <Style x:Key="ButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="{StaticResource PrimaryColor}"/>
+            <Setter Property="Foreground" Value="{StaticResource TextColor}"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="Padding" Value="20,10"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="RenderTransformOrigin" Value="0.5,0.5"/>
+            <Setter Property="RenderTransform">
+                <Setter.Value>
+                    <ScaleTransform ScaleX="1" ScaleY="1"/>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="border" Background="{TemplateBinding Background}" CornerRadius="20">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#FF8A77FF"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#FF5A4FCC"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Style cho Link -->
         <Style x:Key="LinkStyle" TargetType="TextBlock">
-            <Setter Property="Foreground" Value="#FF87CEEB"/>
+            <Setter Property="Foreground" Value="{StaticResource LinkColor}"/>
             <Setter Property="FontSize" Value="14"/>
             <Setter Property="TextDecorations" Value="Underline"/>
             <Setter Property="Cursor" Value="Hand"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Foreground" Value="{StaticResource PrimaryColor}"/>
+                </Trigger>
+            </Style.Triggers>
         </Style>
-        
+
+        <!-- Style cho CheckBox -->
+        <Style x:Key="CheckBoxStyle" TargetType="CheckBox">
+            <Setter Property="Foreground" Value="{StaticResource TextColor}"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+        </Style>
     </Window.Resources>
 
-    <Border Background="#FF2E1E3B" CornerRadius="20" Padding="20">
+    <Border Background="#FF2E1E3B" CornerRadius="20" Padding="20" Margin="10" MouseDown="Border_MouseDown">
         <Grid>
             <Grid.Background>
                 <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
@@ -59,34 +136,63 @@
                 </LinearGradientBrush>
             </Grid.Background>
 
-            <StackPanel HorizontalAlignment="Center" Width="300">
-                <!-- Title -->
-                <StackPanel x:Name="TitlePanel" Margin="0,250,0,0">
-                    <TextBlock x:Name="tb_ABHK" Text="ABHK" Foreground="White" FontSize="36" FontWeight="Bold" 
-                               HorizontalAlignment="Center" Cursor="Hand" MouseDown="tb_ABHK_MouseDown"/>
-                </StackPanel>
+            <!-- Nút đóng -->
+            <Button x:Name="CloseButton" Content="X" Width="30" Height="30" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,10,10,0"
+                    Background="Red" Foreground="White" FontSize="14" Click="CloseButton_Click"/>
 
-                <!-- Login Form -->
-                <StackPanel x:Name="LoginForm" Margin="0,200,0,0" Visibility="Hidden">
-                    <TextBlock Text="Username" Foreground="White" FontSize="16" Margin="0,20,0,5"/>
-                    <TextBox x:Name="UsernameTextBox" Style="{StaticResource TextBoxStyle}"/>
+            <!-- Title -->
+            <StackPanel x:Name="TitlePanel" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <TextBlock x:Name="tb_Welcome" Text="WELCOME" Foreground="{StaticResource TextColor}" FontSize="36" FontWeight="Bold" 
+                           HorizontalAlignment="Center" Cursor="Hand" MouseDown="tb_Welcome_MouseDown"/>
+                <TextBlock Text="Quản Lý Dự Án" Foreground="{StaticResource TextColor}" FontSize="18" Opacity="0.7" 
+                           HorizontalAlignment="Center" Margin="0,10,0,0"/>
+            </StackPanel>
 
-                    <TextBlock Text="Password" Foreground="White" FontSize="16" Margin="0,20,0,5"/>
-                    
+            <!-- Login Form -->
+            <StackPanel x:Name="LoginForm" HorizontalAlignment="Center" VerticalAlignment="Center" Width="300" Visibility="Hidden">
+                <TextBlock Text="Đăng Nhập" Foreground="{StaticResource TextColor}" FontSize="24" FontWeight="Bold" 
+                           HorizontalAlignment="Center" Margin="0,0,0,30"/>
 
-                    <Button x:Name="btn_Login" Content="LOG IN" Style="{StaticResource ButtonStyle}" Margin="0,30,0,10" Height="30" Width="200" Click="btn_Login_Click"/>
+                <!-- Username -->
+                <TextBlock Text="Tài khoản" Foreground="{StaticResource TextColor}" FontSize="16" Margin="0,0,0,5"/>
+                <TextBox x:Name="UsernameTextBox" Style="{StaticResource TextBoxStyle}" Tag="Normal">
+                    <TextBox.Text>
+                        <Binding Path="Username" UpdateSourceTrigger="PropertyChanged">
+                            <Binding.ValidationRules>
+                                <DataErrorValidationRule ValidatesOnTargetUpdated="True"/>
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox.Text>
+                </TextBox>
 
-                    <Grid Margin="0,10,0,0">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        <TextBlock Grid.Column="0" Text="Forget Password?" Style="{StaticResource LinkStyle}" 
-                                   HorizontalAlignment="Left"/>
-                        <Button x:Name="btn_Register" Grid.Column="1" Content="REGISTER" Style="{StaticResource ButtonStyle}" 
-                                HorizontalAlignment="Right" Padding="20,10" Height="25"/>
-                    </Grid>
-                </StackPanel>
+
+                <!-- Password -->
+                <TextBlock Text="Mật khẩu" Foreground="{StaticResource TextColor}" FontSize="16" Margin="0,20,0,5"/>
+                <Grid>
+                    <PasswordBox x:Name="PasswordBox" Style="{StaticResource PasswordBoxStyle}" Tag="Normal"/>
+                    <Button x:Name="ShowPasswordButton" Width="20" Height="20" HorizontalAlignment="Right" Margin="0,0,10,0" Background="Transparent" BorderThickness="0">
+                        <Image Source="/Resources/eye_icon.png" Width="16" Height="16"/>
+                    </Button>
+                </Grid>
+
+                <!-- Remember Me and Forget Password -->
+                <Grid Margin="0,10,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <!-- <CheckBox x:Name="RememberMeCheckBox" Grid.Column="0" Content="Ghi nhớ tôi" Style="{StaticResource CheckBoxStyle}"/>-->
+                    <TextBlock Grid.Column="1" Text="Quên mật khẩu?" Style="{StaticResource LinkStyle}" 
+                               HorizontalAlignment="Right" MouseDown="ForgetPassword_MouseDown"/>
+                </Grid>
+
+                <!-- Login Button -->
+                <Button x:Name="btn_Login" Content="ĐĂNG NHẬP" Style="{StaticResource ButtonStyle}" Margin="0,30,0,10" Height="50" Width="200" 
+                        MouseEnter="btn_Login_MouseEnter" MouseLeave="btn_Login_MouseLeave" Click="btn_Login_Click"/>
+
+                <!-- Loading Indicator -->
+                <ProgressBar x:Name="LoadingIndicator" IsIndeterminate="True" Width="100" Height="5" Margin="0,10,0,0" 
+                             Visibility="Collapsed" Foreground="{StaticResource PrimaryColor}"/>
             </StackPanel>
         </Grid>
     </Border>

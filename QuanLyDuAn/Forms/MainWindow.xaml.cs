@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -11,32 +12,35 @@ using System.Windows.Shapes;
 using System.Windows.Threading;
 using QuanLyDuAn.Controls;
 using QuanLyDuAn.Forms;
-using static QuanLyDuAn.Forms.KPI;
+
+using QuanLyDuAn.Models;
 
 namespace QuanLyDuAn
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
         private const string PlaceholderText = "Tìm kiếm...";
         private DispatcherTimer timer;
+
         private bool isInitialized = false; // Biến flag để kiểm soát
+
+        private readonly ThucTapQuanLyDuAnContext _context;
+
         public MainWindow()
         {
             InitializeComponent();
+            _context = new ThucTapQuanLyDuAnContext();
             MainContent.Content = new TrangChu();
-            // Khởi tạo timer để cập nhật giờ
+
             timer = new DispatcherTimer();
-            timer.Interval = TimeSpan.FromSeconds(1); // Cập nhật mỗi giây
+            timer.Interval = TimeSpan.FromSeconds(1);
             timer.Tick += Timer_Tick;
             timer.Start();
 
-            // Cập nhật giờ ngay khi khởi động
             UpdateCurrentTime();
             isInitialized = true; // Đánh dấu là đã khởi tạo xong
         }
+
         private void Timer_Tick(object sender, EventArgs e)
         {
             UpdateCurrentTime();
@@ -44,7 +48,7 @@ namespace QuanLyDuAn
 
         private void UpdateCurrentTime()
         {
-            CurrentTime.Text = DateTime.Now.ToString("HH:mm:ss"); // Định dạng giờ:phút:giây
+            CurrentTime.Text = DateTime.Now.ToString("HH:mm:ss");
         }
 
         private void SearchBox_GotFocus(object sender, RoutedEventArgs e)
@@ -53,7 +57,7 @@ namespace QuanLyDuAn
             if (textBox.Text == PlaceholderText)
             {
                 textBox.Text = string.Empty;
-                textBox.Foreground = Brushes.White; // Đổi màu chữ khi người dùng nhập
+                textBox.Foreground = Brushes.White;
             }
         }
         private void UserButton_Click(object sender, RoutedEventArgs e)
@@ -73,7 +77,7 @@ namespace QuanLyDuAn
             if (string.IsNullOrWhiteSpace(textBox.Text))
             {
                 textBox.Text = PlaceholderText;
-                textBox.Foreground = Brushes.Gray; // Đặt lại màu chữ placeholder
+                textBox.Foreground = Brushes.Gray;
             }
         }
 
@@ -87,6 +91,7 @@ namespace QuanLyDuAn
             MainContent.Content = new BaoCao();
         }
 
+
         private void btn_QLCV_Click(object sender, RoutedEventArgs e)
         {
             MainContent.Content = new DanhSachCongViec();
@@ -94,19 +99,17 @@ namespace QuanLyDuAn
 
         private void btn_QLDA_Click(object sender, RoutedEventArgs e)
         {
-            MainContent.Content = new ProjectsControl();
+            MainContent.Content = new ProjectsControl(_context);
         }
 
         private void Logo_Click(object sender, RoutedEventArgs e)
         {
-            // Thay đổi nội dung của khu vực chứa UserControl
             MainWindow main = Window.GetWindow(this) as MainWindow;
             if (main != null)
             {
                 MainContent.Content = new TrangChu();
             }
         }
-
         private void btn_KPI_Click(object sender, RoutedEventArgs e)
         {
             MainContent.Content = new KPI();
@@ -116,7 +119,7 @@ namespace QuanLyDuAn
         {
             Window window = new Window
             {
-                Content = new Edit_DuAn(),
+                Content = new Edit_DuAn(null, _context),
                 WindowStartupLocation = WindowStartupLocation.CenterScreen
             };
             window.Show();
@@ -124,7 +127,7 @@ namespace QuanLyDuAn
 
         private void btn_Luong_Click(object sender, RoutedEventArgs e)
         {
-            MainContent.Content = new Luong();
+            MainContent.Content = new QuanLyDuAn.Forms.Luong(); // Chỉ định rõ namespace
         }
 
         private void btn_DangXuat_Click(object sender, RoutedEventArgs e)
@@ -134,9 +137,9 @@ namespace QuanLyDuAn
             Window parentWindow = Window.GetWindow(sender as DependencyObject);
             if (parentWindow != null)
             {
-                parentWindow.Close(); // Đóng cửa sổ hiện tại
+                parentWindow.Close();
             }
-            loginWindow.Show(); // Mở cửa sổ Login
+            loginWindow.Show();
         }
 
         private void btn_Thoat_Click(object sender, RoutedEventArgs e)

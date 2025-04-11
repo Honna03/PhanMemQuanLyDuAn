@@ -13,17 +13,17 @@ public partial class DuAn
 
     public string DaTen { get; set; } = null!;
 
-    public DateOnly? DaBatDau { get; set; }
+    public DateTime? DaBatDau { get; set; }
 
-    public DateOnly DaKetThuc { get; set; }
+    public DateTime? DaKetThuc { get; set; }
 
     public string? DaFile { get; set; }
 
     public string? DaPath { get; set; }
 
-    public decimal DaTienDo { get; set; }
+    public decimal? DaTienDo { get; set; }
 
-    public DateOnly? DaThoiGianHoanThanh { get; set; }
+    public DateTime? DaThoiGianHoanThanh { get; set; }
 
     public int NvIdNguoiTao { get; set; }
 

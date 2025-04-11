@@ -33,7 +33,5 @@ public partial class CongViec
 
     public virtual ICollection<PhanCongCongViec> PhanCongCongViecs { get; set; } = new List<PhanCongCongViec>();
 
-    public virtual ICollection<ThongBao> ThongBaos { get; set; } = new List<ThongBao>();
-
     public virtual TrangThai TtMaNavigation { get; set; } = null!;
 }

@@ -87,12 +87,12 @@ public partial class ThucTapQuanLyDuAnContext : DbContext
             entity.HasKey(e => new { e.CvId, e.DaId });
 
             entity.ToTable("CongViec", tb =>
-                {
-                    tb.HasTrigger("TRG_DeleteCongViec");
-                    tb.HasTrigger("TRG_UpdateKPI");
-                    tb.HasTrigger("TRG_UpdateTienDoDuAn");
-                    tb.HasTrigger("trg_CongViec_CapNhatTrangThai");
-                });
+            {
+                tb.HasTrigger("TRG_DeleteCongViec");
+                tb.HasTrigger("TRG_UpdateKPI");
+                tb.HasTrigger("TRG_UpdateTienDoDuAn");
+                tb.HasTrigger("trg_CongViec_CapNhatTrangThai");
+            });
 
             entity.Property(e => e.CvId)
                 .ValueGeneratedOnAdd()
@@ -328,11 +328,11 @@ public partial class ThucTapQuanLyDuAnContext : DbContext
             entity.HasKey(e => new { e.CvId, e.DaId, e.NvId });
 
             entity.ToTable("PhanCongCongViec", tb =>
-                {
-                    tb.HasTrigger("TRG_DeletePhanCongCongViec");
-                    tb.HasTrigger("TRG_UpdateKPI_PhanCong");
-                    tb.HasTrigger("trg_PhanCongCongViec_ThemThongBao");
-                });
+            {
+                tb.HasTrigger("TRG_DeletePhanCongCongViec");
+                tb.HasTrigger("TRG_UpdateKPI_PhanCong");
+                tb.HasTrigger("trg_PhanCongCongViec_ThemThongBao");
+            });
 
             entity.HasIndex(e => e.CvId, "UQ__PhanCong__C36B8FFFDD9790D6").IsUnique();
 
@@ -369,7 +369,7 @@ public partial class ThucTapQuanLyDuAnContext : DbContext
                 .HasMaxLength(50)
                 .HasColumnName("q_Ten");
         });
-
+        /*
         modelBuilder.Entity<ThongBao>(entity =>
         {
             entity.HasKey(e => e.TbId);
@@ -409,7 +409,7 @@ public partial class ThucTapQuanLyDuAnContext : DbContext
             entity.HasOne(d => d.CongViec).WithMany(p => p.ThongBaos)
                 .HasForeignKey(d => new { d.CvId, d.DaId })
                 .HasConstraintName("FK_ThongBao_CongViec");
-        });
+        });*/
 
         modelBuilder.Entity<TrangThai>(entity =>
         {

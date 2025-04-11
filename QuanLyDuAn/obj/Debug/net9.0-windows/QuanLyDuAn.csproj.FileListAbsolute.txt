@@ -222,6 +222,7 @@ D:\Thuctap\PhanMemQuanLyDuAn\QuanLyDuAn\bin\Debug\net9.0-windows\Microsoft.Ident
 D:\Thuctap\PhanMemQuanLyDuAn\QuanLyDuAn\bin\Debug\net9.0-windows\Microsoft.IdentityModel.Tokens.dll
 D:\Thuctap\PhanMemQuanLyDuAn\QuanLyDuAn\bin\Debug\net9.0-windows\Microsoft.SqlServer.Server.dll
 D:\Thuctap\PhanMemQuanLyDuAn\QuanLyDuAn\bin\Debug\net9.0-windows\Mono.TextTemplating.dll
+D:\Thuctap\PhanMemQuanLyDuAn\QuanLyDuAn\bin\Debug\net9.0-windows\Newtonsoft.Json.dll
 D:\Thuctap\PhanMemQuanLyDuAn\QuanLyDuAn\bin\Debug\net9.0-windows\System.ClientModel.dll
 D:\Thuctap\PhanMemQuanLyDuAn\QuanLyDuAn\bin\Debug\net9.0-windows\System.Composition.AttributedModel.dll
 D:\Thuctap\PhanMemQuanLyDuAn\QuanLyDuAn\bin\Debug\net9.0-windows\System.Composition.Convention.dll
@@ -311,6 +312,7 @@ D:\Thuctap\PhanMemQuanLyDuAn\QuanLyDuAn\obj\Debug\net9.0-windows\QuanLyDuAn.cspr
 D:\Thuctap\PhanMemQuanLyDuAn\QuanLyDuAn\obj\Debug\net9.0-windows\Forms\DanhSachNhanVien.baml
 D:\Thuctap\PhanMemQuanLyDuAn\QuanLyDuAn\obj\Debug\net9.0-windows\Forms\Edit_DuAn.baml
 D:\Thuctap\PhanMemQuanLyDuAn\QuanLyDuAn\obj\Debug\net9.0-windows\Forms\MainWindow.baml
+D:\Thuctap\PhanMemQuanLyDuAn\QuanLyDuAn\obj\Debug\net9.0-windows\Forms\ProjectsControl.baml
 D:\Thuctap\PhanMemQuanLyDuAn\QuanLyDuAn\obj\Debug\net9.0-windows\Forms\BaoCao.g.cs
 D:\Thuctap\PhanMemQuanLyDuAn\QuanLyDuAn\obj\Debug\net9.0-windows\Forms\ChiTietCongViec.g.cs
 D:\Thuctap\PhanMemQuanLyDuAn\QuanLyDuAn\obj\Debug\net9.0-windows\Forms\ChiTietNhanVien.g.cs
@@ -343,7 +345,6 @@ D:\Thuctap\PhanMemQuanLyDuAn\QuanLyDuAn\obj\Debug\net9.0-windows\Forms\Edit_Luon
 D:\Thuctap\PhanMemQuanLyDuAn\QuanLyDuAn\obj\Debug\net9.0-windows\Forms\KPI.baml
 D:\Thuctap\PhanMemQuanLyDuAn\QuanLyDuAn\obj\Debug\net9.0-windows\Forms\Login.baml
 D:\Thuctap\PhanMemQuanLyDuAn\QuanLyDuAn\obj\Debug\net9.0-windows\Forms\Luong.baml
-D:\Thuctap\PhanMemQuanLyDuAn\QuanLyDuAn\obj\Debug\net9.0-windows\Forms\ProjectsControl.baml
 D:\Thuctap\PhanMemQuanLyDuAn\QuanLyDuAn\obj\Debug\net9.0-windows\Forms\TrangChu.baml
 D:\Thuctap\PhanMemQuanLyDuAn\QuanLyDuAn\obj\Debug\net9.0-windows\QuanLyDuAn.g.resources
 D:\Thuctap\PhanMemQuanLyDuAn\QuanLyDuAn\obj\Debug\net9.0-windows\QuanLyDuAn.GeneratedMSBuildEditorConfig.editorconfig
@@ -357,4 +358,3 @@ D:\Thuctap\PhanMemQuanLyDuAn\QuanLyDuAn\obj\Debug\net9.0-windows\refint\QuanLyDu
 D:\Thuctap\PhanMemQuanLyDuAn\QuanLyDuAn\obj\Debug\net9.0-windows\QuanLyDuAn.pdb
 D:\Thuctap\PhanMemQuanLyDuAn\QuanLyDuAn\obj\Debug\net9.0-windows\QuanLyDuAn.genruntimeconfig.cache
 D:\Thuctap\PhanMemQuanLyDuAn\QuanLyDuAn\obj\Debug\net9.0-windows\ref\QuanLyDuAn.dll
-D:\Thuctap\PhanMemQuanLyDuAn\QuanLyDuAn\bin\Debug\net9.0-windows\Newtonsoft.Json.dll

@@ -1,302 +1,234 @@
-﻿using LiveCharts;
-using LiveCharts.Wpf;
-using Microsoft.EntityFrameworkCore;
-using QuanLyDuAn.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using QuanLyDuAn.Models;
+using QuanLyDuAn;
+using LiveCharts;
+using LiveCharts.Wpf;
 
 namespace QuanLyDuAn.Controls
 {
     public partial class ProjectsControl : UserControl
     {
-        private readonly ThucTapQuanLyDuAnContext _context;
-        private List<DuAn> _projects;
+        private List<DuAn> _projects = new List<DuAn>();
+        private List<CongViec> _allTasks = new List<CongViec>();
         private int _currentPage = 1;
-        private int _pageSize = 10;
-        private int _totalItems;
-        private SeriesCollection _seriesCollection;
+        private const int PageSize = 10;
 
-        public SeriesCollection SeriesCollection
-        {
-            get => _seriesCollection;
-            set
-            {
-                _seriesCollection = value;
-                OnPropertyChanged(nameof(SeriesCollection));
-            }
-        }
-
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        protected void OnPropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-        }
-
-        public ProjectsControl(ThucTapQuanLyDuAnContext context)
+        public ProjectsControl()
         {
             InitializeComponent();
-            _context = context ?? throw new ArgumentNullException(nameof(context));
-            SeriesCollection = new SeriesCollection();
-            LoadDataAsync();
         }
 
-        private async void LoadDataAsync()
+        public void SetProjects(List<DuAn> projects, List<TrangThai> statuses, List<Creator> creators, List<CongViec> allTasks)
         {
-            try
-            {
-                if (_context == null || _context.Database == null || !_context.Database.CanConnect())
-                {
-                    MessageBox.Show("Không thể kết nối đến cơ sở dữ liệu. Context không hợp lệ.", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
-                    return;
-                }
-
-                StatusFilterComboBox.ItemsSource = await _context.TrangThais.ToListAsync();
-                CreatorFilterComboBox.ItemsSource = await _context.NhanViens.Select(n => new { n.NvId, Name = n.NvTen }).ToListAsync();
-
-                await LoadProjectsAsync();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Lỗi khi tải dữ liệu: {ex.Message}\nInner Exception: {ex.InnerException?.Message}", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
+            _projects = projects ?? new List<DuAn>();
+            _allTasks = allTasks ?? new List<CongViec>();
+            StatusFilterComboBox.ItemsSource = statuses ?? new List<TrangThai>();
+            CreatorFilterComboBox.ItemsSource = creators ?? new List<Creator>();
+            LoadPage();
+            UpdatePieChart();
         }
 
-        private async Task LoadProjectsAsync()
+        private void LoadPage()
         {
-            try
+            var filteredProjects = ApplyFilters();
+            var pagedProjects = filteredProjects
+                .Skip((_currentPage - 1) * PageSize)
+                .Take(PageSize)
+                .ToList();
+
+            if (ProjectsDataGrid != null)
             {
-                if (_context == null || _context.Database == null || !_context.Database.CanConnect())
-                {
-                    throw new InvalidOperationException("Không thể kết nối đến cơ sở dữ liệu. Context không hợp lệ.");
-                }
-
-                var query = _context.DuAns
-                    .Include(d => d.TtMaNavigation)
-                    .Include(d => d.NvIdNguoiTaoNavigation)
-                    .Include(d => d.NhanVienThamGiaDuAns).ThenInclude(n => n.CongViecs).ThenInclude(c => c.TtMaNavigation)
-                    .AsQueryable();
-
-                if (StatusFilterComboBox.SelectedValue != null)
-                {
-                    string selectedStatus = StatusFilterComboBox.SelectedValue.ToString();
-                    query = query.Where(d => d.TtMa == selectedStatus);
-                }
-
-                if (CreatorFilterComboBox.SelectedValue != null)
-                {
-                    int selectedCreator = (int)CreatorFilterComboBox.SelectedValue;
-                    query = query.Where(d => d.NvIdNguoiTao == selectedCreator);
-                }
-
-                if (!string.IsNullOrWhiteSpace(SearchTextBox.Text) && SearchTextBox.Text != "Tìm kiếm...")
-                {
-                    string searchText = SearchTextBox.Text.ToLower();
-                    query = query.Where(d => d.DaTen.ToLower().Contains(searchText));
-                }
-
-                _totalItems = await query.CountAsync();
-
-                _projects = await query
-                    .OrderBy(d => d.DaId)
-                    .Skip((_currentPage - 1) * _pageSize)
-                    .Take(_pageSize)
-                    .ToListAsync();
-
-                ProjectsDataGrid.ItemsSource = _projects;
-
-                UpdatePaginationInfo();
-
-                if (_projects.Any())
-                {
-                    ProjectsDataGrid.SelectedItem = _projects.First();
-                }
-                else
-                {
-                    UpdateChart(null);
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Lỗi khi tải danh sách dự án: {ex.Message}\nInner Exception: {ex.InnerException?.Message}", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-        }
-
-        private void UpdatePaginationInfo()
-        {
-            int totalPages = (int)Math.Ceiling((double)_totalItems / _pageSize);
-            PageInfoTextBlock.Text = $"Trang {_currentPage}/{totalPages} ({_totalItems} dự án)";
-        }
-
-        private async void UpdateChart(DuAn project)
-        {
-            try
-            {
-                SeriesCollection.Clear();
-
-                if (project == null)
-                {
-                    ChartTitleTextBlock.Text = "Vui lòng chọn một dự án để xem trạng thái công việc.";
-                    return;
-                }
-
-                var taskStatusGroups = await _context.CongViecs
-                    .Where(cv => cv.DaId == project.DaId)
-                    .GroupBy(cv => cv.TtMaNavigation.TtTen)
-                    .Select(g => new
-                    {
-                        Status = g.Key ?? "Không xác định",
-                        Count = g.Count()
-                    })
-                    .ToListAsync();
-
-                if (!taskStatusGroups.Any())
-                {
-                    ChartTitleTextBlock.Text = $"Trạng thái công việc của dự án: {project.DaTen} (Không có công việc)";
-                    return;
-                }
-
-                ChartTitleTextBlock.Text = $"Trạng thái công việc của dự án: {project.DaTen}";
-
-                foreach (var group in taskStatusGroups)
-                {
-                    SeriesCollection.Add(new PieSeries
-                    {
-                        Title = group.Status,
-                        Values = new ChartValues<int> { group.Count },
-                        DataLabels = true,
-                        LabelPoint = chartPoint => $"{chartPoint.Y} ({chartPoint.Participation:P0})"
-                    });
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Lỗi khi cập nhật biểu đồ: {ex.Message}\nInner Exception: {ex.InnerException?.Message}", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
-                ChartTitleTextBlock.Text = "Không thể hiển thị biểu đồ do lỗi.";
-            }
-        }
-
-        private async void ProjectsDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (ProjectsDataGrid.SelectedItem is DuAn selectedProject)
-            {
-                UpdateChart(selectedProject);
+                ProjectsDataGrid.ItemsSource = pagedProjects;
             }
             else
             {
-                UpdateChart(null);
+                System.Diagnostics.Debug.WriteLine("ProjectsDataGrid is null in LoadPage.");
+            }
+
+            UpdatePaginationInfo(filteredProjects.Count);
+        }
+
+        private List<DuAn> ApplyFilters()
+        {
+            if (_projects == null)
+            {
+                _projects = new List<DuAn>();
+            }
+
+            var filtered = _projects.ToList();
+
+            if (StatusFilterComboBox.SelectedValue is TrangThai selectedStatus)
+            {
+                filtered = filtered.Where(p => p.TtMa == selectedStatus.TtMa).ToList();
+            }
+
+            if (CreatorFilterComboBox.SelectedValue is Creator selectedCreator)
+            {
+                filtered = filtered.Where(p => p.NvIdNguoiTao == selectedCreator.NvId).ToList();
+            }
+
+            if (!string.IsNullOrWhiteSpace(SearchTextBox.Text) && SearchTextBox.Text != "Tìm kiếm...")
+            {
+                string searchText = SearchTextBox.Text.ToLower();
+                filtered = filtered.Where(p => p.DaTen.ToLower().Contains(searchText)).ToList();
+            }
+
+            return filtered;
+        }
+
+        private void UpdatePieChart()
+        {
+            if (StatusPieChart == null)
+                return;
+
+            // Lấy dự án được chọn
+            if (ProjectsDataGrid.SelectedItem is DuAn selectedProject)
+            {
+                // Lấy danh sách công việc của dự án được chọn
+                var projectTasks = _allTasks
+                    .Where(t => t.DaId == selectedProject.DaId)
+                    .ToList();
+
+                if (projectTasks.Any())
+                {
+                    // Nhóm công việc theo trạng thái (TtMa)
+                    var taskByStatus = projectTasks
+                        .GroupBy(t => t.TtMaNavigation.TtTen)
+                        .Select(g => new { Status = g.Key, Count = g.Count() })
+                        .ToList();
+
+                    var series = new SeriesCollection();
+
+                    foreach (var status in taskByStatus)
+                    {
+                        series.Add(new PieSeries
+                        {
+                            Title = status.Status,
+                            Values = new ChartValues<int> { status.Count },
+                            DataLabels = true,
+                            LabelPoint = chartPoint => $"{chartPoint.Y} ({chartPoint.Participation:P0})"
+                        });
+                    }
+
+                    StatusPieChart.Series = series;
+                }
+                else
+                {
+                    // Không có công việc
+                    StatusPieChart.Series = new SeriesCollection
+                    {
+                        new PieSeries
+                        {
+                            Title = "Không có công việc",
+                            Values = new ChartValues<int> { 1 },
+                            DataLabels = false
+                        }
+                    };
+                }
+            }
+            else
+            {
+                // Không có dự án nào được chọn
+                StatusPieChart.Series = new SeriesCollection
+                {
+                    new PieSeries
+                    {
+                        Title = "Chọn một dự án",
+                        Values = new ChartValues<int> { 1 },
+                        DataLabels = false
+                    }
+                };
             }
         }
 
-        private async void StatusFilterComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void UpdatePaginationInfo(int totalItems)
         {
-            _currentPage = 1;
-            await LoadProjectsAsync();
+            int totalPages = (int)Math.Ceiling((double)totalItems / PageSize);
+            if (PageInfoTextBlock != null)
+            {
+                PageInfoTextBlock.Text = $"Trang {_currentPage}/{totalPages} ({totalItems} dự án)";
+            }
         }
 
-        private async void CreatorFilterComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void StatusFilterComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             _currentPage = 1;
-            await LoadProjectsAsync();
+            LoadPage();
         }
 
-        private async void SearchTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        private void CreatorFilterComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             _currentPage = 1;
-            await LoadProjectsAsync();
+            LoadPage();
         }
 
-        private async void RefreshButton_Click(object sender, RoutedEventArgs e)
+        private void SearchTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            _currentPage = 1;
+            LoadPage();
+        }
+
+        private void RefreshButton_Click(object sender, RoutedEventArgs e)
         {
             StatusFilterComboBox.SelectedIndex = -1;
             CreatorFilterComboBox.SelectedIndex = -1;
-            SearchTextBox.Text = "Tìm kiếm...";
+            if (SearchTextBox != null)
+            {
+                SearchTextBox.Text = "Tìm kiếm...";
+            }
             _currentPage = 1;
-            await LoadProjectsAsync();
+            LoadPage();
         }
 
-        private async void PreviousPageButton_Click(object sender, RoutedEventArgs e)
+        private void PreviousPageButton_Click(object sender, RoutedEventArgs e)
         {
             if (_currentPage > 1)
             {
                 _currentPage--;
-                await LoadProjectsAsync();
+                LoadPage();
             }
         }
 
-        private async void NextPageButton_Click(object sender, RoutedEventArgs e)
+        private void NextPageButton_Click(object sender, RoutedEventArgs e)
         {
-            int totalPages = (int)Math.Ceiling((double)_totalItems / _pageSize);
-            if (_currentPage < totalPages)
+            var filteredCount = ApplyFilters().Count;
+            if (_currentPage < Math.Ceiling((double)filteredCount / PageSize))
             {
                 _currentPage++;
-                await LoadProjectsAsync();
+                LoadPage();
             }
         }
 
         private void AddProjectButton_Click(object sender, RoutedEventArgs e)
         {
-            OverlayGrid.Visibility = Visibility.Visible;
-            EditContentControl.Content = new Edit_DuAn(null, _context);
-            (EditContentControl.Content as Edit_DuAn).ProjectSaved += async () =>
+            if (OverlayGrid != null)
             {
-                OverlayGrid.Visibility = Visibility.Collapsed;
-                EditContentControl.Content = null;
-                _currentPage = 1;
-                await LoadProjectsAsync();
-            };
+                OverlayGrid.Visibility = Visibility.Visible;
+            }
+            AddProjectRequested?.Invoke(this, EventArgs.Empty);
         }
 
         private void EditProjectButton_Click(object sender, RoutedEventArgs e)
         {
             if (sender is Button button && button.Tag is int daId)
             {
-                OverlayGrid.Visibility = Visibility.Visible;
-                EditContentControl.Content = new Edit_DuAn(daId, _context);
-                (EditContentControl.Content as Edit_DuAn).ProjectSaved += async () =>
+                if (OverlayGrid != null)
                 {
-                    OverlayGrid.Visibility = Visibility.Collapsed;
-                    EditContentControl.Content = null;
-                    await LoadProjectsAsync();
-                };
+                    OverlayGrid.Visibility = Visibility.Visible;
+                }
+                EditProjectRequested?.Invoke(this, new ProjectEventArgs(daId));
             }
         }
 
-        private async void DeleteProjectButton_Click(object sender, RoutedEventArgs e)
+        private void DeleteProjectButton_Click(object sender, RoutedEventArgs e)
         {
             if (sender is Button button && button.Tag is int daId)
             {
-                var result = MessageBox.Show("Bạn có chắc chắn muốn xóa dự án này?", "Xác nhận xóa", MessageBoxButton.YesNo, MessageBoxImage.Question);
-                if (result == MessageBoxResult.Yes)
-                {
-                    try
-                    {
-                        var project = await _context.DuAns
-                            .Include(d => d.NhanVienThamGiaDuAns)
-                            .ThenInclude(n => n.CongViecs)
-                            .FirstOrDefaultAsync(d => d.DaId == daId);
-
-                        if (project != null)
-                        {
-                            foreach (var member in project.NhanVienThamGiaDuAns)
-                            {
-                                _context.CongViecs.RemoveRange(member.CongViecs);
-                            }
-                            _context.NhanVienThamGiaDuAns.RemoveRange(project.NhanVienThamGiaDuAns);
-                            _context.DuAns.Remove(project);
-                            await _context.SaveChangesAsync();
-                            MessageBox.Show("Xóa dự án thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
-                            await LoadProjectsAsync();
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show($"Lỗi khi xóa dự án: {ex.Message}\nInner Exception: {ex.InnerException?.Message}", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
-                    }
-                }
+                DeleteProjectRequested?.Invoke(this, new ProjectEventArgs(daId));
             }
         }
 
@@ -304,15 +236,36 @@ namespace QuanLyDuAn.Controls
         {
             if (sender is Button button && button.Tag is int daId)
             {
-                OverlayGrid.Visibility = Visibility.Visible;
-                var editControl = new Edit_DuAn(daId, _context) { IsReadOnly = true };
-                EditContentControl.Content = editControl;
-                editControl.ProjectSaved += () =>
+                if (OverlayGrid != null)
                 {
-                    OverlayGrid.Visibility = Visibility.Collapsed;
-                    EditContentControl.Content = null;
-                };
+                    OverlayGrid.Visibility = Visibility.Visible;
+                }
+                ViewDetailsRequested?.Invoke(this, new ProjectEventArgs(daId));
             }
         }
+
+        private void CloseOverlayButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (OverlayGrid != null)
+            {
+                OverlayGrid.Visibility = Visibility.Collapsed;
+            }
+        }
+
+        private void ProjectsDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            UpdatePieChart();
+        }
+
+        public event EventHandler AddProjectRequested;
+        public event EventHandler<ProjectEventArgs> EditProjectRequested;
+        public event EventHandler<ProjectEventArgs> DeleteProjectRequested;
+        public event EventHandler<ProjectEventArgs> ViewDetailsRequested;
+    }
+
+    public class ProjectEventArgs : EventArgs
+    {
+        public int DaId { get; }
+        public ProjectEventArgs(int daId) => DaId = daId;
     }
 }

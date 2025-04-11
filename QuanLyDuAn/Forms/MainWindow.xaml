@@ -64,8 +64,8 @@
                 </Setter.Value>
             </Setter>
         </Style>
-        
-        
+
+
     </Window.Resources>
     <Grid Background="{StaticResource MyGradientBrush}">
         <!-- Grid chính chia Sidebar và Main Content -->

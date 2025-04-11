@@ -3,190 +3,85 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:wpf="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
+             xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
              mc:Ignorable="d" 
-             Height="900" Width="700">
-    <UserControl.Resources>
-        <!-- Định nghĩa màu sắc -->
-        <SolidColorBrush x:Key="PrimaryColor" Color="#FF7B68EE"/>
-        <SolidColorBrush x:Key="SecondaryColor" Color="#FF483D8B"/>
-        <SolidColorBrush x:Key="AccentColor" Color="#FF4CAF50"/>
-        <SolidColorBrush x:Key="DangerColor" Color="#FFF44336"/>
-        <SolidColorBrush x:Key="TextColor" Color="#FF333333"/>
-        <SolidColorBrush x:Key="BackgroundColor" Color="#FFF5F5F5"/>
+             d:DesignHeight="600" d:DesignWidth="800">
+    <Grid>
+        <!-- Định nghĩa hàng: 1 hàng cho bộ lọc, 1 hàng cho DataGrid + PieChart, 1 hàng cho phân trang -->
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <!-- Bộ lọc -->
+            <RowDefinition Height="*"/>
+            <!-- DataGrid + PieChart -->
+            <RowDefinition Height="Auto"/>
+            <!-- Phân trang -->
+        </Grid.RowDefinitions>
 
-        <!-- Style cho TextBox -->
-        <Style TargetType="TextBox">
-            <Setter Property="Margin" Value="5"/>
-            <Setter Property="Padding" Value="5"/>
-            <Setter Property="FontSize" Value="14"/>
-            <Setter Property="BorderBrush" Value="{StaticResource PrimaryColor}"/>
-            <Setter Property="BorderThickness" Value="1"/>
-            <Setter Property="Background" Value="White"/>
-            <Setter Property="VerticalContentAlignment" Value="Center"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="TextBox">
-                        <Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}" 
-                                BorderThickness="{TemplateBinding BorderThickness}" 
-                                Background="{TemplateBinding Background}" CornerRadius="5">
-                            <ScrollViewer x:Name="PART_ContentHost" VerticalAlignment="Center"/>
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsFocused" Value="True">
-                                <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource SecondaryColor}"/>
-                                <Setter TargetName="border" Property="BorderThickness" Value="2"/>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
+        <!-- Hàng 1: Bộ lọc và tìm kiếm -->
+        <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="10">
+            <ComboBox x:Name="StatusFilterComboBox" 
+                      Width="150" Height="30" 
+                      DisplayMemberPath="TtTen" SelectedValuePath="TtMa"
+                      SelectionChanged="StatusFilterComboBox_SelectionChanged"
+                      Margin="0,0,10,0"/>
+            <ComboBox x:Name="CreatorFilterComboBox" 
+                      Width="150" Height="30" 
+                      DisplayMemberPath="Name" SelectedValuePath="NvId"
+                      SelectionChanged="CreatorFilterComboBox_SelectionChanged"
+                      Margin="0,0,10,0"/>
+            <TextBox x:Name="SearchTextBox" 
+                     Width="200" Height="30" 
+                     Text="Tìm kiếm..." 
+                     TextChanged="SearchTextBox_TextChanged"
+                     Margin="0,0,10,0"/>
+            <Button x:Name="RefreshButton" 
+                    Content="Làm mới" 
+                    Width="100" Height="30" 
+                    Click="RefreshButton_Click"/>
+        </StackPanel>
 
-        <!-- Style cho ComboBox -->
-        <Style TargetType="ComboBox">
-            <Setter Property="Margin" Value="5"/>
-            <Setter Property="Padding" Value="5"/>
-            <Setter Property="FontSize" Value="14"/>
-            <Setter Property="BorderBrush" Value="{StaticResource PrimaryColor}"/>
-            <Setter Property="BorderThickness" Value="1"/>
-            <Setter Property="Background" Value="White"/>
-            <Setter Property="VerticalContentAlignment" Value="Center"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="ComboBox">
-                        <Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}" 
-                                BorderThickness="{TemplateBinding BorderThickness}" 
-                                Background="{TemplateBinding Background}" CornerRadius="5">
-                            <Grid>
-                                <ToggleButton x:Name="ToggleButton" IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"/>
-                                <ContentPresenter x:Name="ContentSite" IsHitTestVisible="False" 
-                                                  Content="{TemplateBinding SelectionBoxItem}"
-                                                  ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
-                                                  ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}"
-                                                  Margin="3,3,23,3"
-                                                  VerticalAlignment="Center"
-                                                  HorizontalAlignment="Left"/>
-                                <TextBox x:Name="PART_EditableTextBox" Style="{x:Null}" 
-                                         Visibility="Hidden"/>
-                                <Popup x:Name="Popup" Placement="Bottom" 
-                                       IsOpen="{TemplateBinding IsDropDownOpen}"
-                                       AllowsTransparency="True" 
-                                       Focusable="False"
-                                       PopupAnimation="Slide">
-                                    <Grid x:Name="DropDown" SnapsToDevicePixels="True" 
-                                          MinWidth="{TemplateBinding ActualWidth}"
-                                          MaxHeight="{TemplateBinding MaxDropDownHeight}">
-                                        <Border x:Name="DropDownBorder" Background="White" 
-                                                BorderThickness="1" BorderBrush="{StaticResource PrimaryColor}"/>
-                                        <ScrollViewer Margin="4,6,4,6" SnapsToDevicePixels="True">
-                                            <StackPanel IsItemsHost="True" KeyboardNavigation.DirectionalNavigation="Contained"/>
-                                        </ScrollViewer>
-                                    </Grid>
-                                </Popup>
-                            </Grid>
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsFocused" Value="True">
-                                <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource SecondaryColor}"/>
-                                <Setter TargetName="border" Property="BorderThickness" Value="2"/>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
+        <!-- Hàng 2: DataGrid và PieChart -->
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"/>
+                <!-- DataGrid chiếm 2/3 -->
+                <ColumnDefinition Width="1*"/>
+                <!-- PieChart chiếm 1/3 -->
+            </Grid.ColumnDefinitions>
 
-        <!-- Style cho Button -->
-        <Style TargetType="Button">
-            <Setter Property="Margin" Value="5"/>
-            <Setter Property="Padding" Value="10,5"/>
-            <Setter Property="FontSize" Value="14"/>
-            <Setter Property="Background" Value="{StaticResource PrimaryColor}"/>
-            <Setter Property="Foreground" Value="White"/>
-            <Setter Property="BorderThickness" Value="0"/>
-            <Setter Property="Cursor" Value="Hand"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="Button">
-                        <Border x:Name="border" Background="{TemplateBinding Background}" 
-                                BorderBrush="{TemplateBinding BorderBrush}" 
-                                BorderThickness="{TemplateBinding BorderThickness}" 
-                                CornerRadius="5">
-                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="border" Property="Background" Value="{StaticResource SecondaryColor}"/>
-                            </Trigger>
-                            <Trigger Property="IsPressed" Value="True">
-                                <Setter TargetName="border" Property="Background" Value="#FF3B2D7A"/>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-
-        <!-- Style cho DataGrid -->
-        <Style TargetType="DataGrid">
-            <Setter Property="Background" Value="White"/>
-            <Setter Property="BorderBrush" Value="{StaticResource PrimaryColor}"/>
-            <Setter Property="BorderThickness" Value="1"/>
-            <Setter Property="RowBackground" Value="{StaticResource BackgroundColor}"/>
-            <Setter Property="AlternatingRowBackground" Value="White"/>
-            <Setter Property="FontSize" Value="14"/>
-            <Setter Property="GridLinesVisibility" Value="Horizontal"/>
-            <Setter Property="HorizontalGridLinesBrush" Value="#FFDDDDDD"/>
-            <Setter Property="MaxHeight" Value="500"/>
-        </Style>
-    </UserControl.Resources>
-    <Grid Background="{StaticResource BackgroundColor}">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" MinWidth="450"/>
-            <ColumnDefinition Width="Auto"/>
-        </Grid.ColumnDefinitions>
-
-        <!-- Nội dung chính (bên trái) -->
-        <Grid Grid.Column="0" Margin="10">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="Auto"/>
-            </Grid.RowDefinitions>
-
-            <!-- Tiêu đề -->
-            <TextBlock Grid.Row="0" Text="Danh sách dự án" FontSize="18" FontWeight="Bold" 
-                       Foreground="{StaticResource PrimaryColor}" Margin="0,0,0,10"/>
-
-            <!-- Bộ lọc và tìm kiếm -->
-            <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0,0,0,10">
-                <ComboBox x:Name="StatusFilterComboBox" Width="120" DisplayMemberPath="TtTen" SelectedValuePath="TtMa"
-                          SelectionChanged="StatusFilterComboBox_SelectionChanged" ToolTip="Lọc theo trạng thái"/>
-                <ComboBox x:Name="CreatorFilterComboBox" Width="120" DisplayMemberPath="Name" SelectedValuePath="Id"
-                          SelectionChanged="CreatorFilterComboBox_SelectionChanged" ToolTip="Lọc theo người tạo"/>
-                <TextBox x:Name="SearchTextBox" Width="150" TextChanged="SearchTextBox_TextChanged" Text="Tìm kiếm..." ToolTip="Nhập từ khóa để tìm kiếm"/>
-                <Button Content="Làm mới" Click="RefreshButton_Click" ToolTip="Làm mới danh sách"/>
-            </StackPanel>
-
-            <!-- Danh sách dự án -->
-            <DataGrid Grid.Row="2" x:Name="ProjectsDataGrid" AutoGenerateColumns="False" IsReadOnly="True"
-                      SelectionChanged="ProjectsDataGrid_SelectionChanged" Margin="0,0,0,10">
+            <!-- DataGrid -->
+            <DataGrid x:Name="ProjectsDataGrid" 
+                      Grid.Column="0" 
+                      AutoGenerateColumns="False" 
+                      IsReadOnly="True" 
+                      Margin="10"
+                      SelectionChanged="ProjectsDataGrid_SelectionChanged">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="Tên dự án" Binding="{Binding DaTen}" Width="100"/>
-                    <DataGridTextColumn Header="Trạng thái" Binding="{Binding TtMaNavigation.TtTen}" Width="70"/>
-                    <DataGridTextColumn Header="Ngày bắt đầu" Binding="{Binding DaBatDau, StringFormat=dd/MM/yyyy}" Width="70"/>
-                    <DataGridTextColumn Header="Ngày kết thúc" Binding="{Binding DaKetThuc, StringFormat=dd/MM/yyyy}" Width="70"/>
-                    <DataGridTextColumn Header="Tiến độ" Binding="{Binding DaTienDo, StringFormat={}{0:F2}%}" Width="50"/>
-                    <DataGridTemplateColumn Header="Hành động" Width="150">
+                    <DataGridTextColumn Header="Tên dự án" Binding="{Binding DaTen}" Width="*"/>
+                    <DataGridTextColumn Header="Trạng thái" Binding="{Binding TtMaNavigation.TtTen}" Width="100"/>
+                    <DataGridTextColumn Header="Người tạo" Binding="{Binding NvIdNguoiTaoNavigation.NvTen}" Width="100"/>
+                    <DataGridTextColumn Header="Ngày bắt đầu" Binding="{Binding DaBatDau, StringFormat={}{0:dd/MM/yyyy}}" Width="120"/>
+                    <DataGridTextColumn Header="Ngày kết thúc" Binding="{Binding DaKetThuc, StringFormat={}{0:dd/MM/yyyy}}" Width="120"/>
+                    <DataGridTextColumn Header="Tiến độ" Binding="{Binding DaTienDo, StringFormat={}{0}%}" Width="80"/>
+                    <DataGridTemplateColumn Header="Hành động" Width="200">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
-                                    <Button Content="Xem chi tiết" Tag="{Binding DaId}" Click="ViewDetailsButton_Click" ToolTip="Xem chi tiết dự án" Padding="5,2"/>
-                                    <Button Content="Chỉnh sửa" Tag="{Binding DaId}" Click="EditProjectButton_Click" ToolTip="Chỉnh sửa dự án" Padding="5,2"/>
-                                    <Button Content="Xóa" Tag="{Binding DaId}" Click="DeleteProjectButton_Click"
-                                            Background="{StaticResource DangerColor}" ToolTip="Xóa dự án" Padding="5,2"/>
+                                    <Button x:Name="ViewDetailsButton" 
+                                            Content="Xem" 
+                                            Margin="2" 
+                                            Tag="{Binding DaId}" 
+                                            Click="ViewDetailsButton_Click"/>
+                                    <Button x:Name="EditProjectButton" 
+                                            Content="Sửa" 
+                                            Margin="2" 
+                                            Tag="{Binding DaId}" 
+                                            Click="EditProjectButton_Click"/>
+                                    <Button x:Name="DeleteProjectButton" 
+                                            Content="Xóa" 
+                                            Margin="2" 
+                                            Tag="{Binding DaId}" 
+                                            Click="DeleteProjectButton_Click"/>
                                 </StackPanel>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
@@ -194,28 +89,47 @@
                 </DataGrid.Columns>
             </DataGrid>
 
-            <!-- Phân trang -->
-            <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,5">
-                <Button Content="Trang trước" Click="PreviousPageButton_Click" ToolTip="Trang trước"/>
-                <TextBlock x:Name="PageInfoTextBlock" Margin="10,0" VerticalAlignment="Center" FontSize="14" Foreground="{StaticResource TextColor}"/>
-                <Button Content="Trang sau" Click="NextPageButton_Click" ToolTip="Trang sau"/>
-                <Button Content="Thêm dự án" Click="AddProjectButton_Click" Margin="20,0,0,0"
-                        Background="{StaticResource AccentColor}" ToolTip="Thêm dự án mới"/>
-            </StackPanel>
+            <!-- PieChart -->
+            <lvc:PieChart x:Name="StatusPieChart" 
+                          Grid.Column="1" 
+                          Margin="10" 
+                          LegendLocation="Bottom" 
+                          InnerRadius="30" 
+                          Hoverable="True"/>
         </Grid>
 
-        <!-- Biểu đồ tròn (bên phải) -->
-        <StackPanel Grid.Column="1" Margin="10,10,5,10">
-            <TextBlock x:Name="ChartTitleTextBlock" FontSize="16" FontWeight="Bold" Foreground="{StaticResource PrimaryColor}" Margin="0,0,0,10"/>
-            <wpf:PieChart x:Name="ProjectChart" LegendLocation="Bottom" InnerRadius="50" Width="250" Height="250"
-                          Series="{Binding SeriesCollection, RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+        <!-- Hàng 3: Phân trang -->
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
+            <Button x:Name="PreviousPageButton" 
+                    Content="Trang trước" 
+                    Width="100" Height="30" 
+                    Click="PreviousPageButton_Click"
+                    Margin="0,0,10,0"/>
+            <TextBlock x:Name="PageInfoTextBlock" 
+                       VerticalAlignment="Center" 
+                       Margin="10,0"/>
+            <Button x:Name="NextPageButton" 
+                    Content="Trang sau" 
+                    Width="100" Height="30" 
+                    Click="NextPageButton_Click"
+                    Margin="10,0,0,0"/>
         </StackPanel>
 
-        <!-- Overlay để hiển thị Edit_DuAn -->
-        <Grid x:Name="OverlayGrid" Grid.ColumnSpan="2" Background="#80000000" Visibility="Collapsed">
-            <Border Background="White" Margin="50" Padding="20" MaxWidth="700" MaxHeight="900" CornerRadius="10" BorderBrush="{StaticResource PrimaryColor}" BorderThickness="1">
+        <!-- OverlayGrid cho form thêm/chỉnh sửa -->
+        <Grid x:Name="OverlayGrid" 
+              Grid.Row="0" Grid.RowSpan="3" 
+              Background="Black" Opacity="0.5" 
+              Visibility="Collapsed">
+            <Grid Background="White" 
+                  Width="400" Height="300" 
+                  HorizontalAlignment="Center" VerticalAlignment="Center">
                 <ContentControl x:Name="EditContentControl"/>
-            </Border>
+                <Button Content="Đóng" 
+                        Width="80" Height="30" 
+                        HorizontalAlignment="Right" VerticalAlignment="Bottom" 
+                        Margin="10" 
+                        Click="CloseOverlayButton_Click"/>
+            </Grid>
         </Grid>
     </Grid>
 </UserControl>

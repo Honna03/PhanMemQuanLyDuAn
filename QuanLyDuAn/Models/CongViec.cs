@@ -4,7 +4,9 @@ using System.Collections.Generic;
 namespace QuanLyDuAn.Models;
 
 public partial class CongViec
+
 {
+
     public int CvId { get; set; }
 
     public string? CvMa { get; set; }

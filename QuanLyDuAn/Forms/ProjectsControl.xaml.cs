@@ -1,223 +1,318 @@
-﻿using System;
+﻿using LiveCharts;
+using LiveCharts.Wpf;
+using Microsoft.EntityFrameworkCore;
+using QuanLyDuAn.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using QuanLyDuAn.Forms;
-using LiveCharts;
-using LiveCharts.Wpf;
-using System.Windows.Media;
-using static QuanLyDuAn.Forms.KPI;
 
 namespace QuanLyDuAn.Controls
 {
     public partial class ProjectsControl : UserControl
     {
-        private List<DuAn> danhSachDuAn = new List<DuAn>();
-        private List<CongViec> danhSachCongViec = new List<CongViec>();
-        private int currentPageDuAn = 1;
-        private int pageSizeDuAn = 30;
-        private int totalPagesDuAn;
+        private readonly ThucTapQuanLyDuAnContext _context;
+        private List<DuAn> _projects;
+        private int _currentPage = 1;
+        private int _pageSize = 10;
+        private int _totalItems;
+        private SeriesCollection _seriesCollection;
 
-        public ProjectsControl()
+        public SeriesCollection SeriesCollection
+        {
+            get => _seriesCollection;
+            set
+            {
+                _seriesCollection = value;
+                OnPropertyChanged(nameof(SeriesCollection));
+            }
+        }
+
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        protected void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+        }
+
+        public ProjectsControl(ThucTapQuanLyDuAnContext context)
         {
             InitializeComponent();
-            LoadDuAn();
-            UpdateTotalRecords();
-            UpdatePaginationDuAn();
+            _context = context ?? throw new ArgumentNullException(nameof(context));
+            SeriesCollection = new SeriesCollection();
+            LoadDataAsync();
         }
 
-        private void btn_AddDuAn_Click(object sender, RoutedEventArgs e)
+        private async void LoadDataAsync()
         {
-            Window window = new Window
+            try
             {
-                Content = new Edit_DuAn(),
-                WindowStartupLocation = WindowStartupLocation.CenterScreen
-            };
-            window.Show();
-        }
-
-        private void LoadDuAn()
-        {
-            // Dữ liệu mẫu cho dự án
-            danhSachDuAn = new List<DuAn>
-            {
-                new DuAn { STT = 1, MaDuAn = "DA001", TenDuAn = "Dự án A", NgayBatDau = new DateTime(2025, 1, 1), NgayKetThuc = new DateTime(2025, 6, 30), TrangThai = "Đang thực hiện", NguoiNhan = "Nguyễn Văn A", NguoiTao = "Admin" },
-                new DuAn { STT = 2, MaDuAn = "DA002", TenDuAn = "Dự án B", NgayBatDau = new DateTime(2025, 2, 1), NgayKetThuc = new DateTime(2025, 7, 31), TrangThai = "Hoàn thành", NguoiNhan = "Trần Thị B", NguoiTao = "Admin" },
-                new DuAn { STT = 3, MaDuAn = "DA003", TenDuAn = "Dự án C", NgayBatDau = new DateTime(2025, 3, 1), NgayKetThuc = new DateTime(2025, 8, 31), TrangThai = "Tạm dừng", NguoiNhan = "Lê Văn C", NguoiTao = "Admin" },
-                new DuAn { STT = 4, MaDuAn = "DA001", TenDuAn = "Dự án A", NgayBatDau = new DateTime(2025, 1, 1), NgayKetThuc = new DateTime(2025, 6, 30), TrangThai = "Đang thực hiện", NguoiNhan = "Nguyễn Văn A", NguoiTao = "Admin" },
-                new DuAn { STT = 5, MaDuAn = "DA002", TenDuAn = "Dự án B", NgayBatDau = new DateTime(2025, 2, 1), NgayKetThuc = new DateTime(2025, 7, 31), TrangThai = "Hoàn thành", NguoiNhan = "Trần Thị B", NguoiTao = "Admin" },
-                new DuAn { STT = 6, MaDuAn = "DA003", TenDuAn = "Dự án C", NgayBatDau = new DateTime(2025, 3, 1), NgayKetThuc = new DateTime(2025, 8, 31), TrangThai = "Tạm dừng", NguoiNhan = "Lê Văn C", NguoiTao = "Admin" },
-                new DuAn { STT = 7, MaDuAn = "DA001", TenDuAn = "Dự án A", NgayBatDau = new DateTime(2025, 1, 1), NgayKetThuc = new DateTime(2025, 6, 30), TrangThai = "Đang thực hiện", NguoiNhan = "Nguyễn Văn A", NguoiTao = "Admin" },
-                new DuAn { STT = 8, MaDuAn = "DA002", TenDuAn = "Dự án B", NgayBatDau = new DateTime(2025, 2, 1), NgayKetThuc = new DateTime(2025, 7, 31), TrangThai = "Hoàn thành", NguoiNhan = "Trần Thị B", NguoiTao = "Admin" },
-                new DuAn { STT = 9, MaDuAn = "DA003", TenDuAn = "Dự án C", NgayBatDau = new DateTime(2025, 3, 1), NgayKetThuc = new DateTime(2025, 8, 31), TrangThai = "Tạm dừng", NguoiNhan = "Lê Văn C", NguoiTao = "Admin" },
-                new DuAn { STT = 10, MaDuAn = "DA001", TenDuAn = "Dự án A", NgayBatDau = new DateTime(2025, 1, 1), NgayKetThuc = new DateTime(2025, 6, 30), TrangThai = "Đang thực hiện", NguoiNhan = "Nguyễn Văn A", NguoiTao = "Admin" },
-                new DuAn { STT = 11, MaDuAn = "DA002", TenDuAn = "Dự án B", NgayBatDau = new DateTime(2025, 2, 1), NgayKetThuc = new DateTime(2025, 7, 31), TrangThai = "Hoàn thành", NguoiNhan = "Trần Thị B", NguoiTao = "Admin" },
-                new DuAn { STT = 12, MaDuAn = "DA003", TenDuAn = "Dự án C", NgayBatDau = new DateTime(2025, 3, 1), NgayKetThuc = new DateTime(2025, 8, 31), TrangThai = "Tạm dừng", NguoiNhan = "Lê Văn C", NguoiTao = "Admin" },
-                new DuAn { STT = 13, MaDuAn = "DA001", TenDuAn = "Dự án A", NgayBatDau = new DateTime(2025, 1, 1), NgayKetThuc = new DateTime(2025, 6, 30), TrangThai = "Đang thực hiện", NguoiNhan = "Nguyễn Văn A", NguoiTao = "Admin" },
-                new DuAn { STT = 14, MaDuAn = "DA002", TenDuAn = "Dự án B", NgayBatDau = new DateTime(2025, 2, 1), NgayKetThuc = new DateTime(2025, 7, 31), TrangThai = "Hoàn thành", NguoiNhan = "Trần Thị B", NguoiTao = "Admin" },
-                new DuAn { STT = 15, MaDuAn = "DA003", TenDuAn = "Dự án C", NgayBatDau = new DateTime(2025, 3, 1), NgayKetThuc = new DateTime(2025, 8, 31), TrangThai = "Tạm dừng", NguoiNhan = "Lê Văn C", NguoiTao = "Admin" },
-                new DuAn { STT = 16, MaDuAn = "DA001", TenDuAn = "Dự án A", NgayBatDau = new DateTime(2025, 1, 1), NgayKetThuc = new DateTime(2025, 6, 30), TrangThai = "Đang thực hiện", NguoiNhan = "Nguyễn Văn A", NguoiTao = "Admin" },
-                new DuAn { STT = 17, MaDuAn = "DA002", TenDuAn = "Dự án B", NgayBatDau = new DateTime(2025, 2, 1), NgayKetThuc = new DateTime(2025, 7, 31), TrangThai = "Hoàn thành", NguoiNhan = "Trần Thị B", NguoiTao = "Admin" },
-                new DuAn { STT = 18, MaDuAn = "DA003", TenDuAn = "Dự án C", NgayBatDau = new DateTime(2025, 3, 1), NgayKetThuc = new DateTime(2025, 8, 31), TrangThai = "Tạm dừng", NguoiNhan = "Lê Văn C", NguoiTao = "Admin" },
-                new DuAn { STT = 19, MaDuAn = "DA001", TenDuAn = "Dự án A", NgayBatDau = new DateTime(2025, 1, 1), NgayKetThuc = new DateTime(2025, 6, 30), TrangThai = "Đang thực hiện", NguoiNhan = "Nguyễn Văn A", NguoiTao = "Admin" },
-                new DuAn { STT = 20, MaDuAn = "DA002", TenDuAn = "Dự án B", NgayBatDau = new DateTime(2025, 2, 1), NgayKetThuc = new DateTime(2025, 7, 31), TrangThai = "Hoàn thành", NguoiNhan = "Trần Thị B", NguoiTao = "Admin" },
-                new DuAn { STT = 21, MaDuAn = "DA003", TenDuAn = "Dự án C", NgayBatDau = new DateTime(2025, 3, 1), NgayKetThuc = new DateTime(2025, 8, 31), TrangThai = "Tạm dừng", NguoiNhan = "Lê Văn C", NguoiTao = "Admin" },
-                new DuAn { STT = 22, MaDuAn = "DA001", TenDuAn = "Dự án A", NgayBatDau = new DateTime(2025, 1, 1), NgayKetThuc = new DateTime(2025, 6, 30), TrangThai = "Đang thực hiện", NguoiNhan = "Nguyễn Văn A", NguoiTao = "Admin" },
-                new DuAn { STT = 23, MaDuAn = "DA002", TenDuAn = "Dự án B", NgayBatDau = new DateTime(2025, 2, 1), NgayKetThuc = new DateTime(2025, 7, 31), TrangThai = "Hoàn thành", NguoiNhan = "Trần Thị B", NguoiTao = "Admin" },
-                new DuAn { STT = 24, MaDuAn = "DA003", TenDuAn = "Dự án C", NgayBatDau = new DateTime(2025, 3, 1), NgayKetThuc = new DateTime(2025, 8, 31), TrangThai = "Tạm dừng", NguoiNhan = "Lê Văn C", NguoiTao = "Admin" },
-
-            };
-
-            // Dữ liệu mẫu cho công việc
-            danhSachCongViec = new List<CongViec>
-            {
-                new CongViec { MaDuAn = "DA001", TenCongViec = "Lập kế hoạch", NgayBatDau = new DateTime(2025, 1, 1), NgayKetThuc = new DateTime(2025, 1, 15), TienDo = 100 },
-                new CongViec { MaDuAn = "DA001", TenCongViec = "Thiết kế", NgayBatDau = new DateTime(2025, 1, 16), NgayKetThuc = new DateTime(2025, 2, 15), TienDo = 70 },
-                new CongViec { MaDuAn = "DA001", TenCongViec = "Phát triển", NgayBatDau = new DateTime(2025, 2, 16), NgayKetThuc = new DateTime(2025, 3, 15), TienDo = 50 },
-                new CongViec { MaDuAn = "DA001", TenCongViec = "aaa", NgayBatDau = new DateTime(2025, 1, 1), NgayKetThuc = new DateTime(2025, 1, 15), TienDo = 100 },
-                new CongViec { MaDuAn = "DA001", TenCongViec = "bbb", NgayBatDau = new DateTime(2025, 1, 16), NgayKetThuc = new DateTime(2025, 2, 15), TienDo = 70 },
-                new CongViec { MaDuAn = "DA001", TenCongViec = "ccc", NgayBatDau = new DateTime(2025, 2, 16), NgayKetThuc = new DateTime(2025, 3, 15), TienDo = 50 },
-                new CongViec { MaDuAn = "DA001", TenCongViec = "d", NgayBatDau = new DateTime(2025, 1, 1), NgayKetThuc = new DateTime(2025, 1, 15), TienDo = 100 },
-                new CongViec { MaDuAn = "DA001", TenCongViec = "e", NgayBatDau = new DateTime(2025, 1, 16), NgayKetThuc = new DateTime(2025, 2, 15), TienDo = 70 },
-                new CongViec { MaDuAn = "DA001", TenCongViec = "cadfdsfsadfsdfc", NgayBatDau = new DateTime(2025, 2, 16), NgayKetThuc = new DateTime(2025, 3, 15), TienDo = 50 },
-                new CongViec { MaDuAn = "DA002", TenCongViec = "Phân tích", NgayBatDau = new DateTime(2025, 2, 1), NgayKetThuc = new DateTime(2025, 2, 20), TienDo = 100 },
-                new CongViec { MaDuAn = "DA002", TenCongViec = "Kiểm thử", NgayBatDau = new DateTime(2025, 2, 21), NgayKetThuc = new DateTime(2025, 3, 10), TienDo = 80 }
-            };
-
-            totalPagesDuAn = (int)Math.Ceiling((double)danhSachDuAn.Count / pageSizeDuAn);
-            HienThiDuAnTheoTrang(currentPageDuAn);
-        }
-
-        private void UpdateTotalRecords()
-        {
-            int totalRecords = danhSachDuAn.Count;
-            txtTotalRecords.Text = $"Tổng số bản ghi: {totalRecords}";
-        }
-
-        private void HienThiDuAnTheoTrang(int page)
-        {
-            var duAnTheoTrang = danhSachDuAn
-                .Skip((page - 1) * pageSizeDuAn)
-                .Take(pageSizeDuAn)
-                .ToList();
-
-            dgDuAn.ItemsSource = duAnTheoTrang;
-            UpdatePaginationDuAn();
-        }
-
-        private void UpdatePaginationDuAn()
-        {
-            txtPaginationDuAn.Text = $"{currentPageDuAn} trong {totalPagesDuAn}";
-            btnPrevPageDuAn.IsEnabled = currentPageDuAn > 1;
-            btnNextPageDuAn.IsEnabled = currentPageDuAn < totalPagesDuAn;
-        }
-
-        private void btnPrevPageDuAn_Click(object sender, RoutedEventArgs e)
-        {
-            if (currentPageDuAn > 1)
-            {
-                currentPageDuAn--;
-                HienThiDuAnTheoTrang(currentPageDuAn);
-            }
-        }
-
-        private void btnNextPageDuAn_Click(object sender, RoutedEventArgs e)
-        {
-            if (currentPageDuAn < totalPagesDuAn)
-            {
-                currentPageDuAn++;
-                HienThiDuAnTheoTrang(currentPageDuAn);
-            }
-        }
-
-        private void dgDuAn_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (dgDuAn.SelectedItem is DuAn selectedDuAn)
-            {
-                HienThiBieuDoTron(selectedDuAn.MaDuAn);
-            }
-        }
-
-        private void HienThiBieuDoTron(string maDuAn)
-        {
-            pieChart.Series.Clear();
-
-            // Lọc công việc theo mã dự án
-            var congViecCuaDuAn = danhSachCongViec.FindAll(cv => cv.MaDuAn == maDuAn);
-            if (congViecCuaDuAn.Count == 0)
-            {
-                pieChart.Series.Add(new PieSeries
+                if (_context == null || _context.Database == null || !_context.Database.CanConnect())
                 {
-                    Title = "Chưa có dữ liệu",
-                    Values = new ChartValues<double> { 1 },
-                    Fill = new SolidColorBrush(Color.FromRgb(211, 211, 211)) // Màu xám
-                });
-                return;
-            }
+                    MessageBox.Show("Không thể kết nối đến cơ sở dữ liệu. Context không hợp lệ.", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
 
-            // Thêm các công việc vào biểu đồ tròn
-            foreach (var congViec in congViecCuaDuAn)
+                StatusFilterComboBox.ItemsSource = await _context.TrangThais.ToListAsync();
+                CreatorFilterComboBox.ItemsSource = await _context.NhanViens.Select(n => new { n.NvId, Name = n.NvTen }).ToListAsync();
+
+                await LoadProjectsAsync();
+            }
+            catch (Exception ex)
             {
-                pieChart.Series.Add(new PieSeries
-                {
-                    Title = congViec.TenCongViec,
-                    Values = new ChartValues<double> { congViec.TienDo },
-                    DataLabels = true,
-                    LabelPoint = chartPoint => $"{chartPoint.Y}%",
-                    Fill = new SolidColorBrush(GetColorForProgress(congViec.TienDo))
-                });
+                MessageBox.Show($"Lỗi khi tải dữ liệu: {ex.Message}\nInner Exception: {ex.InnerException?.Message}", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
-        private Color GetColorForProgress(int tienDo)
+        private async Task LoadProjectsAsync()
         {
-            // Gán màu tùy theo tiến độ
-            if (tienDo == 100) return Colors.Green;
-            if (tienDo >= 70) return Colors.Orange;
-            return Colors.Red;
+            try
+            {
+                if (_context == null || _context.Database == null || !_context.Database.CanConnect())
+                {
+                    throw new InvalidOperationException("Không thể kết nối đến cơ sở dữ liệu. Context không hợp lệ.");
+                }
+
+                var query = _context.DuAns
+                    .Include(d => d.TtMaNavigation)
+                    .Include(d => d.NvIdNguoiTaoNavigation)
+                    .Include(d => d.NhanVienThamGiaDuAns).ThenInclude(n => n.CongViecs).ThenInclude(c => c.TtMaNavigation)
+                    .AsQueryable();
+
+                if (StatusFilterComboBox.SelectedValue != null)
+                {
+                    string selectedStatus = StatusFilterComboBox.SelectedValue.ToString();
+                    query = query.Where(d => d.TtMa == selectedStatus);
+                }
+
+                if (CreatorFilterComboBox.SelectedValue != null)
+                {
+                    int selectedCreator = (int)CreatorFilterComboBox.SelectedValue;
+                    query = query.Where(d => d.NvIdNguoiTao == selectedCreator);
+                }
+
+                if (!string.IsNullOrWhiteSpace(SearchTextBox.Text) && SearchTextBox.Text != "Tìm kiếm...")
+                {
+                    string searchText = SearchTextBox.Text.ToLower();
+                    query = query.Where(d => d.DaTen.ToLower().Contains(searchText));
+                }
+
+                _totalItems = await query.CountAsync();
+
+                _projects = await query
+                    .OrderBy(d => d.DaId)
+                    .Skip((_currentPage - 1) * _pageSize)
+                    .Take(_pageSize)
+                    .ToListAsync();
+
+                ProjectsDataGrid.ItemsSource = _projects;
+
+                UpdatePaginationInfo();
+
+                if (_projects.Any())
+                {
+                    ProjectsDataGrid.SelectedItem = _projects.First();
+                }
+                else
+                {
+                    UpdateChart(null);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Lỗi khi tải danh sách dự án: {ex.Message}\nInner Exception: {ex.InnerException?.Message}", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
-        private void dgDuAn_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        private void UpdatePaginationInfo()
         {
-            if (dgDuAn.SelectedItem != null)
-            {
-                DuAn selectedDuAn = dgDuAn.SelectedItem as DuAn;
-                if (selectedDuAn == null) return;
+            int totalPages = (int)Math.Ceiling((double)_totalItems / _pageSize);
+            PageInfoTextBlock.Text = $"Trang {_currentPage}/{totalPages} ({_totalItems} dự án)";
+        }
 
-                Window editWindow = new Window
+        private async void UpdateChart(DuAn project)
+        {
+            try
+            {
+                SeriesCollection.Clear();
+
+                if (project == null)
                 {
-                    Title = $"Chỉnh sửa dự án: {selectedDuAn.TenDuAn}",
-                    Width = 1000,
-                    Height = 450,
-                    Content = new Edit_DuAn(),
-                    WindowStartupLocation = WindowStartupLocation.CenterScreen,
-                    ResizeMode = ResizeMode.NoResize
+                    ChartTitleTextBlock.Text = "Vui lòng chọn một dự án để xem trạng thái công việc.";
+                    return;
+                }
+
+                var taskStatusGroups = await _context.CongViecs
+                    .Where(cv => cv.DaId == project.DaId)
+                    .GroupBy(cv => cv.TtMaNavigation.TtTen)
+                    .Select(g => new
+                    {
+                        Status = g.Key ?? "Không xác định",
+                        Count = g.Count()
+                    })
+                    .ToListAsync();
+
+                if (!taskStatusGroups.Any())
+                {
+                    ChartTitleTextBlock.Text = $"Trạng thái công việc của dự án: {project.DaTen} (Không có công việc)";
+                    return;
+                }
+
+                ChartTitleTextBlock.Text = $"Trạng thái công việc của dự án: {project.DaTen}";
+
+                foreach (var group in taskStatusGroups)
+                {
+                    SeriesCollection.Add(new PieSeries
+                    {
+                        Title = group.Status,
+                        Values = new ChartValues<int> { group.Count },
+                        DataLabels = true,
+                        LabelPoint = chartPoint => $"{chartPoint.Y} ({chartPoint.Participation:P0})"
+                    });
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Lỗi khi cập nhật biểu đồ: {ex.Message}\nInner Exception: {ex.InnerException?.Message}", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                ChartTitleTextBlock.Text = "Không thể hiển thị biểu đồ do lỗi.";
+            }
+        }
+
+        private async void ProjectsDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (ProjectsDataGrid.SelectedItem is DuAn selectedProject)
+            {
+                UpdateChart(selectedProject);
+            }
+            else
+            {
+                UpdateChart(null);
+            }
+        }
+
+        private async void StatusFilterComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            _currentPage = 1;
+            await LoadProjectsAsync();
+        }
+
+        private async void CreatorFilterComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            _currentPage = 1;
+            await LoadProjectsAsync();
+        }
+
+        private async void SearchTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            _currentPage = 1;
+            await LoadProjectsAsync();
+        }
+
+        private async void RefreshButton_Click(object sender, RoutedEventArgs e)
+        {
+            StatusFilterComboBox.SelectedIndex = -1;
+            CreatorFilterComboBox.SelectedIndex = -1;
+            SearchTextBox.Text = "Tìm kiếm...";
+            _currentPage = 1;
+            await LoadProjectsAsync();
+        }
+
+        private async void PreviousPageButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (_currentPage > 1)
+            {
+                _currentPage--;
+                await LoadProjectsAsync();
+            }
+        }
+
+        private async void NextPageButton_Click(object sender, RoutedEventArgs e)
+        {
+            int totalPages = (int)Math.Ceiling((double)_totalItems / _pageSize);
+            if (_currentPage < totalPages)
+            {
+                _currentPage++;
+                await LoadProjectsAsync();
+            }
+        }
+
+        private void AddProjectButton_Click(object sender, RoutedEventArgs e)
+        {
+            OverlayGrid.Visibility = Visibility.Visible;
+            EditContentControl.Content = new Edit_DuAn(null, _context);
+            (EditContentControl.Content as Edit_DuAn).ProjectSaved += async () =>
+            {
+                OverlayGrid.Visibility = Visibility.Collapsed;
+                EditContentControl.Content = null;
+                _currentPage = 1;
+                await LoadProjectsAsync();
+            };
+        }
+
+        private void EditProjectButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is Button button && button.Tag is int daId)
+            {
+                OverlayGrid.Visibility = Visibility.Visible;
+                EditContentControl.Content = new Edit_DuAn(daId, _context);
+                (EditContentControl.Content as Edit_DuAn).ProjectSaved += async () =>
+                {
+                    OverlayGrid.Visibility = Visibility.Collapsed;
+                    EditContentControl.Content = null;
+                    await LoadProjectsAsync();
                 };
-                editWindow.Show();
             }
         }
-    }
 
-    public class DuAn
-    {
-        public int STT { get; set; }
-        public string MaDuAn { get; set; }
-        public string TenDuAn { get; set; }
-        public DateTime NgayBatDau { get; set; }
-        public DateTime NgayKetThuc { get; set; }
-        public string TrangThai { get; set; }
-        public string NguoiNhan { get; set; }
-        public string NguoiTao { get; set; }
-    }
+        private async void DeleteProjectButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is Button button && button.Tag is int daId)
+            {
+                var result = MessageBox.Show("Bạn có chắc chắn muốn xóa dự án này?", "Xác nhận xóa", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                if (result == MessageBoxResult.Yes)
+                {
+                    try
+                    {
+                        var project = await _context.DuAns
+                            .Include(d => d.NhanVienThamGiaDuAns)
+                            .ThenInclude(n => n.CongViecs)
+                            .FirstOrDefaultAsync(d => d.DaId == daId);
 
-    public class CongViec
-    {
-        public string MaDuAn { get; set; }
-        public string TenCongViec { get; set; }
-        public DateTime NgayBatDau { get; set; }
-        public DateTime NgayKetThuc { get; set; }
-        public int TienDo { get; set; }
+                        if (project != null)
+                        {
+                            foreach (var member in project.NhanVienThamGiaDuAns)
+                            {
+                                _context.CongViecs.RemoveRange(member.CongViecs);
+                            }
+                            _context.NhanVienThamGiaDuAns.RemoveRange(project.NhanVienThamGiaDuAns);
+                            _context.DuAns.Remove(project);
+                            await _context.SaveChangesAsync();
+                            MessageBox.Show("Xóa dự án thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
+                            await LoadProjectsAsync();
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Lỗi khi xóa dự án: {ex.Message}\nInner Exception: {ex.InnerException?.Message}", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                }
+            }
+        }
+
+        private void ViewDetailsButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is Button button && button.Tag is int daId)
+            {
+                OverlayGrid.Visibility = Visibility.Visible;
+                var editControl = new Edit_DuAn(daId, _context) { IsReadOnly = true };
+                EditContentControl.Content = editControl;
+                editControl.ProjectSaved += () =>
+                {
+                    OverlayGrid.Visibility = Visibility.Collapsed;
+                    EditContentControl.Content = null;
+                };
+            }
+        }
     }
 }

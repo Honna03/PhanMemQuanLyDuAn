@@ -1,133 +1,317 @@
-﻿<UserControl x:Class="QuanLyDuAn.Forms.Edit_DuAn"
+﻿<UserControl x:Class="QuanLyDuAn.Controls.Edit_DuAn"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:QuanLyDuAn.Forms"
-             mc:Ignorable="d"
-             d:DesignHeight="450" d:DesignWidth="800">
-    <Grid Background="White" Margin="0,0,0,-228">
-        <Grid Margin="20">
-            <!-- Định nghĩa 2 cột -->
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
+             mc:Ignorable="d">
+    <UserControl.Resources>
+        <!-- Định nghĩa màu sắc -->
+        <SolidColorBrush x:Key="PrimaryColor" Color="#FF7B68EE"/>
+        <SolidColorBrush x:Key="SecondaryColor" Color="#FF483D8B"/>
+        <SolidColorBrush x:Key="AccentColor" Color="#FF4CAF50"/>
+        <SolidColorBrush x:Key="DangerColor" Color="#FFF44336"/>
+        <SolidColorBrush x:Key="TextColor" Color="#FF333333"/>
+        <SolidColorBrush x:Key="BackgroundColor" Color="#FFF5F5F5"/>
 
-            <!-- Định nghĩa các hàng -->
+        <!-- Style cho TextBox -->
+        <Style TargetType="TextBox">
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Padding" Value="5"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="BorderBrush" Value="{StaticResource PrimaryColor}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TextBox">
+                        <Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}" 
+                                BorderThickness="{TemplateBinding BorderThickness}" 
+                                Background="{TemplateBinding Background}" CornerRadius="5">
+                            <ScrollViewer x:Name="PART_ContentHost" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsFocused" Value="True">
+                                <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource SecondaryColor}"/>
+                                <Setter TargetName="border" Property="BorderThickness" Value="2"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Style cho ComboBox -->
+        <Style TargetType="ComboBox">
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Padding" Value="5"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="BorderBrush" Value="{StaticResource PrimaryColor}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ComboBox">
+                        <Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}" 
+                                BorderThickness="{TemplateBinding BorderThickness}" 
+                                Background="{TemplateBinding Background}" CornerRadius="5">
+                            <Grid>
+                                <ToggleButton x:Name="ToggleButton" IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"/>
+                                <ContentPresenter x:Name="ContentSite" IsHitTestVisible="False" 
+                                                  Content="{TemplateBinding SelectionBoxItem}"
+                                                  ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
+                                                  ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}"
+                                                  Margin="3,3,23,3"
+                                                  VerticalAlignment="Center"
+                                                  HorizontalAlignment="Left"/>
+                                <TextBox x:Name="PART_EditableTextBox" Style="{x:Null}" 
+                                         Visibility="Hidden"/>
+                                <Popup x:Name="Popup" Placement="Bottom" 
+                                       IsOpen="{TemplateBinding IsDropDownOpen}"
+                                       AllowsTransparency="True" 
+                                       Focusable="False"
+                                       PopupAnimation="Slide">
+                                    <Grid x:Name="DropDown" SnapsToDevicePixels="True" 
+                                          MinWidth="{TemplateBinding ActualWidth}"
+                                          MaxHeight="{TemplateBinding MaxDropDownHeight}">
+                                        <Border x:Name="DropDownBorder" Background="White" 
+                                                BorderThickness="1" BorderBrush="{StaticResource PrimaryColor}"/>
+                                        <ScrollViewer Margin="4,6,4,6" SnapsToDevicePixels="True">
+                                            <StackPanel IsItemsHost="True" KeyboardNavigation.DirectionalNavigation="Contained"/>
+                                        </ScrollViewer>
+                                    </Grid>
+                                </Popup>
+                            </Grid>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsFocused" Value="True">
+                                <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource SecondaryColor}"/>
+                                <Setter TargetName="border" Property="BorderThickness" Value="2"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Style cho DatePicker -->
+        <Style TargetType="DatePicker">
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Padding" Value="5"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="BorderBrush" Value="{StaticResource PrimaryColor}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+        </Style>
+
+        <!-- Style cho Button -->
+        <Style TargetType="Button">
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Padding" Value="10,5"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Background" Value="{StaticResource PrimaryColor}"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="border" Background="{TemplateBinding Background}" 
+                                BorderBrush="{TemplateBinding BorderBrush}" 
+                                BorderThickness="{TemplateBinding BorderThickness}" 
+                                CornerRadius="5">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="{StaticResource SecondaryColor}"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#FF3B2D7A"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Style cho ListView -->
+        <Style TargetType="ListView">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="BorderBrush" Value="{StaticResource PrimaryColor}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="FontSize" Value="14"/>
+        </Style>
+
+        <!-- Style cho Hyperlink -->
+        <Style TargetType="Hyperlink">
+            <Setter Property="Foreground" Value="{StaticResource PrimaryColor}"/>
+            <Setter Property="TextDecorations" Value="Underline"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Foreground" Value="{StaticResource SecondaryColor}"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
+    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+        <Grid Margin="10" Background="{StaticResource BackgroundColor}" Height="850" Width="811">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
+                <!-- Tiêu đề -->
                 <RowDefinition Height="Auto"/>
+                <!-- Tên dự án -->
                 <RowDefinition Height="Auto"/>
+                <!-- Ngày bắt đầu -->
                 <RowDefinition Height="Auto"/>
+                <!-- Ngày kết thúc -->
                 <RowDefinition Height="Auto"/>
+                <!-- Trạng thái -->
                 <RowDefinition Height="Auto"/>
+                <!-- Người tạo -->
                 <RowDefinition Height="Auto"/>
+                <!-- Thành viên tham gia (Label) -->
                 <RowDefinition Height="Auto"/>
+                <!-- Thành viên tham gia (ComboBox và Button) -->
                 <RowDefinition Height="Auto"/>
+                <!-- MembersListView -->
+                <RowDefinition Height="Auto"/>
+                <!-- Công việc nhỏ (Label) -->
+                <RowDefinition Height="Auto"/>
+                <!-- Công việc nhỏ (TextBox, ComboBox, DatePicker, Button) -->
+                <RowDefinition Height="Auto"/>
+                <!-- TasksListView -->
+                <RowDefinition Height="Auto"/>
+                <!-- Tiến độ dự án -->
+                <RowDefinition Height="Auto"/>
+                <!-- Nút lưu và hủy -->
             </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" MinWidth="150"/>
+                <!-- Nhãn -->
+                <ColumnDefinition Width="*"/>
+                <!-- Nội dung -->
+            </Grid.ColumnDefinitions>
 
-            <!-- Cột 1 -->
-            <!-- Mã dự án -->
-            <TextBlock Grid.Row="0" Grid.Column="0" Text="Mã dự án *" Foreground="Black" FontSize="14"/>
-            <TextBox Grid.Row="1" Grid.Column="0" x:Name="txtMaDuAn" Background="White" Foreground="Black" 
-                     BorderBrush="#E0E0E0" BorderThickness="1" Padding="5" Margin="0,5,25,10"/>
+            <!-- Tiêu đề -->
+            <TextBlock Grid.Row="0" Grid.ColumnSpan="2" x:Name="TitleTextBlock" Text="Thêm dự án" FontSize="20" FontWeight="Bold" 
+                       Foreground="{StaticResource PrimaryColor}" Margin="0,0,0,10"/>
 
             <!-- Tên dự án -->
-            <TextBlock Grid.Row="2" Grid.Column="0" Text="Tên dự án *" Foreground="Black" FontSize="14"/>
-            <TextBox Grid.Row="3" Grid.Column="0" x:Name="txtTenDuAn" Background="White" Foreground="Black" 
-                     BorderBrush="#E0E0E0" BorderThickness="1" Padding="5" Margin="0,5,25,10"/>
+            <Label Grid.Row="1" Grid.Column="0" Content="Tên dự án:" FontSize="14" Foreground="{StaticResource TextColor}"/>
+            <TextBox Grid.Row="1" Grid.Column="1" x:Name="NameTextBox" 
+                     Text="{Binding DaTen, UpdateSourceTrigger=PropertyChanged}" ToolTip="Nhập tên dự án"/>
 
             <!-- Ngày bắt đầu -->
-            <TextBlock Grid.Row="4" Grid.Column="0" Text="Ngày bắt đầu *" Foreground="Black" FontSize="14"/>
-            <TextBox Grid.Row="5" Grid.Column="0" x:Name="txtNgayBatDau" Background="White" Foreground="Black" 
-                     BorderBrush="#E0E0E0" BorderThickness="1" Padding="5" Margin="0,5,25,10" Text="dd/MM/yyyy"/>
+            <Label Grid.Row="2" Grid.Column="0" Content="Ngày bắt đầu:" FontSize="14" Foreground="{StaticResource TextColor}"/>
+            <DatePicker Grid.Row="2" Grid.Column="1" x:Name="StartDatePicker" 
+                        SelectedDate="{Binding DaBatDau}" ToolTip="Chọn ngày bắt đầu"/>
 
             <!-- Ngày kết thúc -->
-            <TextBlock Grid.Row="6" Grid.Column="0" Text="Ngày kết thúc" Foreground="Black" FontSize="14"/>
-            <TextBox Grid.Row="7" Grid.Column="0" x:Name="txtNgayKetThuc" Background="White" Foreground="Black" 
-                     BorderBrush="#E0E0E0" BorderThickness="1" Padding="5" Margin="0,5,25,10" Text="dd/MM/yyyy"/>
-
-            <!-- Cột 2 -->
-            <!-- Mô tả dự án -->
-            <TextBlock Grid.Row="0" Grid.Column="1" Text="Mô tả dự án" Foreground="Black" FontSize="14" Margin="25,0,0,0"/>
-            <TextBox Grid.Row="1" Grid.Column="1" x:Name="txtMoTaDuAn" Background="White" Foreground="Black" 
-                     BorderBrush="#E0E0E0" BorderThickness="1" Padding="5" Margin="25,5,0,10" AcceptsReturn="True" Height="50"/>
+            <Label Grid.Row="3" Grid.Column="0" Content="Ngày kết thúc:" FontSize="14" Foreground="{StaticResource TextColor}"/>
+            <DatePicker Grid.Row="3" Grid.Column="1" x:Name="EndDatePicker" 
+                        SelectedDate="{Binding DaKetThuc}" ToolTip="Chọn ngày kết thúc"/>
 
             <!-- Trạng thái -->
-            <TextBlock Grid.Row="2" Grid.Column="1" Text="Trạng thái" Foreground="Black" FontSize="14" Margin="25,0,0,0"/>
-            <ComboBox Grid.Row="3" Grid.Column="1" x:Name="cbTrangThai" Background="White" Foreground="Black" 
-                      BorderBrush="#E0E0E0" BorderThickness="1" Padding="5" Margin="25,5,0,10">
-                <ComboBoxItem Content="Đang thực hiện"/>
-                <ComboBoxItem Content="Hoàn thành"/>
-                <ComboBoxItem Content="Tạm dừng"/>
-            </ComboBox>
-
-            <!-- Người nhận -->
-            <TextBlock Grid.Row="4" Grid.Column="1" Text="Người nhận" Foreground="Black" FontSize="14" Margin="25,0,0,0"/>
-            <Button Grid.Row="5" Grid.Column="1" x:Name="btnChonNguoiNhan" Content="Chọn người nhận" 
-                    Background="White" Foreground="Black" BorderBrush="#E0E0E0" BorderThickness="1" Padding="5" Margin="25,5,0,10"/>
-            <Popup x:Name="popupNguoiNhan" PlacementTarget="{Binding ElementName=btnChonNguoiNhan}" 
-                   Placement="Bottom" StaysOpen="False" PopupAnimation="Slide">
-                <Border Background="White" BorderBrush="#E0E0E0" BorderThickness="1" Padding="10">
-                    <StackPanel Width="250">
-                        <TextBox x:Name="txtTimKiemNguoiNhan" Text="Tìm kiếm..." Foreground="Gray" 
-                                 Padding="5" Margin="0,0,0,10"/>
-                        <ScrollViewer MaxHeight="200">
-                            <StackPanel x:Name="stackNguoiNhan"/>
-                        </ScrollViewer>
-                        <Button Content="Xác nhận" Background="#27AE60" Foreground="White" 
-                                Padding="5" Margin="0,10,0,0"/>
-                    </StackPanel>
-                </Border>
-            </Popup>
+            <Label Grid.Row="4" Grid.Column="0" Content="Trạng thái:" FontSize="14" Foreground="{StaticResource TextColor}"/>
+            <ComboBox Grid.Row="4" Grid.Column="1" x:Name="StatusComboBox" 
+                      DisplayMemberPath="TtTen" SelectedValuePath="TtMa" SelectedValue="{Binding TtMa}" ToolTip="Chọn trạng thái"/>
 
             <!-- Người tạo -->
-            <TextBlock Grid.Row="6" Grid.Column="1" Text="Người tạo *" Foreground="Black" FontSize="14" Margin="25,0,0,0"/>
-            <Button Grid.Row="7" Grid.Column="1" x:Name="btnChonNguoiTao" Content="Chọn người tạo" 
-                    Background="White" Foreground="Black" BorderBrush="#E0E0E0" BorderThickness="1" Padding="5" Margin="25,5,0,10"/>
-            <Popup x:Name="popupNguoiTao" PlacementTarget="{Binding ElementName=btnChonNguoiTao}" 
-                   Placement="Bottom" StaysOpen="False" PopupAnimation="Slide">
-                <Border Background="White" BorderBrush="#E0E0E0" BorderThickness="1" Padding="10">
-                    <StackPanel Width="250">
-                        <TextBox x:Name="txtTimKiemNguoiTao" Text="Tìm kiếm..." Foreground="Gray" 
-                                 Padding="5" Margin="0,0,0,10"/>
-                        <ScrollViewer MaxHeight="200">
-                            <StackPanel x:Name="stackNguoiTao"/>
-                        </ScrollViewer>
-                        <Button Content="Xác nhận" Background="#27AE60" Foreground="White" 
-                                Padding="5" Margin="0,10,0,0"/>
-                    </StackPanel>
-                </Border>
-            </Popup>
+            <Label Grid.Row="5" Grid.Column="0" Content="Người tạo:" FontSize="14" Foreground="{StaticResource TextColor}"/>
+            <ComboBox Grid.Row="5" Grid.Column="1" x:Name="CreatorComboBox" 
+                      DisplayMemberPath="NvTen" SelectedValuePath="NvId" SelectedValue="{Binding NvIdNguoiTao}" IsEnabled="False" ToolTip="Người tạo dự án"/>
 
-            <!-- Nút Lưu, Sửa, Xóa và Hủy -->
-            <StackPanel Grid.Row="8" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,10,0,0">
-                <Button x:Name="btn_Luu" Background="#008080" Foreground="White" Height="40" Width="100" Margin="0,0,10,0">
-                    <StackPanel Orientation="Horizontal">
-                        <Image Source="/icon/add.png" Width="20" Height="20" Margin="0,0,10,0"/>
-                        <TextBlock Text="Lưu" VerticalAlignment="Center"/>
-                    </StackPanel>
-                </Button>
-                <Button x:Name="btn_Sua" Background="#FFA500" Foreground="White" Height="40" Width="100" Margin="0,0,10,0">
-                    <StackPanel Orientation="Horizontal">
-                        <Image Source="/icon/changes.png" Width="20" Height="20" Margin="0,0,10,0"/>
-                        <TextBlock Text="Sửa" VerticalAlignment="Center"/>
-                    </StackPanel>
-                </Button>
-                <Button x:Name="btn_Xoa" Background="#FF0000" Foreground="White" Height="40" Width="100" Margin="0,0,10,0">
-                    <StackPanel Orientation="Horizontal">
-                        <Image Source="/icon/delete.png" Width="20" Height="20" Margin="0,0,10,0"/>
-                        <TextBlock Text="Xóa" VerticalAlignment="Center"/>
-                    </StackPanel>
-                </Button>
-                <Button x:Name="btn_Huy" Background="#808080" Foreground="White" Height="40" Width="100" Margin="0,0,0,0">
-                    <StackPanel Orientation="Horizontal">
-                        <Image Source="/icon/close.png" Width="20" Height="20" Margin="0,0,10,0"/>
-                        <TextBlock Text="Hủy" VerticalAlignment="Center"/>
-                    </StackPanel>
-                </Button>
+            <!-- Thành viên tham gia -->
+            <Label Grid.Row="6" Grid.Column="0" Content="Thành viên tham gia:" FontSize="14" Foreground="{StaticResource TextColor}"/>
+            <StackPanel Grid.Row="7" Grid.ColumnSpan="2" Orientation="Horizontal" Margin="0,0,0,5">
+                <ComboBox x:Name="MemberComboBox" Width="150" DisplayMemberPath="NvTen" SelectedValuePath="NvId" ToolTip="Chọn thành viên"/>
+                <ComboBox x:Name="RoleComboBox" Width="100" DisplayMemberPath="VtTen" SelectedValuePath="VtMa" ToolTip="Chọn vai trò"/>
+                <Button x:Name="AddMemberButton" Content="Thêm" 
+                        Background="{StaticResource AccentColor}" Foreground="White" Click="AddMemberButton_Click" ToolTip="Thêm thành viên"/>
+            </StackPanel>
+            <ListView Grid.Row="8" Grid.ColumnSpan="2" x:Name="MembersListView" Margin="0,0,0,10" Height="150">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="Tên" DisplayMemberBinding="{Binding Nv.NvTen}" Width="200"/>
+                        <GridViewColumn Header="Vai trò" DisplayMemberBinding="{Binding VtMaNavigation.VtTen}" Width="100"/>
+                        <GridViewColumn Header="Hành động" Width="80">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button Content="Xóa" Tag="{Binding}" Click="RemoveMemberButton_Click" 
+                                            Background="{StaticResource DangerColor}" Foreground="White" Padding="5,2" ToolTip="Xóa thành viên"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+
+            <!-- Công việc nhỏ -->
+            <Label Grid.Row="9" Grid.Column="0" Content="Công việc nhỏ:" FontSize="14" Foreground="{StaticResource TextColor}"/>
+            <StackPanel Grid.Row="10" Grid.ColumnSpan="2" Orientation="Horizontal" Margin="0,0,0,5">
+                <TextBox x:Name="TaskNameTextBox" Width="120" Text="Tên công việc" ToolTip="Nhập tên công việc"/>
+                <ComboBox x:Name="TaskStatusComboBox" Width="80" DisplayMemberPath="TtTen" SelectedValuePath="TtMa" ToolTip="Chọn trạng thái"/>
+                <DatePicker x:Name="TaskStartDatePicker" Width="90" ToolTip="Chọn ngày bắt đầu"/>
+                <DatePicker x:Name="TaskEndDatePicker" Width="90" ToolTip="Chọn ngày kết thúc"/>
+                <Button x:Name="UploadFileButton" Content="Tải lên file" 
+                        Background="{StaticResource PrimaryColor}" Foreground="White" Click="UploadFileButton_Click" Padding="5,2" ToolTip="Tải lên file"/>
+                <Button x:Name="AddTaskButton" Content="Thêm" 
+                        Background="{StaticResource AccentColor}" Foreground="White" Click="AddTaskButton_Click" Padding="5,2" ToolTip="Thêm công việc"/>
+            </StackPanel>
+            <ListView Grid.Row="11" Grid.ColumnSpan="2" x:Name="TasksListView" Margin="0,0,0,10" Height="150">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="Hoàn thành" Width="60">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <CheckBox IsChecked="{Binding IsCompleted, UpdateSourceTrigger=PropertyChanged}" 
+                                              Checked="CheckBox_Checked" Unchecked="CheckBox_Unchecked" 
+                                              HorizontalAlignment="Center" ToolTip="Đánh dấu hoàn thành"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Header="Tên công việc" DisplayMemberBinding="{Binding Task.CvTen}" Width="120"/>
+                        <GridViewColumn Header="Trạng thái" DisplayMemberBinding="{Binding Task.TtMaNavigation.TtTen}" Width="80"/>
+                        <GridViewColumn Header="Ngày bắt đầu" DisplayMemberBinding="{Binding Task.CvBatDau, StringFormat=dd/MM/yyyy}" Width="80"/>
+                        <GridViewColumn Header="Ngày kết thúc" DisplayMemberBinding="{Binding Task.CvKetThuc, StringFormat=dd/MM/yyyy}" Width="80"/>
+                        <GridViewColumn Header="File" Width="80">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock ToolTip="{Binding Task.CvPath}">
+                                        <Hyperlink Click="DownloadFile_Click" Tag="{Binding Task.CvPath}">
+                                            <TextBlock Text="{Binding Task.CvFile}"/>
+                                        </Hyperlink>
+                                    </TextBlock>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Header="Hành động" Width="80">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button Content="Xóa" Tag="{Binding}" Click="RemoveTaskButton_Click" 
+                                            Background="{StaticResource DangerColor}" Foreground="White" Padding="5,2" ToolTip="Xóa công việc"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+
+            <!-- Hiển thị tiến độ dự án -->
+            <TextBlock Grid.Row="12" Grid.ColumnSpan="2" x:Name="ProgressTextBlock" Text="Tiến độ dự án: 0%" FontSize="14" 
+                       Foreground="{StaticResource PrimaryColor}" Margin="0,0,0,10"/>
+
+            <!-- Nút lưu và hủy -->
+            <StackPanel Grid.Row="13" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Right">
+                <Button x:Name="SaveButton" Content="Lưu" 
+                        Background="{StaticResource AccentColor}" Foreground="White" Click="SaveButton_Click" ToolTip="Lưu dự án"/>
+                <Button x:Name="CancelButton" Content="Hủy" 
+                        Background="{StaticResource DangerColor}" Foreground="White" Click="CancelButton_Click" ToolTip="Hủy bỏ"/>
             </StackPanel>
         </Grid>
-    </Grid>
+    </ScrollViewer>
 </UserControl>

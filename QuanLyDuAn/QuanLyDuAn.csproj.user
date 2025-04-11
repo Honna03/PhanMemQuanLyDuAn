@@ -26,9 +26,6 @@
     <Compile Update="Forms\ProjectsControl.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Forms\Register.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Update="Forms\TrangChu.xaml.cs">
       <SubType>Code</SubType>
     </Compile>

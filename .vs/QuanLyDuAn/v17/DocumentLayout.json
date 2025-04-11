@@ -1,12 +1,36 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "D:\\TTTN\\Cty\\Project\\QuanLyDuAnTrenWindows\\",
-  "Documents": [],
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{609535E4-5219-4C7E-94CA-1D34431D5C15}|QuanLyDuAn\\QuanLyDuAn.csproj|d:\\tttn\\cty\\project\\quanlyduantrenwindows\\quanlyduan\\forms\\luong.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{609535E4-5219-4C7E-94CA-1D34431D5C15}|QuanLyDuAn\\QuanLyDuAn.csproj|solutionrelative:quanlyduan\\forms\\luong.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    }
+  ],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
       "VerticalTabListWidth": 256,
-      "DocumentGroups": []
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Luong.xaml",
+              "DocumentMoniker": "D:\\TTTN\\Cty\\Project\\QuanLyDuAnTrenWindows\\QuanLyDuAn\\Forms\\Luong.xaml",
+              "RelativeDocumentMoniker": "QuanLyDuAn\\Forms\\Luong.xaml",
+              "ToolTip": "D:\\TTTN\\Cty\\Project\\QuanLyDuAnTrenWindows\\QuanLyDuAn\\Forms\\Luong.xaml",
+              "RelativeToolTip": "QuanLyDuAn\\Forms\\Luong.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2025-04-11T16:07:59.69Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
     }
   ]
 }

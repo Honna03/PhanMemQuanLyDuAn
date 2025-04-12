@@ -1,4 +1,3 @@
-﻿
 using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
@@ -34,9 +33,7 @@ public partial class ThucTapQuanLyDuAnContext : DbContext
     public virtual DbSet<PhanCongCongViec> PhanCongCongViecs { get; set; }
 
     public virtual DbSet<Quyen> Quyens { get; set; }
-
     public virtual DbSet<ThongBao> ThongBaos { get; set; }
-
     public virtual DbSet<TrangThai> TrangThais { get; set; }
 
     public virtual DbSet<VaiTro> VaiTros { get; set; }
@@ -52,9 +49,8 @@ public partial class ThucTapQuanLyDuAnContext : DbContext
         modelBuilder.Entity<CapNhatCongViec>(entity =>
         {
             entity.HasKey(e => new { e.CnId, e.CvId, e.DaId, e.NvId });
-
             entity.ToTable("CapNhatCongViec", tb => tb.HasTrigger("trg_CapNhatCongViec_ThemThongBao"));
-
+            entity.ToTable("CapNhatCongViec");
             entity.Property(e => e.CnId)
                 .ValueGeneratedOnAdd()
                 .HasColumnName("cn_ID");
@@ -92,7 +88,6 @@ public partial class ThucTapQuanLyDuAnContext : DbContext
                 tb.HasTrigger("TRG_DeleteCongViec");
                 tb.HasTrigger("TRG_UpdateKPI");
                 tb.HasTrigger("TRG_UpdateTienDoDuAn");
-                tb.HasTrigger("trg_CongViec_CapNhatTrangThai");
             });
 
             entity.Property(e => e.CvId)
@@ -247,6 +242,7 @@ public partial class ThucTapQuanLyDuAnContext : DbContext
             entity.ToTable("NhanVien", tb => tb.HasTrigger("TRG_DeleteNhanVien"));
 
             entity.HasIndex(e => e.NvTaiKhoan, "UQ__NhanVien__3360C9D2DBE34436").IsUnique();
+            entity.HasIndex(e => e.NvTaiKhoan, "UQ__NhanVien__3360C9D26C863E77").IsUnique();
 
             entity.Property(e => e.NvId).HasColumnName("nv_ID");
             entity.Property(e => e.NvDiaChi)
@@ -326,16 +322,16 @@ public partial class ThucTapQuanLyDuAnContext : DbContext
 
         modelBuilder.Entity<PhanCongCongViec>(entity =>
         {
-            entity.HasKey(e => new { e.CvId, e.DaId, e.NvId });
+        entity.HasKey(e => new { e.CvId, e.DaId, e.NvId });
 
-            entity.ToTable("PhanCongCongViec", tb =>
-            {
-                tb.HasTrigger("TRG_DeletePhanCongCongViec");
-                tb.HasTrigger("TRG_UpdateKPI_PhanCong");
-                tb.HasTrigger("trg_PhanCongCongViec_ThemThongBao");
-            });
+        entity.ToTable("PhanCongCongViec", tb =>
+        {
+            tb.HasTrigger("TRG_DeletePhanCongCongViec");
+            tb.HasTrigger("TRG_UpdateKPI_PhanCong");
+            tb.HasTrigger("trg_PhanCongCongViec_ThemThongBao");
+        });
 
-            entity.HasIndex(e => e.CvId, "UQ__PhanCong__C36B8FFFDD9790D6").IsUnique();
+            entity.HasIndex(e => e.CvId, "UQ__PhanCong__C36B8FFFC2955FA2").IsUnique();
 
             entity.Property(e => e.CvId).HasColumnName("cv_ID");
             entity.Property(e => e.DaId).HasColumnName("da_ID");
@@ -417,7 +413,6 @@ public partial class ThucTapQuanLyDuAnContext : DbContext
                   .HasForeignKey(d => new { d.CvId, d.DaId })
                   .HasConstraintName("FK_ThongBao_CongViec");
         });
-
         modelBuilder.Entity<TrangThai>(entity =>
         {
             entity.HasKey(e => e.TtMa);

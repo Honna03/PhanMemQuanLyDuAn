@@ -61,7 +61,7 @@ namespace QuanLyDuAn.Forms {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/QuanLyDuAn;V1.0.0.0;component/forms/trangchu.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/QuanLyDuAn;component/forms/trangchu.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\..\Forms\TrangChu.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);

@@ -35,12 +35,8 @@ namespace QuanLyDuAn.Forms
             try
             {
                 // Tính khoảng thời gian: đầu tháng đến cuối tháng của kpiThoiGian
-                DateTime startDateTime = kpiThoiGian.ToDateTime(TimeOnly.MinValue);
-                DateTime endDateTime = startDateTime.AddMonths(1).AddDays(-1);
-
-                // Chuyển sang DateOnly để so sánh
-                DateOnly startDate = DateOnly.FromDateTime(startDateTime);
-                DateOnly endDate = DateOnly.FromDateTime(endDateTime);
+                DateOnly startDate = kpiThoiGian;
+                DateOnly endDate = kpiThoiGian.AddMonths(1).AddDays(-1);
 
                 // Truy vấn dữ liệu từ các bảng liên quan
                 var query = from pccv in _context.PhanCongCongViecs
@@ -48,8 +44,8 @@ namespace QuanLyDuAn.Forms
                             join nv in _context.NhanViens on pccv.NvId equals nv.NvId
                             join tt in _context.TrangThais on cv.TtMa equals tt.TtMa
                             where pccv.NvId == nvId
-                                  && (cv.CvBatDau.HasValue ? DateOnly.FromDateTime(cv.CvBatDau.Value) >= startDate : false)
-                                  && (cv.CvKetThuc == null || (cv.CvKetThuc.HasValue && DateOnly.FromDateTime(cv.CvKetThuc.Value) <= endDate))
+                                  && cv.CvBatDau >= startDate
+                                  && (cv.CvKetThuc == null || cv.CvKetThuc <= endDate)
                             orderby cv.CvBatDau
                             select new ChiTietTienDoItem
                             {
@@ -57,8 +53,8 @@ namespace QuanLyDuAn.Forms
                                 MaNhanVien = nv.NvMa,
                                 HoTenNhanVien = nv.NvTen,
                                 TenCongViec = cv.CvTen,
-                                ThoiGianBatDau = cv.CvBatDau.HasValue ? DateOnly.FromDateTime(cv.CvBatDau.Value) : null,
-                                ThoiGianKetThuc = cv.CvKetThuc.HasValue ? DateOnly.FromDateTime(cv.CvKetThuc.Value) : null,
+                                ThoiGianBatDau = cv.CvBatDau,
+                                ThoiGianKetThuc = cv.CvKetThuc,
                                 TrangThai = tt.TtTen
                             };
 

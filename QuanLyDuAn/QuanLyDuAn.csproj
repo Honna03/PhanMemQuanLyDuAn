@@ -14,6 +14,7 @@
     <None Remove="icon\add.png" />
     <None Remove="icon\changes.png" />
     <None Remove="icon\close.png" />
+    <None Remove="icon\compose.png" />
     <None Remove="icon\delete.png" />
     <None Remove="icon\down.png" />
     <None Remove="icon\exit.png" />
@@ -24,7 +25,9 @@
     <None Remove="icon\money.png" />
     <None Remove="icon\power.png" />
     <None Remove="icon\report.png" />
+    <None Remove="icon\return.png" />
     <None Remove="icon\ruler.png" />
+    <None Remove="icon\save-instagram.png" />
     <None Remove="icon\staff.png" />
     <None Remove="icon\task.png" />
     <None Remove="icon\up.png" />
@@ -59,6 +62,9 @@
     <Resource Include="icon\close.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="icon\compose.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="icon\delete.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
@@ -86,9 +92,11 @@
     <Resource Include="icon\report.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="icon\return.png" />
     <Resource Include="icon\ruler.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="icon\save-instagram.png" />
     <Resource Include="icon\staff.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>

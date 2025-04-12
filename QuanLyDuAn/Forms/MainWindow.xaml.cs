@@ -17,6 +17,7 @@ namespace QuanLyDuAn
         private const string PlaceholderText = "Tìm kiếm...";
         private DispatcherTimer timer;
 
+        public static string nguoidangnhap;
         private bool isInitialized = false; // Biến flag để kiểm soát
 
         private readonly ThucTapQuanLyDuAnContext _context;

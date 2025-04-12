@@ -69,7 +69,7 @@ namespace QuanLyDuAn.Forms {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/QuanLyDuAn;V1.0.0.0;component/forms/chitiettiendo.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/QuanLyDuAn;component/forms/chitiettiendo.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\..\Forms\ChiTietTienDo.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);

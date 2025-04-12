@@ -225,8 +225,12 @@ namespace QuanLyDuAn.Controls
                 {
                     CvTen = TaskNameTextBox.Text,
                     TtMa = TaskStatusComboBox.SelectedValue.ToString(),
-                    CvBatDau = TaskStartDatePicker.SelectedDate ?? DateTime.Now,
-                    CvKetThuc = TaskEndDatePicker.SelectedDate,
+                    CvBatDau = TaskStartDatePicker.SelectedDate.HasValue
+                        ? DateOnly.FromDateTime(TaskStartDatePicker.SelectedDate.Value)
+                        : DateOnly.FromDateTime(DateTime.Now),
+                    CvKetThuc = TaskEndDatePicker.SelectedDate.HasValue
+                        ? DateOnly.FromDateTime(TaskEndDatePicker.SelectedDate.Value)
+                        : null,
                     NvIdNguoiTao = CurrentUser.NvId,
                     CvPath = _selectedFilePath,
                     CvFile = _selectedFilePath != null ? Path.GetFileName(_selectedFilePath) : null

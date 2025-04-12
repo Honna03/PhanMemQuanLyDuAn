@@ -212,7 +212,7 @@ namespace QuanLyDuAn.Controls {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/QuanLyDuAn;V1.0.0.0;component/forms/edit_duan.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/QuanLyDuAn;component/forms/edit_duan.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\..\Forms\Edit_DuAn.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);

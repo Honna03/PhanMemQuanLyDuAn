@@ -48,8 +48,8 @@ namespace QuanLyDuAn.Forms
                             join nv in _context.NhanViens on pccv.NvId equals nv.NvId
                             join tt in _context.TrangThais on cv.TtMa equals tt.TtMa
                             where pccv.NvId == nvId
-                                  && cv.CvBatDau >= startDate
-                                  && (cv.CvKetThuc == null || cv.CvKetThuc <= endDate)
+                                  && (cv.CvBatDau.HasValue ? DateOnly.FromDateTime(cv.CvBatDau.Value) >= startDate : false)
+                                  && (cv.CvKetThuc == null || (cv.CvKetThuc.HasValue && DateOnly.FromDateTime(cv.CvKetThuc.Value) <= endDate))
                             orderby cv.CvBatDau
                             select new ChiTietTienDoItem
                             {
@@ -57,8 +57,8 @@ namespace QuanLyDuAn.Forms
                                 MaNhanVien = nv.NvMa,
                                 HoTenNhanVien = nv.NvTen,
                                 TenCongViec = cv.CvTen,
-                                ThoiGianBatDau = cv.CvBatDau,
-                                ThoiGianKetThuc = cv.CvKetThuc,
+                                ThoiGianBatDau = cv.CvBatDau.HasValue ? DateOnly.FromDateTime(cv.CvBatDau.Value) : null,
+                                ThoiGianKetThuc = cv.CvKetThuc.HasValue ? DateOnly.FromDateTime(cv.CvKetThuc.Value) : null,
                                 TrangThai = tt.TtTen
                             };
 

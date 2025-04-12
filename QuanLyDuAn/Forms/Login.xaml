@@ -165,7 +165,6 @@
                     </TextBox.Text>
                 </TextBox>
 
-
                 <!-- Password -->
                 <TextBlock Text="Mật khẩu" Foreground="{StaticResource TextColor}" FontSize="16" Margin="0,20,0,5"/>
                 <Grid>

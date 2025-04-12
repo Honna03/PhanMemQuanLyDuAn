@@ -194,7 +194,7 @@ namespace QuanLyDuAn.Controls
 
         private async void AddTaskButton_Click(object sender, RoutedEventArgs e)
         {
-          /*  if (string.IsNullOrWhiteSpace(TaskNameTextBox.Text) || TaskNameTextBox.Text == "Tên công việc")
+            if (string.IsNullOrWhiteSpace(TaskNameTextBox.Text) || TaskNameTextBox.Text == "Tên công việc")
             {
                 MessageBox.Show("Tên công việc không được để trống!", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
@@ -248,7 +248,7 @@ namespace QuanLyDuAn.Controls
             catch (Exception ex)
             {
                 MessageBox.Show($"Lỗi khi thêm công việc: {ex.Message}", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
-            }*/
+            }
         }
 
         private async void RemoveTaskButton_Click(object sender, RoutedEventArgs e)

@@ -205,7 +205,7 @@ namespace QuanLyDuAn.Forms {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/QuanLyDuAn;component/forms/chitietcongviec.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/QuanLyDuAn;V1.0.0.0;component/forms/chitietcongviec.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\..\Forms\ChiTietCongViec.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);

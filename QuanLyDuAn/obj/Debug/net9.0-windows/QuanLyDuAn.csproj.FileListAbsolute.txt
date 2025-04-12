@@ -2,7 +2,6 @@ D:\TTTN\Cty\Project\QuanLyDuAnTrenWindows\QuanLyDuAn\obj\Debug\net9.0-windows\Qu
 D:\TTTN\Cty\Project\QuanLyDuAnTrenWindows\QuanLyDuAn\obj\Debug\net9.0-windows\Forms\DanhSachNhanVien.baml
 D:\TTTN\Cty\Project\QuanLyDuAnTrenWindows\QuanLyDuAn\obj\Debug\net9.0-windows\Forms\Edit_DuAn.baml
 D:\TTTN\Cty\Project\QuanLyDuAnTrenWindows\QuanLyDuAn\obj\Debug\net9.0-windows\Forms\MainWindow.baml
-D:\TTTN\Cty\Project\QuanLyDuAnTrenWindows\QuanLyDuAn\obj\Debug\net9.0-windows\Forms\ProjectsControl.baml
 D:\TTTN\Cty\Project\QuanLyDuAnTrenWindows\QuanLyDuAn\obj\Debug\net9.0-windows\Forms\BaoCao.g.cs
 D:\TTTN\Cty\Project\QuanLyDuAnTrenWindows\QuanLyDuAn\obj\Debug\net9.0-windows\Forms\ChiTietCongViec.g.cs
 D:\TTTN\Cty\Project\QuanLyDuAnTrenWindows\QuanLyDuAn\obj\Debug\net9.0-windows\Forms\ChiTietNhanVien.g.cs
@@ -15,11 +14,12 @@ D:\TTTN\Cty\Project\QuanLyDuAnTrenWindows\QuanLyDuAn\obj\Debug\net9.0-windows\Fo
 D:\TTTN\Cty\Project\QuanLyDuAnTrenWindows\QuanLyDuAn\obj\Debug\net9.0-windows\Forms\Login.g.cs
 D:\TTTN\Cty\Project\QuanLyDuAnTrenWindows\QuanLyDuAn\obj\Debug\net9.0-windows\Forms\Luong.g.cs
 D:\TTTN\Cty\Project\QuanLyDuAnTrenWindows\QuanLyDuAn\obj\Debug\net9.0-windows\Forms\MainWindow.g.cs
-D:\TTTN\Cty\Project\QuanLyDuAnTrenWindows\QuanLyDuAn\obj\Debug\net9.0-windows\Forms\ProjectsControl.g.cs
 D:\TTTN\Cty\Project\QuanLyDuAnTrenWindows\QuanLyDuAn\obj\Debug\net9.0-windows\Forms\TrangChu.g.cs
 D:\TTTN\Cty\Project\QuanLyDuAnTrenWindows\QuanLyDuAn\obj\Debug\net9.0-windows\App.g.cs
 D:\TTTN\Cty\Project\QuanLyDuAnTrenWindows\QuanLyDuAn\obj\Debug\net9.0-windows\QuanLyDuAn_MarkupCompile.cache
 D:\TTTN\Cty\Project\QuanLyDuAnTrenWindows\QuanLyDuAn\obj\Debug\net9.0-windows\QuanLyDuAn_MarkupCompile.lref
+D:\TTTN\Cty\Project\QuanLyDuAnTrenWindows\QuanLyDuAn\obj\Debug\net9.0-windows\Forms\ProjectsControl.baml
+D:\TTTN\Cty\Project\QuanLyDuAnTrenWindows\QuanLyDuAn\obj\Debug\net9.0-windows\Forms\ProjectsControl.g.cs
 D:\TTTN\Cty\Project\QuanLyDuAnTrenWindows\QuanLyDuAn\bin\Debug\net9.0-windows\QuanLyDuAn.exe
 D:\TTTN\Cty\Project\QuanLyDuAnTrenWindows\QuanLyDuAn\bin\Debug\net9.0-windows\QuanLyDuAn.dll.config
 D:\TTTN\Cty\Project\QuanLyDuAnTrenWindows\QuanLyDuAn\bin\Debug\net9.0-windows\QuanLyDuAn.deps.json

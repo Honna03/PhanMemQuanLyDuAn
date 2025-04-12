@@ -125,7 +125,7 @@ namespace QuanLyDuAn.Forms {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/QuanLyDuAn;component/forms/kpi.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/QuanLyDuAn;V1.0.0.0;component/forms/kpi.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\..\Forms\KPI.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);

@@ -28,7 +28,7 @@ namespace QuanLyDuAn.Forms
         {
             Window window = new Window
             {
-                Content = new ChiTietNhanVien(),
+                //Content = new ChiTietNhanVien(),
                 WindowStartupLocation = WindowStartupLocation.CenterScreen
             };
             window.Show();

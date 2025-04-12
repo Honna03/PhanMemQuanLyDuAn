@@ -2,10 +2,10 @@
 <Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup />
   <ItemGroup>
-    <Compile Update="Forms\ChiTietCongVIec.xaml.cs">
+    <Compile Update="Forms\AddCongViec.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Forms\ChiTietNhanVien.xaml.cs">
+    <Compile Update="Forms\AddNhanVien.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Forms\DanhSachCongViec.xaml.cs">
@@ -27,6 +27,12 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Forms\Register.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Forms\ThongTinCongViec.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Forms\ThongTinNhanVien.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Forms\TrangChu.xaml.cs">

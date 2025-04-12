@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\TTTN\\Cty\\Project\\QuanLyDuAnTrenWindows\\QuanLyDuAn\\QuanLyDuAn.csproj": {}
+    "D:\\TTTN\\PhanMemQuanLyDuAn\\PhanMemQuanLyDuAn\\QuanLyDuAn\\QuanLyDuAn.csproj": {}
   },
   "projects": {
-    "D:\\TTTN\\Cty\\Project\\QuanLyDuAnTrenWindows\\QuanLyDuAn\\QuanLyDuAn.csproj": {
+    "D:\\TTTN\\PhanMemQuanLyDuAn\\PhanMemQuanLyDuAn\\QuanLyDuAn\\QuanLyDuAn.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\TTTN\\Cty\\Project\\QuanLyDuAnTrenWindows\\QuanLyDuAn\\QuanLyDuAn.csproj",
+        "projectUniqueName": "D:\\TTTN\\PhanMemQuanLyDuAn\\PhanMemQuanLyDuAn\\QuanLyDuAn\\QuanLyDuAn.csproj",
         "projectName": "QuanLyDuAn",
-        "projectPath": "D:\\TTTN\\Cty\\Project\\QuanLyDuAnTrenWindows\\QuanLyDuAn\\QuanLyDuAn.csproj",
+        "projectPath": "D:\\TTTN\\PhanMemQuanLyDuAn\\PhanMemQuanLyDuAn\\QuanLyDuAn\\QuanLyDuAn.csproj",
         "packagesPath": "C:\\Users\\Legion\\.nuget\\packages\\",
-        "outputPath": "D:\\TTTN\\Cty\\Project\\QuanLyDuAnTrenWindows\\QuanLyDuAn\\obj\\",
+        "outputPath": "D:\\TTTN\\PhanMemQuanLyDuAn\\PhanMemQuanLyDuAn\\QuanLyDuAn\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -22,7 +22,7 @@
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
-          "net9.0-windows"
+          "net9.0-windows7.0"
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
@@ -30,7 +30,7 @@
         },
         "frameworks": {
           "net9.0-windows7.0": {
-            "targetAlias": "net9.0-windows",
+            "targetAlias": "net9.0-windows7.0",
             "projectReferences": {}
           }
         },
@@ -48,11 +48,33 @@
       },
       "frameworks": {
         "net9.0-windows7.0": {
-          "targetAlias": "net9.0-windows",
+          "targetAlias": "net9.0-windows7.0",
           "dependencies": {
             "LiveCharts.Wpf": {
               "target": "Package",
               "version": "[0.9.7, )"
+            },
+            "MaterialDesignThemes": {
+              "target": "Package",
+              "version": "[5.2.1, )"
+            },
+            "MaterialDesignThemes.MahApps": {
+              "target": "Package",
+              "version": "[5.2.1, )"
+            },
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[9.0.3, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[9.0.3, )"
+            },
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[9.0.3, )"
             }
           },
           "imports": [

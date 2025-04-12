@@ -3,13 +3,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using QuanLyDuAn.Forms; // Giả định có namespace này cho form chỉnh sửa
+using Microsoft.EntityFrameworkCore;
+using Microsoft.SqlServer.Server;
+using QuanLyDuAn.Forms;
+using System.Windows.Input;
+using QuanLyDuAn.Models; // bo cmt
 
 namespace QuanLyDuAn.Controls
 {
     public partial class DanhSachNhanVien : UserControl
     {
-        private List<NhanVien> danhSachNhanVien = new List<NhanVien>();
+        ThucTapQuanLyDuAnContext context = new ThucTapQuanLyDuAnContext();
+        List<Models.NhanVien> nhanVien = new List<Models.NhanVien>(); 
+        //private List<NhanVien> danhSachNhanVien = new List<NhanVien>();
         private int currentPageNhanVien = 1;
         private int pageSizeNhanVien = 10; // Số bản ghi mỗi trang
         private int totalPagesNhanVien;
@@ -25,47 +31,39 @@ namespace QuanLyDuAn.Controls
         // Xử lý nút Thêm nhân viên
         private void btn_AddNhanVien_Click(object sender, RoutedEventArgs e)
         {
-            Window window = new Window
-            {
-                Content = new ChiTietNhanVien(),
-                WindowStartupLocation = WindowStartupLocation.CenterScreen
-            };
-            window.Show();
+            
+            AddNhanVien addNhanVien = new AddNhanVien();
+            addNhanVien.NhanVienAdded += LoadLoadNhanVien;
+            addNhanVien.ShowDialog();
+        }
+        private void LoadLoadNhanVien(object sender, EventArgs e)
+        {
+            // Gọi lại LoadNhanVien khi nhân viên được thêm
+            LoadNhanVien();
         }
 
-        // Tải dữ liệu mẫu
-        private void LoadNhanVien()
+        public void LoadNhanVien()         //bo cmt
         {
-            danhSachNhanVien = new List<NhanVien>
-            {
-                new NhanVien { STT = 1, MaNhanVien = "NV001", HoTen = "Nguyễn Văn A", GioiTinh = "Nam", NgaySinh = new DateTime(1990, 5, 15), SDT = "0901234567", Email = "nva@example.com", TaiKhoan = "nva", MatKhau = "123456", LuongCoBan = 10000000 },
-                new NhanVien { STT = 2, MaNhanVien = "NV002", HoTen = "Trần Thị B", GioiTinh = "Nữ", NgaySinh = new DateTime(1995, 8, 20), SDT = "0912345678", Email = "ttb@example.com", TaiKhoan = "ttb", MatKhau = "abcdef", LuongCoBan = 12000000 },
-                new NhanVien { STT = 3, MaNhanVien = "NV003", HoTen = "Lê Văn C", GioiTinh = "Nam", NgaySinh = new DateTime(1988, 3, 10), SDT = "0923456789", Email = "lvc@example.com", TaiKhoan = "lvc", MatKhau = "pass123", LuongCoBan = 15000000 },
-                new NhanVien { STT = 4, MaNhanVien = "NV004", HoTen = "Phạm Thị D", GioiTinh = "Nữ", NgaySinh = new DateTime(1992, 12, 25), SDT = "0934567890", Email = "ptd@example.com", TaiKhoan = "ptd", MatKhau = "xyz789", LuongCoBan = 9000000 },
-                new NhanVien { STT = 5, MaNhanVien = "NV005", HoTen = "Hoàng Văn E", GioiTinh = "Nam", NgaySinh = new DateTime(1993, 7, 18), SDT = "0945678901", Email = "hve@example.com", TaiKhoan = "hve", MatKhau = "qwerty", LuongCoBan = 11000000 },
-                new NhanVien { STT = 6, MaNhanVien = "NV006", HoTen = "Đỗ Thị F", GioiTinh = "Nữ", NgaySinh = new DateTime(1991, 9, 5), SDT = "0956789012", Email = "dtf@example.com", TaiKhoan = "dtf", MatKhau = "abc123", LuongCoBan = 13000000 },
-                new NhanVien { STT = 7, MaNhanVien = "NV007", HoTen = "Bùi Văn G", GioiTinh = "Nam", NgaySinh = new DateTime(1987, 4, 22), SDT = "0967890123", Email = "bvg@example.com", TaiKhoan = "bvg", MatKhau = "def456", LuongCoBan = 14000000 },
-                new NhanVien { STT = 8, MaNhanVien = "NV008", HoTen = "Ngô Thị H", GioiTinh = "Nữ", NgaySinh = new DateTime(1994, 11, 30), SDT = "0978901234", Email = "nth@example.com", TaiKhoan = "nth", MatKhau = "ghi789", LuongCoBan = 9500000 },
-                new NhanVien { STT = 9, MaNhanVien = "NV009", HoTen = "Vũ Văn I", GioiTinh = "Nam", NgaySinh = new DateTime(1989, 6, 15), SDT = "0989012345", Email = "vvi@example.com", TaiKhoan = "vvi", MatKhau = "jkl012", LuongCoBan = 12500000 },
-                new NhanVien { STT = 10, MaNhanVien = "NV010", HoTen = "Trương Thị K", GioiTinh = "Nữ", NgaySinh = new DateTime(1996, 2, 8), SDT = "0990123456", Email = "ttk@example.com", TaiKhoan = "ttk", MatKhau = "mno345", LuongCoBan = 10500000 },
-                new NhanVien { STT = 11, MaNhanVien = "NV011", HoTen = "Phan Văn L", GioiTinh = "Nam", NgaySinh = new DateTime(1990, 10, 12), SDT = "0909876543", Email = "pvl@example.com", TaiKhoan = "pvl", MatKhau = "pqr678", LuongCoBan = 11500000 }
-            };
-
-            totalPagesNhanVien = (int)Math.Ceiling((double)danhSachNhanVien.Count / pageSizeNhanVien);
+            nhanVien = context.NhanViens.Include(nv => nv.QMaNavigation).ToList();
+            dgNhanVien.ItemsSource = nhanVien;
+            totalPagesNhanVien = (int)Math.Ceiling((double)nhanVien.Count / pageSizeNhanVien);
             HienThiNhanVienTheoTrang(currentPageNhanVien);
+            UpdateTotalRecords();
         }
 
         // Cập nhật tổng số bản ghi
-        private void UpdateTotalRecords()
+        private void UpdateTotalRecords() //bo cmt
         {
-            int totalRecords = danhSachNhanVien.Count;
+            nhanVien = context.NhanViens.ToList();
+            int totalRecords = nhanVien.Count;
             txtTotalRecords.Text = $"Tổng số bản ghi: {totalRecords}";
+
         }
 
         // Hiển thị nhân viên theo trang
-        private void HienThiNhanVienTheoTrang(int page)
+        private void HienThiNhanVienTheoTrang(int page)     //bo cmt
         {
-            var nhanVienTheoTrang = danhSachNhanVien
+            var nhanVienTheoTrang = nhanVien
                 .Skip((page - 1) * pageSizeNhanVien)
                 .Take(pageSizeNhanVien)
                 .ToList();
@@ -101,20 +99,23 @@ namespace QuanLyDuAn.Controls
                 HienThiNhanVienTheoTrang(currentPageNhanVien);
             }
         }
-    }
 
-    // Lớp mô hình cho nhân viên
-    public class NhanVien
-    {
-        public int STT { get; set; }
-        public string MaNhanVien { get; set; }
-        public string HoTen { get; set; }
-        public string GioiTinh { get; set; }
-        public DateTime NgaySinh { get; set; }
-        public string SDT { get; set; }
-        public string Email { get; set; }
-        public string TaiKhoan { get; set; }
-        public string MatKhau { get; set; }
-        public decimal LuongCoBan { get; set; }
+        private void frmNhanVien_Loaded(object sender, RoutedEventArgs e)
+        {
+            LoadNhanVien();
+        }
+
+        private void dgNhanVien_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)        //bo cmt
+        {
+            var selectNhanVien = dgNhanVien.SelectedItem as NhanVien;
+
+            if (selectNhanVien != null)
+            {
+                // Mở Form B và truyền mã nhân viên
+                ThongTinNhanVien ThongTinNhanVien = new ThongTinNhanVien(selectNhanVien.NvMa);
+                ThongTinNhanVien.NhanVienDeleted += LoadLoadNhanVien;
+                ThongTinNhanVien.Show();
+            }
+        }
     }
 }

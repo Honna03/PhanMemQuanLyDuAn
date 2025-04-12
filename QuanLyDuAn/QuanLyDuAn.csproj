@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net9.0-windows</TargetFramework>
+    <TargetFramework>net9.0-windows7.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
@@ -12,6 +12,7 @@
     <None Remove="icon\add.png" />
     <None Remove="icon\changes.png" />
     <None Remove="icon\close.png" />
+    <None Remove="icon\compose.png" />
     <None Remove="icon\delete.png" />
     <None Remove="icon\down.png" />
     <None Remove="icon\exit.png" />
@@ -22,7 +23,9 @@
     <None Remove="icon\money.png" />
     <None Remove="icon\power.png" />
     <None Remove="icon\report.png" />
+    <None Remove="icon\return.png" />
     <None Remove="icon\ruler.png" />
+    <None Remove="icon\save-instagram.png" />
     <None Remove="icon\staff.png" />
     <None Remove="icon\task.png" />
     <None Remove="icon\up.png" />
@@ -30,6 +33,14 @@
 
   <ItemGroup>
     <PackageReference Include="LiveCharts.Wpf" Version="0.9.7" />
+    <PackageReference Include="MaterialDesignThemes" Version="5.2.1" />
+    <PackageReference Include="MaterialDesignThemes.MahApps" Version="5.2.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.3" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.3" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="9.0.3">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
   </ItemGroup>
 
   <ItemGroup>
@@ -40,6 +51,9 @@
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
     <Resource Include="icon\close.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="icon\compose.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
     <Resource Include="icon\delete.png">
@@ -69,9 +83,11 @@
     <Resource Include="icon\report.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="icon\return.png" />
     <Resource Include="icon\ruler.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="icon\save-instagram.png" />
     <Resource Include="icon\staff.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>

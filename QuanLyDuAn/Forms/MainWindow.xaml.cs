@@ -21,7 +21,8 @@ namespace QuanLyDuAn
     {
         private const string PlaceholderText = "Tìm kiếm...";
         private DispatcherTimer timer;
-        public MainWindow()
+        public static string nguoidangnhap;
+        public MainWindow(string tenTaiKhoan)
         {
             InitializeComponent();
             MainContent.Content = new TrangChu();
@@ -33,6 +34,10 @@ namespace QuanLyDuAn
 
             // Cập nhật giờ ngay khi khởi động
             UpdateCurrentTime();
+
+            InitializeComponent();
+            UserName.Text = tenTaiKhoan;
+            nguoidangnhap = UserName.Text;
         }
         private void Timer_Tick(object sender, EventArgs e)
         {

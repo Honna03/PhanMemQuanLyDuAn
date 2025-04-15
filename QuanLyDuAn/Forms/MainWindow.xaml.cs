@@ -1,33 +1,37 @@
 ﻿using QuanLyDuAn.Controls;
 using QuanLyDuAn.Forms;
-
 using QuanLyDuAn.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media;
 using System.Windows.Threading;
 
 namespace QuanLyDuAn
 {
     public partial class MainWindow : Window
     {
-        private const string PlaceholderText = "Tìm kiếm...";
         private DispatcherTimer timer;
-
-        public static string nguoidangnhap;
-        private bool isInitialized = false; // Biến flag để kiểm soát
-
         private readonly ThucTapQuanLyDuAnContext _context;
         private ProjectsControl _projectsControl;
+        private int _currentUserId;
+        private string _currentUserName;
 
-        public MainWindow()
+        public MainWindow(int userId)
         {
             InitializeComponent();
             _context = new ThucTapQuanLyDuAnContext();
             MainContent.Content = new TrangChu();
+
+            _currentUserId = userId;
+            var user = _context.NhanViens.FirstOrDefault(n => n.NvId == userId);
+            _currentUserName = user != null ? user.NvTen : "Admin";
+
+            if (UserNameTextBlock != null)
+            {
+                UserNameTextBlock.Text = _currentUserName;
+            }
 
             timer = new DispatcherTimer();
             timer.Interval = TimeSpan.FromSeconds(1);
@@ -35,7 +39,6 @@ namespace QuanLyDuAn
             timer.Start();
 
             UpdateCurrentTime();
-            isInitialized = true; // Đánh dấu là đã khởi tạo xong
         }
 
         private void Timer_Tick(object sender, EventArgs e)
@@ -60,7 +63,6 @@ namespace QuanLyDuAn
                 var creators = _context.NhanViens
                     .Select(n => new Creator { NvId = n.NvId, Name = n.NvTen })
                     .ToList();
-                // Lấy tất cả công việc, bao gồm thông tin dự án và trạng thái
                 var allTasks = _context.CongViecs
                     .Include(c => c.Da)
                     .Include(c => c.TtMaNavigation)
@@ -70,6 +72,7 @@ namespace QuanLyDuAn
                 _projectsControl.SetProjects(projects, statuses, creators, allTasks);
 
                 _projectsControl.AddProjectRequested += ProjectsControl_AddProjectRequested;
+                _projectsControl.RefreshRequested += ProjectsControl_RefreshRequested;
                 _projectsControl.EditProjectRequested += ProjectsControl_EditProjectRequested;
                 _projectsControl.DeleteProjectRequested += ProjectsControl_DeleteProjectRequested;
                 _projectsControl.ViewDetailsRequested += ProjectsControl_ViewDetailsRequested;
@@ -103,7 +106,7 @@ namespace QuanLyDuAn
         {
             var window = new Window
             {
-                Content = new Edit_DuAn(null, _context),
+                Content = new Edit_DuAn(null, _context, _currentUserId),
                 WindowStartupLocation = WindowStartupLocation.CenterScreen
             };
             window.Closed += async (s, args) =>
@@ -114,11 +117,16 @@ namespace QuanLyDuAn
             window.ShowDialog();
         }
 
+        private void ProjectsControl_RefreshRequested(object sender, EventArgs e)
+        {
+            ReloadProjectsAsync();
+        }
+
         private void ProjectsControl_EditProjectRequested(object sender, ProjectEventArgs e)
         {
             var window = new Window
             {
-                Content = new Edit_DuAn(e.DaId, _context),
+                Content = new Edit_DuAn(e.DaId, _context, _currentUserId),
                 WindowStartupLocation = WindowStartupLocation.CenterScreen
             };
             window.Closed += async (s, args) =>
@@ -165,41 +173,11 @@ namespace QuanLyDuAn
         {
             var window = new Window
             {
-                Content = new Edit_DuAn(e.DaId, _context) { IsReadOnly = true },
+                Content = new Edit_DuAn(e.DaId, _context, _currentUserId) { IsReadOnly = true },
                 WindowStartupLocation = WindowStartupLocation.CenterScreen
             };
             window.Closed += (s, args) => _projectsControl.OverlayGrid.Visibility = Visibility.Collapsed;
             window.ShowDialog();
-        }
-
-        private void SearchBox_GotFocus(object sender, RoutedEventArgs e)
-        {
-            TextBox textBox = sender as TextBox;
-            if (textBox.Text == PlaceholderText)
-            {
-                textBox.Text = string.Empty;
-                textBox.Foreground = Brushes.White;
-            }
-        }
-        private void UserButton_Click(object sender, RoutedEventArgs e)
-        {
-            if (UserButton.ContextMenu != null)
-            {
-                UserButton.ContextMenu.PlacementTarget = UserButton; // Đặt vị trí ContextMenu tại Button
-                UserButton.ContextMenu.Placement = System.Windows.Controls.Primitives.PlacementMode.Bottom; // Hiển thị submenu bên dưới Button
-                UserButton.ContextMenu.IsOpen = true; // Mở ContextMenu
-            }
-        }
-
-
-        private void SearchBox_LostFocus(object sender, RoutedEventArgs e)
-        {
-            TextBox textBox = sender as TextBox;
-            if (string.IsNullOrWhiteSpace(textBox.Text))
-            {
-                textBox.Text = PlaceholderText;
-                textBox.Foreground = Brushes.Gray;
-            }
         }
 
         private void btn_NhanVien_Click(object sender, RoutedEventArgs e)
@@ -207,18 +185,15 @@ namespace QuanLyDuAn
             MainContent.Content = new DanhSachNhanVien();
         }
 
-        private void btn_BaoCao_Click(object sender, RoutedEventArgs e)
+        private void UserButton_Click(object sender, RoutedEventArgs e)
         {
-            try
+            if (UserButton.ContextMenu != null)
             {
-                MainContent.Content = new BaoCao(1);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Không thể mở form báo cáo: {ex.Message}", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                UserButton.ContextMenu.PlacementTarget = UserButton;
+                UserButton.ContextMenu.Placement = System.Windows.Controls.Primitives.PlacementMode.Bottom;
+                UserButton.ContextMenu.IsOpen = true;
             }
         }
-
 
         private void btn_QLCV_Click(object sender, RoutedEventArgs e)
         {
@@ -234,19 +209,10 @@ namespace QuanLyDuAn
         {
             MainContent.Content = new TrangChu();
         }
+
         private void btn_KPI_Click(object sender, RoutedEventArgs e)
         {
             MainContent.Content = new KPI();
-        }
-
-        private void btn_AddDuAn_Click(object sender, RoutedEventArgs e)
-        {
-            var window = new Window
-            {
-                Content = new Edit_DuAn(null, _context),
-                WindowStartupLocation = WindowStartupLocation.CenterScreen
-            };
-            window.Show();
         }
 
         private void btn_Luong_Click(object sender, RoutedEventArgs e)
@@ -275,30 +241,22 @@ namespace QuanLyDuAn
             }
         }
 
-        private void SearchBox_TextChanged(object sender, TextChangedEventArgs e)
+        private void SearchBox_GotFocus(object sender, RoutedEventArgs e)
         {
-            // Kiểm tra nếu MainContent chưa được khởi tạo thì bỏ qua
-            if (MainContent == null)
+            if (sender is TextBox searchBox && searchBox.Text == "Tìm kiếm...")
             {
-                return;
-            }
-
-            string searchText = (sender as TextBox)?.Text.ToLower();
-            if (string.IsNullOrWhiteSpace(searchText) || searchText == PlaceholderText.ToLower())
-            {
-                searchText = string.Empty;
-            }
-
-            // Kiểm tra UserControl hiện tại trong MainContent
-            if (MainContent.Content is KPI kpiControl)
-            {
-                kpiControl.Search(searchText); // Gọi phương thức tìm kiếm của KPI
+                searchBox.Text = "";
+                searchBox.Foreground = System.Windows.Media.Brushes.Black;
             }
         }
 
-        private void btn_QLKPI_Click(object sender, RoutedEventArgs e)
+        private void SearchBox_LostFocus(object sender, RoutedEventArgs e)
         {
-
+            if (sender is TextBox searchBox && string.IsNullOrWhiteSpace(searchBox.Text))
+            {
+                searchBox.Text = "Tìm kiếm...";
+                searchBox.Foreground = System.Windows.Media.Brushes.Gray;
+            }
         }
     }
 }

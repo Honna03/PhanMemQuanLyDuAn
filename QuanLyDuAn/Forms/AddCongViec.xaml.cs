@@ -84,14 +84,14 @@ namespace QuanLyDuAn.Forms
 
         private void LoadDuAn()     // bo cmt 
         {
-            string tenTaiKhoan;
+         /*   string tenTaiKhoan;
             tenTaiKhoan = MainWindow.nguoidangnhap;
             var nhanvien = context.NhanViens.FirstOrDefault(nv => nv.NvTaiKhoan == tenTaiKhoan);
             List<Models.DuAn> duAn = new List<Models.DuAn>();
             duAn = context.DuAns.Where(da => da.NhanVienThamGiaDuAns.Any(nv => nv.NvId == nhanvien.NvId)).ToList();
             cbDuAn.ItemsSource = duAn;
             cbDuAn.DisplayMemberPath = "DaTen";
-            cbDuAn.SelectedValuePath = "DaId";
+            cbDuAn.SelectedValuePath = "DaId";*/
         }
 
         private void cbDuAn_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -106,7 +106,7 @@ namespace QuanLyDuAn.Forms
 
         private void btnLuu_Click(object sender, RoutedEventArgs e)
         {
-            Models.CongViec congViec = new Models.CongViec();
+         /*   Models.CongViec congViec = new Models.CongViec();
             if (cbDuAn.SelectedValue == null)
             {
                 MessageBox.Show("Vui lòng chọn dự án!", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -175,7 +175,7 @@ namespace QuanLyDuAn.Forms
 
             CongViecAdded?.Invoke(this, EventArgs.Empty);
 
-            this.Close();
+            this.Close();*/
         }
 
         private void btn_Huy_Click(object sender, RoutedEventArgs e)

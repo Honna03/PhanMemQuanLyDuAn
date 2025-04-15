@@ -32,7 +32,7 @@ namespace QuanLyDuAn.Controls
         }
         public void LoadCongViec()     //bo cmt
         {
-            //congViec = context.CongViecs.Include(cv => cv.NhanVienThamGiaDuAn).ThenInclude(tg => tg.Da)
+          /*  //congViec = context.CongViecs.Include(cv => cv.NhanVienThamGiaDuAn).ThenInclude(tg => tg.Da)
             //    .Include(cv => cv.TtMaNavigation).ToList();
 
             //dgCongViec.ItemsSource = congViec;
@@ -64,7 +64,7 @@ namespace QuanLyDuAn.Controls
                          };
             var ketQuaList = ketQua.ToList();
             dgCongViec.ItemsSource = ketQuaList;
-
+          */
         }
         private void LoadLoadCongViec(object sender, EventArgs e)
         {

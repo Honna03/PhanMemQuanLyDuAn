@@ -19,25 +19,15 @@
 
         <!-- Hàng 1: Bộ lọc và tìm kiếm -->
         <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="10">
-            <ComboBox x:Name="StatusFilterComboBox" 
-                      Width="150" Height="30" 
-                      DisplayMemberPath="TtTen" SelectedValuePath="TtMa"
-                      SelectionChanged="StatusFilterComboBox_SelectionChanged"
-                      Margin="0,0,10,0"/>
-            <ComboBox x:Name="CreatorFilterComboBox" 
-                      Width="150" Height="30" 
-                      DisplayMemberPath="Name" SelectedValuePath="NvId"
-                      SelectionChanged="CreatorFilterComboBox_SelectionChanged"
-                      Margin="0,0,10,0"/>
-            <TextBox x:Name="SearchTextBox" 
-                     Width="200" Height="30" 
-                     Text="Tìm kiếm..." 
-                     TextChanged="SearchTextBox_TextChanged"
-                     Margin="0,0,10,0"/>
             <Button x:Name="RefreshButton" 
                     Content="Làm mới" 
                     Width="100" Height="30" 
                     Click="RefreshButton_Click"/>
+            <Button x:Name="AddProjectButton" 
+                    Content="Thêm dự án" 
+                    Width="100" Height="30" 
+                    Margin="10,0,0,0"
+                    Click="AddProjectButton_Click"/>
         </StackPanel>
 
         <!-- Hàng 2: DataGrid và PieChart -->

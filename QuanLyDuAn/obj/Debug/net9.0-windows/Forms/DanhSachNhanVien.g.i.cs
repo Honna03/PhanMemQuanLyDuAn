@@ -108,7 +108,7 @@ namespace QuanLyDuAn.Controls {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/QuanLyDuAn;component/forms/danhsachnhanvien.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/QuanLyDuAn;V1.0.0.0;component/forms/danhsachnhanvien.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\..\Forms\DanhSachNhanVien.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);

@@ -1,0 +1,99 @@
+﻿<Window x:Class="QuanLyDuAn.Forms.ThongTinCapNhat"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:QuanLyDuAn.Forms"
+        mc:Ignorable="d"
+        Title="ThongTinCapNhat" Height="500" Width="800" Loaded="Window_Loaded" WindowStartupLocation="CenterScreen" ShowInTaskbar="False">
+    <Grid>
+        <Label Margin="0, 25, 0,0" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center">Thông tin cập nhật công việc</Label>
+        <Grid Margin="30, 70, 30, 30">
+            <!-- Định nghĩa 2 cột -->
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Định nghĩa các hàng -->
+            <Grid.RowDefinitions>
+                <RowDefinition Height="35"/>
+                <RowDefinition Height="35"/>
+                <RowDefinition Height="35"/>
+                <RowDefinition Height="35"/>
+                <RowDefinition Height="35"/>
+                <RowDefinition Height="35"/>
+                <RowDefinition Height="35"/>
+                <RowDefinition Height="35"/>
+                <RowDefinition Height="35"/>
+                <RowDefinition Height="35"/>
+                <RowDefinition Height="90"/>
+
+            </Grid.RowDefinitions>
+            <!-- Tên dự án -->
+            <TextBlock Grid.Row="0" Grid.Column="0" Text="Mã cập nhật*" Foreground="Black" FontSize="14" Margin="0,15,25,0"/>
+            <TextBox Grid.Row="1" Grid.Column="0" x:Name="txtID" Background="White" Foreground="Black" 
+    BorderBrush="#E0E0E0" BorderThickness="1" Padding="5" Margin="0,0,25,5"/>
+            <!--hoTen-->
+            <TextBlock Grid.Row="2" Grid.Column="0" Text="Tên công việc*" Foreground="Black" FontSize="14" Margin="0,15,25,0"/>
+            <TextBox Grid.Row="3" Grid.Column="0" x:Name="txtCongViec" Background="White" Foreground="Black" BorderBrush="#E0E0E0" 
+    BorderThickness="1" Padding="5" Margin="0,0,25,5"/>
+
+            <TextBlock Grid.Row="4" Grid.Column="0" Text="Dự án*" Foreground="Black" FontSize="14" Margin="0,15,25,0"/>
+            <TextBox Grid.Row="5" Grid.Column="0" x:Name="txtDuAn" Background="White" Foreground="Black" BorderBrush="#E0E0E0" 
+BorderThickness="1" Padding="5" Margin="0,0,25,5"/>
+
+            <TextBlock Grid.Row="6" Grid.Column="0" Text="Người cập nhật*" Foreground="Black" FontSize="14" Margin="0,15,25,0"/>
+            <TextBox Grid.Row="7" Grid.Column="0" x:Name="txtNhanVien" Background="White" Foreground="Black" BorderBrush="#E0E0E0" 
+BorderThickness="1" Padding="5" Margin="0,0,25,5"/>
+
+            <TextBlock Grid.Row="8" Grid.Column="0" Text="Thời gian cập nhật*" Foreground="Black" FontSize="14" Margin="0,15,25,0"/>
+            <TextBox Grid.Row="9" Grid.Column="0" x:Name="txtThoiGian" Background="White" Foreground="Black" BorderBrush="#E0E0E0" 
+BorderThickness="1" Padding="5" Margin="0,0,25,5"/>
+
+
+
+            <!--<Button x:Name="btnLuu" Grid.Row="10" Grid.Column="0" FontSize="24"  Background="#008080" Foreground="White" Height="60" Width="340" HorizontalAlignment="Left" VerticalAlignment="Bottom" FontWeight="Bold">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="/icon/add.png" Width="20" Height="20" Margin="0,0,10,0"/>
+                    <TextBlock Text="Lưu" VerticalAlignment="Center"/>
+                </StackPanel>
+            </Button>-->
+
+
+            <!-- Cột 2 -->
+            <!-- Tên tập tin -->
+            <TextBlock Grid.Row="0" Grid.Column="1" Text="Mô tả*" Foreground="Black" FontSize="14" Margin="25,15,0,0"/>
+            <TextBox Grid.Row="1" Grid.Column="1" x:Name="txtMoTa" Background="White" Foreground="Black" 
+BorderBrush="#E0E0E0" BorderThickness="1" Padding="5" Margin="25,0,0,5"/>
+
+
+            <TextBlock Grid.Row="2" Grid.Column="1" Text="Tên tập tin*" Foreground="Black" FontSize="14" Margin="25,15,0,0"/>
+            <TextBox Grid.Row="3" Grid.Column="1" x:Name="txtTenTapTin" IsHitTestVisible="False" Background="White" Foreground="Black" 
+    BorderBrush="#E0E0E0" BorderThickness="1" Padding="5" Margin="25,0,0,5"/>
+
+            <!-- Đường dẫn -->
+            <TextBlock Grid.Row="4" Grid.Column="1" Text="Đường dẫn*" Foreground="Black" FontSize="14" Margin="25,15,0,0"/>
+            <TextBox Grid.Row="5" Grid.Column="1" x:Name="txtDuongDan" Background="White" Foreground="Black" IsHitTestVisible="False"
+    BorderBrush="#E0E0E0" BorderThickness="1" Padding="5" Margin="25,5,0,5"/>
+
+            <!-- Chọn tệp -->
+            <TextBlock Grid.Row="6" Grid.Column="1" Text="Xem tập tin*" Foreground="Black" FontSize="14" Margin="25,15,0,0"/>
+            <Button Grid.Row="7" Grid.Column="1" x:Name="btnChonFile" Background="#C0C0C0" Foreground="Black" 
+     BorderBrush="#E0E0E0" BorderThickness="1" Padding="5" Margin="25,0,0,5" Width="80" HorizontalAlignment="Left" Click="btnChonFile_Click">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="/icon/folder.png" Width="20" Height="20" Margin="0,0,10,0"/>
+                    <TextBlock Text="Mở" VerticalAlignment="Center"/>
+                </StackPanel>
+            </Button>
+
+            <!--<Button x:Name="btn_Huy" Grid.Row="10" Grid.Column="1" Background="#808080" Foreground="White" Height="60" Width="340" Margin="0,0,0,0" HorizontalAlignment="Right" VerticalAlignment="Bottom" FontSize="24" FontWeight="Bold">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="/icon/close.png" Width="20" Height="20" Margin="0,0,10,0"/>
+                    <TextBlock Text="Hủy" VerticalAlignment="Center"/>
+                </StackPanel>
+            </Button>-->
+
+        </Grid>
+    </Grid>
+</Window>

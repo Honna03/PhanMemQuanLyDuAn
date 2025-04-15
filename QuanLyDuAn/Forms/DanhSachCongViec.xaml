@@ -1,0 +1,300 @@
+﻿<UserControl x:Class="QuanLyDuAn.Controls.DanhSachCongViec"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:QuanLyDuAn.Controls"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800" Loaded="DanhSachCongViec1_Loaded">
+    <Grid Background="#ab99f2">
+        <!-- Tiêu đề -->
+        <TextBlock Text="Danh sách Công việc" 
+                   FontSize="20" FontWeight="Bold" Foreground="White"
+                   Margin="10,10,0,0"/>
+
+        <Grid VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0, 10, 10, 0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="120"/>
+                <ColumnDefinition Width="25"/>
+                <ColumnDefinition Width="140"/>
+                <ColumnDefinition Width="25"/>
+                <ColumnDefinition Width="120"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Nút Thêm mới -->
+            <Button Grid.Row="0" Grid.Column="0"
+        Content="Công việc đã tạo" 
+        HorizontalAlignment="Right" 
+        VerticalAlignment="Top"
+        Padding="10,5"
+        Background="#27AE60" Foreground="White"
+        FontWeight="Bold"
+        x:Name="btnDaTao"
+        BorderThickness="0" Cursor="Hand" Click="btnDaTao_Click" />
+
+            <Button Grid.Row="0" Grid.Column="2"
+        Content="Công việc được giao" 
+        HorizontalAlignment="Right" 
+        VerticalAlignment="Top"
+        Padding="10,5"
+        Background="#27AE60" Foreground="White"
+        FontWeight="Bold"
+        x:Name="btnDuocGiao"
+        BorderThickness="0" Cursor="Hand" Click="btnDuocGiao_Click" />
+
+            <Button Grid.Row="0" Grid.Column="4"
+        Width="120"
+        Content="+ Thêm mới" 
+        HorizontalAlignment="Right" 
+        VerticalAlignment="Top"
+        Padding="10,5"
+        Background="#27AE60" Foreground="White"
+        FontWeight="Bold"
+        x:Name="btn_AddCongViec"
+        BorderThickness="0" Cursor="Hand" Click="btn_AddCongViec_Click_1"/>
+
+        </Grid>
+
+        <!-- DataGrid -->
+        <DataGrid Name="dgCongViec" AutoGenerateColumns="False" IsReadOnly="True"
+                  HeadersVisibility="Column"
+                  CanUserAddRows="False"
+                  SelectionMode="Single"
+                  Margin="0,50,0,0"
+                  Background="White" BorderBrush="#E0E0E0" BorderThickness="1"
+                  GridLinesVisibility="Horizontal" HorizontalGridLinesBrush="#E0E0E0"
+                  RowBackground="White" AlternatingRowBackground="#F9F9F9" MouseDoubleClick="dgCongViec_MouseDoubleClick">
+            <DataGrid.Columns>
+                <!-- Cột STT -->
+                <DataGridTextColumn Header="Mã công việc" Binding="{Binding Path=CvMa}" Width="0.5*" IsReadOnly="True">
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="HorizontalAlignment" Value="Center"/>
+                            <Setter Property="VerticalAlignment" Value="Center"/>
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                    <DataGridTextColumn.HeaderStyle>
+                        <Style TargetType="DataGridColumnHeader">
+                            <Setter Property="Background" Value="#2D2D2D"/>
+                            <Setter Property="Foreground" Value="White"/>
+                            <Setter Property="BorderThickness" Value="0"/>
+                            <Setter Property="Padding" Value="5"/>
+                        </Style>
+                    </DataGridTextColumn.HeaderStyle>
+                </DataGridTextColumn>
+
+                <!-- Cột Tên dự án -->
+                <DataGridTextColumn Header="Tên công việc" Binding="{Binding Path=CvTen}" Width="*">
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="Margin" Value="5,0"/>
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                    <DataGridTextColumn.HeaderStyle>
+                        <Style TargetType="DataGridColumnHeader">
+                            <Setter Property="Background" Value="#2D2D2D"/>
+                            <Setter Property="Foreground" Value="White"/>
+                            <Setter Property="BorderThickness" Value="0"/>
+                            <Setter Property="Padding" Value="5"/>
+                        </Style>
+                    </DataGridTextColumn.HeaderStyle>
+                </DataGridTextColumn>
+
+                <DataGridTextColumn Header="Tên dự án" Binding="{Binding Path=DaTen}" Width="*">
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="Margin" Value="5,0"/>
+                            <Setter Property="HorizontalAlignment" Value="Center"/>
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                    <DataGridTextColumn.HeaderStyle>
+                        <Style TargetType="DataGridColumnHeader">
+                            <Setter Property="Background" Value="#2D2D2D"/>
+                            <Setter Property="Foreground" Value="White"/>
+                            <Setter Property="BorderThickness" Value="0"/>
+                            <Setter Property="Padding" Value="5"/>
+                        </Style>
+                    </DataGridTextColumn.HeaderStyle>
+                </DataGridTextColumn>
+
+                <!-- Cột Mô tả -->
+                <DataGridTextColumn Header="Mô tả" Binding="{Binding Path=CvMoTa}" Width="*">
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="Margin" Value="5,0"/>
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                    <DataGridTextColumn.HeaderStyle>
+                        <Style TargetType="DataGridColumnHeader">
+                            <Setter Property="Background" Value="#2D2D2D"/>
+                            <Setter Property="Foreground" Value="White"/>
+                            <Setter Property="BorderThickness" Value="0"/>
+                            <Setter Property="Padding" Value="5"/>
+                        </Style>
+                    </DataGridTextColumn.HeaderStyle>
+                </DataGridTextColumn>
+
+                <!-- Cột Ngày bắt đầu -->
+                <DataGridTextColumn Header="Thời gian bắt đầu" Binding="{Binding Path=CvBatDau, StringFormat={}{0:dd/MM/yyyy}}" Width="*">
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="Margin" Value="5,0"/>
+                            <Setter Property="HorizontalAlignment" Value="Center"/>
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                    <DataGridTextColumn.HeaderStyle>
+                        <Style TargetType="DataGridColumnHeader">
+                            <Setter Property="Background" Value="#2D2D2D"/>
+                            <Setter Property="Foreground" Value="White"/>
+                            <Setter Property="BorderThickness" Value="0"/>
+                            <Setter Property="Padding" Value="5"/>
+                        </Style>
+                    </DataGridTextColumn.HeaderStyle>
+                </DataGridTextColumn>
+
+                <!-- Cột Ngày kết thúc -->
+                <DataGridTextColumn Header="Thời gian kết thúc" Binding="{Binding Path=CvKetThuc, StringFormat={}{0:dd/MM/yyyy}}" Width="*">
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="Margin" Value="5,0"/>
+                            <Setter Property="HorizontalAlignment" Value="Center"/>
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                    <DataGridTextColumn.HeaderStyle>
+                        <Style TargetType="DataGridColumnHeader">
+                            <Setter Property="Background" Value="#2D2D2D"/>
+                            <Setter Property="Foreground" Value="White"/>
+                            <Setter Property="BorderThickness" Value="0"/>
+                            <Setter Property="Padding" Value="5"/>
+                        </Style>
+                    </DataGridTextColumn.HeaderStyle>
+                </DataGridTextColumn>
+
+
+                <!-- Cột Tiến độ -->
+                <!-- Cột Số lượng thành viên -->
+                <DataGridTextColumn Header="Người tạo việc" Binding="{Binding Path=NguoiTao}" Width="*">
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="Margin" Value="5,0"/>
+                            <Setter Property="HorizontalAlignment" Value="Center"/>
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                    <DataGridTextColumn.HeaderStyle>
+                        <Style TargetType="DataGridColumnHeader">
+                            <Setter Property="Background" Value="#2D2D2D"/>
+                            <Setter Property="Foreground" Value="White"/>
+                            <Setter Property="BorderThickness" Value="0"/>
+                            <Setter Property="Padding" Value="5"/>
+                        </Style>
+                    </DataGridTextColumn.HeaderStyle>
+                </DataGridTextColumn>
+                
+                <!--llll-->
+                <DataGridTextColumn Header="Người nhận việc" Binding="{Binding Path=NguoiNhan}" Width="*">
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="Margin" Value="5,0"/>
+                            <Setter Property="HorizontalAlignment" Value="Center"/>
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                    <DataGridTextColumn.HeaderStyle>
+                        <Style TargetType="DataGridColumnHeader">
+                            <Setter Property="Background" Value="#2D2D2D"/>
+                            <Setter Property="Foreground" Value="White"/>
+                            <Setter Property="BorderThickness" Value="0"/>
+                            <Setter Property="Padding" Value="5"/>
+                        </Style>
+                    </DataGridTextColumn.HeaderStyle>
+                </DataGridTextColumn>
+
+
+                <!-- Cột Số lượng thành viên -->
+                <DataGridTextColumn Header="Trạng thái" Binding="{Binding Path=TrangThai}" Width="*">
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="Margin" Value="5,0"/>
+                            <Setter Property="HorizontalAlignment" Value="Center"/>
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                    <DataGridTextColumn.HeaderStyle>
+                        <Style TargetType="DataGridColumnHeader">
+                            <Setter Property="Background" Value="#2D2D2D"/>
+                            <Setter Property="Foreground" Value="White"/>
+                            <Setter Property="BorderThickness" Value="0"/>
+                            <Setter Property="Padding" Value="5"/>
+                        </Style>
+                    </DataGridTextColumn.HeaderStyle>
+                </DataGridTextColumn>
+
+                <!-- Cột Số lượng thành viên -->
+                <DataGridTextColumn Header="Trạng thái" Binding="{Binding Path=ThoiGianHoanThanh}" Width="*">
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="Margin" Value="5,0"/>
+                            <Setter Property="HorizontalAlignment" Value="Center"/>
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                    <DataGridTextColumn.HeaderStyle>
+                        <Style TargetType="DataGridColumnHeader">
+                            <Setter Property="Background" Value="#2D2D2D"/>
+                            <Setter Property="Foreground" Value="White"/>
+                            <Setter Property="BorderThickness" Value="0"/>
+                            <Setter Property="Padding" Value="5"/>
+                        </Style>
+                    </DataGridTextColumn.HeaderStyle>
+                </DataGridTextColumn>
+
+                <!-- Cột Người chịu trách nhiệm --><!--
+                <DataGridTextColumn Header="Thành viên" Binding="{Binding ThanhVien}" Width="1*">
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="Margin" Value="5,0"/>
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                    <DataGridTextColumn.HeaderStyle>
+                        <Style TargetType="DataGridColumnHeader">
+                            <Setter Property="Background" Value="#2D2D2D"/>
+                            <Setter Property="Foreground" Value="White"/>
+                            <Setter Property="BorderThickness" Value="0"/>
+                            <Setter Property="Padding" Value="5"/>
+                        </Style>
+                    </DataGridTextColumn.HeaderStyle>
+                </DataGridTextColumn>
+
+                --><!-- Cột Người tạo công việc --><!--
+                <DataGridTextColumn Header="Người tạo công việc" Binding="{Binding NguoiTaoCongViec}" Width="1*">
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="Margin" Value="5,0"/>
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                    <DataGridTextColumn.HeaderStyle>
+                        <Style TargetType="DataGridColumnHeader">
+                            <Setter Property="Background" Value="#2D2D2D"/>
+                            <Setter Property="Foreground" Value="White"/>
+                            <Setter Property="BorderThickness" Value="0"/>
+                            <Setter Property="Padding" Value="5"/>
+                        </Style>
+                    </DataGridTextColumn.HeaderStyle>
+                </DataGridTextColumn>
+                --><!-- Cột Lịch sử cập nhật --><!--
+                <DataGridTextColumn Header="Lịch sử cập nhật" Binding="{Binding LichSuCapNhat}" Width="1*">
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="Margin" Value="5,0"/>
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                    <DataGridTextColumn.HeaderStyle>
+                        <Style TargetType="DataGridColumnHeader">
+                            <Setter Property="Background" Value="#2D2D2D"/>
+                            <Setter Property="Foreground" Value="White"/>
+                            <Setter Property="BorderThickness" Value="0"/>
+                            <Setter Property="Padding" Value="5"/>
+                        </Style>
+                    </DataGridTextColumn.HeaderStyle>
+                </DataGridTextColumn>-->
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</UserControl>

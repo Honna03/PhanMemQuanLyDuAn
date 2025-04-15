@@ -33,9 +33,15 @@ public partial class NhanVien
 
     public virtual ICollection<Kpi> Kpis { get; set; } = new List<Kpi>();
 
+    public virtual ICollection<LichSuCapNhatLuong> LichSuCapNhatLuongs { get; set; } = new List<LichSuCapNhatLuong>();
+
     public virtual ICollection<Luong> Luongs { get; set; } = new List<Luong>();
 
     public virtual ICollection<NhanVienThamGiaDuAn> NhanVienThamGiaDuAns { get; set; } = new List<NhanVienThamGiaDuAn>();
 
     public virtual Quyen QMaNavigation { get; set; } = null!;
+
+    public virtual ICollection<ThongBao> ThongBaoNvIdNguoiGuiNavigations { get; set; } = new List<ThongBao>();
+
+    public virtual ICollection<ThongBao> ThongBaoNvIdNguoiNhanNavigations { get; set; } = new List<ThongBao>();
 }

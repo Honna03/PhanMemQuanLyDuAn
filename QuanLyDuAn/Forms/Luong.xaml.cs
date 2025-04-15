@@ -42,51 +42,51 @@ namespace QuanLyDuAn.Forms
 
         private void LoadData()
         {
-             try
-             {
-                 _luongList = new List<LuongViewModel>();
-                 _originalLuongList = new List<LuongViewModel>();
+            try
+            {
+                _luongList = new List<LuongViewModel>();
+                _originalLuongList = new List<LuongViewModel>();
 
-                 using (var context = new ThucTapQuanLyDuAnContext())
-                 {
-                     var query = from nv in context.NhanViens
-                                 join l in context.Luongs on nv.NvId equals l.NvId into luongGroup
-                                 from l in luongGroup.DefaultIfEmpty()
-                                 join k in context.Kpis
-                                 on new { nv.NvId, ThangNam = l != null ? l.LuongThangNam : (DateOnly?)null }
-                                 equals new { k.NvId, ThangNam = (DateOnly?)k.KpiThangNam }
-                                 into kpiGroup
-                                 from k in kpiGroup.DefaultIfEmpty()
-                                 select new LuongViewModel
-                                 {
-                                     STT = 0,
-                                     NvId = nv.NvId,
-                                     ThangNam = l != null ? l.LuongThangNam.ToString("MM/yyyy") : "",
-                                     MaNhanVien = nv.NvMa,
-                                     HoTenNhanVien = nv.NvTen,
-                                     Email = nv.NvEmail,
-                                     SDT = nv.NvSdt,
-                                     DiaChi = nv.NvDiaChi,
-                                     LuongCoBan = nv.NvLuongCoBan, 
-                                     KPI = k != null ? (k.KpiPhanTram ?? 0) : 0, // Sửa lỗi: decimal? -> decimal
-                                     PhuCap = l != null ? (l.LuongPhuCap ?? 0) : 0, // Sửa lỗi: decimal? -> decimal
-                                     TongLuong = l != null ? (l.LuongThucNhan ?? 0) : 0 // Sửa lỗi: decimal? -> decimal
-                                 };
+                using (var context = new ThucTapQuanLyDuAnContext())
+                {
+                    var query = from nv in context.NhanViens
+                                join l in context.Luongs on nv.NvId equals l.NvId into luongGroup
+                                from l in luongGroup.DefaultIfEmpty()
+                                join k in context.Kpis
+                                on new { nv.NvId, ThangNam = l != null ? l.LuongThangNam : (DateOnly?)null }
+                                equals new { k.NvId, ThangNam = (DateOnly?)k.KpiThangNam }
+                                into kpiGroup
+                                from k in kpiGroup.DefaultIfEmpty()
+                                select new LuongViewModel
+                                {
+                                    STT = 0,
+                                    NvId = nv.NvId,
+                                    ThangNam = l != null ? l.LuongThangNam.ToString("MM/yyyy") : "",
+                                    MaNhanVien = nv.NvMa,
+                                    HoTenNhanVien = nv.NvTen,
+                                    Email = nv.NvEmail,
+                                    SDT = nv.NvSdt,
+                                    DiaChi = nv.NvDiaChi,
+                                    LuongCoBan = nv.NvLuongCoBan,
+                                    KPI = k != null ? (k.KpiPhanTram ?? 0) : 0, // Sửa lỗi: decimal? -> decimal
+                                    PhuCap = l != null ? (l.LuongPhuCap ?? 0) : 0, // Sửa lỗi: decimal? -> decimal
+                                    TongLuong = l != null ? (l.LuongThucNhan ?? 0) : 0 // Sửa lỗi: decimal? -> decimal
+                                };
 
-                     _luongList = query.ToList();
-                     for (int i = 0; i < _luongList.Count; i++)
-                     {
-                         _luongList[i].STT = i + 1;
-                     }
-                     _originalLuongList = new List<LuongViewModel>(_luongList);
+                    _luongList = query.ToList();
+                    for (int i = 0; i < _luongList.Count; i++)
+                    {
+                        _luongList[i].STT = i + 1;
+                    }
+                    _originalLuongList = new List<LuongViewModel>(_luongList);
 
-                     UpdatePagination();
-                 }
-             }
-             catch (Exception ex)
-             {
-                 MessageBox.Show($"Lỗi khi tải dữ liệu: {ex.Message}", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
-             }
+                    UpdatePagination();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Lỗi khi tải dữ liệu: {ex.Message}", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         private void UpdatePagination()
@@ -218,6 +218,22 @@ namespace QuanLyDuAn.Forms
             {
                 LoadData();
             }
+        }
+
+        private void btn_AdjustBaseSalary_Click(object sender, RoutedEventArgs e)
+        {
+            Window window = new Window
+            {
+                Title = "Điều chỉnh lương cơ bản",
+                Width = 600,
+                Height = 450,
+                WindowStartupLocation = WindowStartupLocation.CenterOwner,
+                Owner = Window.GetWindow(this)
+            };
+
+            var adjustBaseSalaryForm = new AdjustBaseSalary();
+            window.Content = adjustBaseSalaryForm;
+            window.ShowDialog();
         }
 
         private void btn_ExportExcel_Click(object sender, RoutedEventArgs e)

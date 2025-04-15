@@ -424,3 +424,5 @@ D:\ThucTapTotNghiep\ProjectZomboid\PhanMemQuanLyDuAn\QuanLyDuAn\bin\Debug\net9.0
 D:\ThucTapTotNghiep\ProjectZomboid\PhanMemQuanLyDuAn\QuanLyDuAn\bin\Debug\net9.0-windows\System.Drawing.Common.dll
 D:\ThucTapTotNghiep\ProjectZomboid\PhanMemQuanLyDuAn\QuanLyDuAn\bin\Debug\net9.0-windows\System.Private.Windows.Core.dll
 D:\ThucTapTotNghiep\ProjectZomboid\PhanMemQuanLyDuAn\QuanLyDuAn\bin\Debug\net9.0-windows\runtimes\win\lib\net9.0\Microsoft.Win32.SystemEvents.dll
+D:\ThucTapTotNghiep\ProjectZomboid\PhanMemQuanLyDuAn\QuanLyDuAn\obj\Debug\net9.0-windows\Forms\AdjustBaseSalary.g.cs
+D:\ThucTapTotNghiep\ProjectZomboid\PhanMemQuanLyDuAn\QuanLyDuAn\obj\Debug\net9.0-windows\Forms\AdjustBaseSalary.baml

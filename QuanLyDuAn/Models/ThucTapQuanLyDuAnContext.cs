@@ -22,7 +22,11 @@ public partial class ThucTapQuanLyDuAnContext : DbContext
 
     public virtual DbSet<DuAn> DuAns { get; set; }
 
+    public virtual DbSet<ErrorLog> ErrorLogs { get; set; }
+
     public virtual DbSet<Kpi> Kpis { get; set; }
+
+    public virtual DbSet<LichSuCapNhatLuong> LichSuCapNhatLuongs { get; set; }
 
     public virtual DbSet<Luong> Luongs { get; set; }
 
@@ -34,6 +38,8 @@ public partial class ThucTapQuanLyDuAnContext : DbContext
 
     public virtual DbSet<Quyen> Quyens { get; set; }
 
+    public virtual DbSet<ThongBao> ThongBaos { get; set; }
+
     public virtual DbSet<ThongTinCongTy> ThongTinCongTies { get; set; }
 
     public virtual DbSet<TrangThai> TrangThais { get; set; }
@@ -41,9 +47,7 @@ public partial class ThucTapQuanLyDuAnContext : DbContext
     public virtual DbSet<VaiTro> VaiTros { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
-        optionsBuilder.UseSqlServer(ConfigurationManager.ConnectionStrings["QLDAConnection"].ConnectionString);
-    }
+    { optionsBuilder.UseSqlServer(ConfigurationManager.ConnectionStrings["QLDAConnection"].ConnectionString); }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<CapNhatCongViec>(entity =>
@@ -84,12 +88,7 @@ public partial class ThucTapQuanLyDuAnContext : DbContext
         {
             entity.HasKey(e => new { e.CvId, e.DaId });
 
-            entity.ToTable("CongViec", tb =>
-                {
-                    tb.HasTrigger("TRG_DeleteCongViec");
-                    tb.HasTrigger("TRG_UpdateKPI");
-                    tb.HasTrigger("TRG_UpdateTienDoDuAn");
-                });
+            entity.ToTable("CongViec");
 
             entity.Property(e => e.CvId)
                 .ValueGeneratedOnAdd()
@@ -103,7 +102,7 @@ public partial class ThucTapQuanLyDuAnContext : DbContext
                 .HasDefaultValue("")
                 .HasColumnName("cv_File");
             entity.Property(e => e.CvKetThuc)
-                .HasDefaultValueSql("(NULL)")
+                .HasDefaultValueSql("('')")
                 .HasColumnName("cv_KetThuc");
             entity.Property(e => e.CvMa)
                 .HasMaxLength(17)
@@ -122,7 +121,7 @@ public partial class ThucTapQuanLyDuAnContext : DbContext
                 .HasMaxLength(50)
                 .HasColumnName("cv_Ten");
             entity.Property(e => e.CvThoiGianHoanThanh)
-                .HasDefaultValueSql("(NULL)")
+                .HasDefaultValueSql("('')")
                 .HasColumnName("cv_ThoiGianHoanThanh");
             entity.Property(e => e.NvIdNguoiTao).HasColumnName("nv_ID_NguoiTao");
             entity.Property(e => e.TtMa)
@@ -145,7 +144,7 @@ public partial class ThucTapQuanLyDuAnContext : DbContext
         {
             entity.HasKey(e => e.DaId);
 
-            entity.ToTable("DuAn", tb => tb.HasTrigger("TRG_DeleteDuAn"));
+            entity.ToTable("DuAn");
 
             entity.Property(e => e.DaId).HasColumnName("da_ID");
             entity.Property(e => e.DaBatDau)
@@ -173,7 +172,7 @@ public partial class ThucTapQuanLyDuAnContext : DbContext
                 .HasMaxLength(100)
                 .HasColumnName("da_Ten");
             entity.Property(e => e.DaThoiGianHoanThanh)
-                .HasDefaultValueSql("(NULL)")
+                .HasDefaultValueSql("('')")
                 .HasColumnName("da_ThoiGianHoanThanh");
             entity.Property(e => e.DaTienDo)
                 .HasColumnType("decimal(5, 2)")
@@ -195,11 +194,24 @@ public partial class ThucTapQuanLyDuAnContext : DbContext
                 .HasConstraintName("FK_DuAn_TrangThai");
         });
 
+        modelBuilder.Entity<ErrorLog>(entity =>
+        {
+            entity.HasKey(e => e.ErrorId).HasName("PK__ErrorLog__358565CAFBD13DA3");
+
+            entity.ToTable("ErrorLog");
+
+            entity.Property(e => e.ErrorId).HasColumnName("ErrorID");
+            entity.Property(e => e.ErrorMessage).HasMaxLength(4000);
+            entity.Property(e => e.ErrorTime)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime");
+        });
+
         modelBuilder.Entity<Kpi>(entity =>
         {
             entity.HasKey(e => new { e.NvId, e.KpiThangNam });
 
-            entity.ToTable("KPI", tb => tb.HasTrigger("TRG_InsertUpdateLuongFromKPI"));
+            entity.ToTable("KPI");
 
             entity.Property(e => e.NvId).HasColumnName("nv_ID");
             entity.Property(e => e.KpiThangNam).HasColumnName("kpi_ThangNam");
@@ -212,6 +224,40 @@ public partial class ThucTapQuanLyDuAnContext : DbContext
                 .HasForeignKey(d => d.NvId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_KPI_NhanVien");
+        });
+
+        modelBuilder.Entity<LichSuCapNhatLuong>(entity =>
+        {
+            entity.HasKey(e => e.LsId);
+
+            entity.ToTable("LichSuCapNhatLuong");
+
+            entity.HasIndex(e => new { e.NvId, e.QMa }, "IX_LichSuCapNhatLuong_nv_ID_q_Ma");
+
+            entity.Property(e => e.LsId).HasColumnName("ls_ID");
+            entity.Property(e => e.LuongCu)
+                .HasColumnType("decimal(15, 2)")
+                .HasColumnName("luongCu");
+            entity.Property(e => e.LuongMoi)
+                .HasColumnType("decimal(15, 2)")
+                .HasColumnName("luongMoi");
+            entity.Property(e => e.NvId).HasColumnName("nv_ID");
+            entity.Property(e => e.QMa)
+                .HasMaxLength(15)
+                .IsUnicode(false)
+                .HasColumnName("q_Ma");
+            entity.Property(e => e.ThoiGianCapNhat)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime")
+                .HasColumnName("thoiGianCapNhat");
+
+            entity.HasOne(d => d.Nv).WithMany(p => p.LichSuCapNhatLuongs)
+                .HasForeignKey(d => d.NvId)
+                .HasConstraintName("FK_LichSuCapNhatLuong_NhanVien");
+
+            entity.HasOne(d => d.QMaNavigation).WithMany(p => p.LichSuCapNhatLuongs)
+                .HasForeignKey(d => d.QMa)
+                .HasConstraintName("FK_LichSuCapNhatLuong_Quyen");
         });
 
         modelBuilder.Entity<Luong>(entity =>
@@ -240,9 +286,9 @@ public partial class ThucTapQuanLyDuAnContext : DbContext
         {
             entity.HasKey(e => e.NvId);
 
-            entity.ToTable("NhanVien", tb => tb.HasTrigger("TRG_DeleteNhanVien"));
+            entity.ToTable("NhanVien");
 
-            entity.HasIndex(e => e.NvTaiKhoan, "UQ__NhanVien__3360C9D2CAB78C2B").IsUnique();
+            entity.HasIndex(e => e.NvTaiKhoan, "UQ__NhanVien__3360C9D24B98F8ED").IsUnique();
 
             entity.Property(e => e.NvId).HasColumnName("nv_ID");
             entity.Property(e => e.NvDiaChi)
@@ -269,7 +315,7 @@ public partial class ThucTapQuanLyDuAnContext : DbContext
                 .HasColumnName("nv_MatKhau");
             entity.Property(e => e.NvNgaySinh).HasColumnName("nv_NgaySinh");
             entity.Property(e => e.NvSdt)
-                .HasMaxLength(10)
+                .HasMaxLength(15)
                 .IsUnicode(false)
                 .IsFixedLength()
                 .HasColumnName("nv_SDT");
@@ -295,7 +341,7 @@ public partial class ThucTapQuanLyDuAnContext : DbContext
         {
             entity.HasKey(e => new { e.NvId, e.DaId });
 
-            entity.ToTable("NhanVienThamGiaDuAn", tb => tb.HasTrigger("TRG_DeleteNVThamGiaDA"));
+            entity.ToTable("NhanVienThamGiaDuAn");
 
             entity.Property(e => e.NvId).HasColumnName("nv_ID");
             entity.Property(e => e.DaId).HasColumnName("da_ID");
@@ -324,11 +370,9 @@ public partial class ThucTapQuanLyDuAnContext : DbContext
         {
             entity.HasKey(e => new { e.CvId, e.DaId, e.NvId });
 
-            entity.ToTable("PhanCongCongViec", tb =>
-                {
-                    tb.HasTrigger("TRG_DeletePhanCongCongViec");
-                    tb.HasTrigger("TRG_UpdateKPI_PhanCong");
-                });
+            entity.ToTable("PhanCongCongViec");
+
+            entity.HasIndex(e => e.CvId, "UQ__PhanCong__C36B8FFFFFC63E28").IsUnique();
 
             entity.Property(e => e.CvId).HasColumnName("cv_ID");
             entity.Property(e => e.DaId).HasColumnName("da_ID");
@@ -355,6 +399,9 @@ public partial class ThucTapQuanLyDuAnContext : DbContext
                 .HasMaxLength(15)
                 .IsUnicode(false)
                 .HasColumnName("q_Ma");
+            entity.Property(e => e.QLuongCoBan)
+                .HasColumnType("decimal(15, 2)")
+                .HasColumnName("q_LuongCoBan");
             entity.Property(e => e.QMoTa)
                 .HasMaxLength(50)
                 .HasDefaultValue("")
@@ -362,6 +409,46 @@ public partial class ThucTapQuanLyDuAnContext : DbContext
             entity.Property(e => e.QTen)
                 .HasMaxLength(50)
                 .HasColumnName("q_Ten");
+        });
+
+        modelBuilder.Entity<ThongBao>(entity =>
+        {
+            entity.HasKey(e => e.TbId);
+
+            entity.ToTable("ThongBao");
+
+            entity.Property(e => e.TbId).HasColumnName("tb_ID");
+            entity.Property(e => e.CvId).HasColumnName("cv_ID");
+            entity.Property(e => e.DaId).HasColumnName("da_ID");
+            entity.Property(e => e.NvIdNguoiGui).HasColumnName("nv_ID_NguoiGui");
+            entity.Property(e => e.NvIdNguoiNhan).HasColumnName("nv_ID_NguoiNhan");
+            entity.Property(e => e.TbLoai)
+                .HasMaxLength(20)
+                .HasColumnName("tb_Loai");
+            entity.Property(e => e.TbNoiDung)
+                .HasMaxLength(500)
+                .HasColumnName("tb_NoiDung");
+            entity.Property(e => e.TbThoiGian)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime")
+                .HasColumnName("tb_ThoiGian");
+            entity.Property(e => e.TbTinhTrang)
+                .HasDefaultValue(false)
+                .HasColumnName("tb_TinhTrang");
+
+            entity.HasOne(d => d.NvIdNguoiGuiNavigation).WithMany(p => p.ThongBaoNvIdNguoiGuiNavigations)
+                .HasForeignKey(d => d.NvIdNguoiGui)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_ThongBao_NhanVien_NguoiGui");
+
+            entity.HasOne(d => d.NvIdNguoiNhanNavigation).WithMany(p => p.ThongBaoNvIdNguoiNhanNavigations)
+                .HasForeignKey(d => d.NvIdNguoiNhan)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_ThongBao_NhanVien_NguoiNhan");
+
+            entity.HasOne(d => d.CongViec).WithMany(p => p.ThongBaos)
+                .HasForeignKey(d => new { d.CvId, d.DaId })
+                .HasConstraintName("FK_ThongBao_CongViec");
         });
 
         modelBuilder.Entity<ThongTinCongTy>(entity =>

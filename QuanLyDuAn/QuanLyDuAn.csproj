@@ -98,30 +98,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<Compile Update="DATA\DataSet1.Designer.cs">
-			<DesignTime>True</DesignTime>
-			<AutoGen>True</AutoGen>
-			<DependentUpon>DataSet1.xsd</DependentUpon>
-		</Compile>
-		<Compile Update="DATA\ReportDataSet.Designer.cs">
-			<DesignTime>True</DesignTime>
-			<AutoGen>True</AutoGen>
-			<DependentUpon>ReportDataSet.xsd</DependentUpon>
-		</Compile>
-	</ItemGroup>
-
-	<ItemGroup>
-		<None Update="DATA\DataSet1.xsd">
-			<Generator>MSDataSetGenerator</Generator>
-			<LastGenOutput>DataSet1.Designer.cs</LastGenOutput>
-		</None>
-		<None Update="DATA\ReportDataSet.xsd">
-			<Generator>MSDataSetGenerator</Generator>
-			<LastGenOutput>ReportDataSet.Designer.cs</LastGenOutput>
-		</None>
-	</ItemGroup>
-
-	<ItemGroup>
 		<Folder Include="Image\" />
 	</ItemGroup>
 

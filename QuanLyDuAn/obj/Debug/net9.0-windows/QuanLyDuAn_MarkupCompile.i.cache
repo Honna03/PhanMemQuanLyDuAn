@@ -10,11 +10,11 @@ none
 false
 TRACE;DEBUG;NET;NET9_0;NETCOREAPP;WINDOWS;WINDOWS7_0;NET5_0_OR_GREATER;NET6_0_OR_GREATER;NET7_0_OR_GREATER;NET8_0_OR_GREATER;NET9_0_OR_GREATER;NETCOREAPP3_0_OR_GREATER;NETCOREAPP3_1_OR_GREATER;WINDOWS7_0_OR_GREATER
 D:\ThucTapTotNghiep\ProjectZomboid\PhanMemQuanLyDuAn\QuanLyDuAn\App.xaml
-17737475223
+18-1867652811
 
-38-971932966
+40-1222329126
 249-219186687
-Forms\BaoCao.xaml;Forms\ChiTietCongViec.xaml;Forms\ChiTietNhanVien.xaml;Forms\CongThucKPI.xaml;Forms\DanhSachCongViec.xaml;Forms\DanhSachNhanVien.xaml;Forms\Edit_CongThuc.xaml;Forms\Edit_DuAn.xaml;Forms\Edit_KPI.xaml;Forms\Edit_Luong.xaml;Forms\KPI.xaml;Forms\Login.xaml;Forms\Luong.xaml;Forms\MainWindow.xaml;Forms\ProjectsControl.xaml;Forms\Register.xaml;Forms\TrangChu.xaml;
+Forms\AdjustBaseSalary.xaml;Forms\BaoCao.xaml;Forms\ChiTietCongViec.xaml;Forms\ChiTietNhanVien.xaml;Forms\CongThucKPI.xaml;Forms\DanhSachCongViec.xaml;Forms\DanhSachNhanVien.xaml;Forms\Edit_CongThuc.xaml;Forms\Edit_DuAn.xaml;Forms\Edit_KPI.xaml;Forms\Edit_Luong.xaml;Forms\KPI.xaml;Forms\Login.xaml;Forms\Luong.xaml;Forms\MainWindow.xaml;Forms\ProjectsControl.xaml;Forms\Register.xaml;Forms\TrangChu.xaml;
 
 False
 

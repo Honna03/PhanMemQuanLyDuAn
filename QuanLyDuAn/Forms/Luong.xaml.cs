@@ -4,7 +4,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using QuanLyDuAn.Models; // Namespace của DbContext
+using QuanLyDuAn.Models; // Namespace của DbContext*/
 using Microsoft.EntityFrameworkCore;
 using ClosedXML.Excel;
 using System.IO;
@@ -67,7 +67,7 @@ namespace QuanLyDuAn.Forms
                                     Email = nv.NvEmail,
                                     SDT = nv.NvSdt,
                                     DiaChi = nv.NvDiaChi,
-                                    LuongCoBan = nv.NvLuongCoBan, // Sửa lỗi: decimal? -> decimal
+                                    LuongCoBan = nv.NvLuongCoBan,
                                     KPI = k != null ? (k.KpiPhanTram ?? 0) : 0, // Sửa lỗi: decimal? -> decimal
                                     PhuCap = l != null ? (l.LuongPhuCap ?? 0) : 0, // Sửa lỗi: decimal? -> decimal
                                     TongLuong = l != null ? (l.LuongThucNhan ?? 0) : 0 // Sửa lỗi: decimal? -> decimal
@@ -218,6 +218,22 @@ namespace QuanLyDuAn.Forms
             {
                 LoadData();
             }
+        }
+
+        private void btn_AdjustBaseSalary_Click(object sender, RoutedEventArgs e)
+        {
+            Window window = new Window
+            {
+                Title = "Điều chỉnh lương cơ bản",
+                Width = 600,
+                Height = 450,
+                WindowStartupLocation = WindowStartupLocation.CenterOwner,
+                Owner = Window.GetWindow(this)
+            };
+
+            var adjustBaseSalaryForm = new AdjustBaseSalary();
+            window.Content = adjustBaseSalaryForm;
+            window.ShowDialog();
         }
 
         private void btn_ExportExcel_Click(object sender, RoutedEventArgs e)

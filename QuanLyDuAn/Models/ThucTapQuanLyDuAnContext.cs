@@ -322,14 +322,14 @@ public partial class ThucTapQuanLyDuAnContext : DbContext
 
         modelBuilder.Entity<PhanCongCongViec>(entity =>
         {
-        entity.HasKey(e => new { e.CvId, e.DaId, e.NvId });
+            entity.HasKey(e => new { e.CvId, e.DaId, e.NvId });
 
-        entity.ToTable("PhanCongCongViec", tb =>
-        {
-            tb.HasTrigger("TRG_DeletePhanCongCongViec");
-            tb.HasTrigger("TRG_UpdateKPI_PhanCong");
-            tb.HasTrigger("trg_PhanCongCongViec_ThemThongBao");
-        });
+            entity.ToTable("PhanCongCongViec", tb =>
+            {
+                tb.HasTrigger("TRG_DeletePhanCongCongViec");
+                tb.HasTrigger("TRG_UpdateKPI_PhanCong");
+                tb.HasTrigger("trg_PhanCongCongViec_ThemThongBao");
+            });
 
             entity.HasIndex(e => e.CvId, "UQ__PhanCong__C36B8FFFC2955FA2").IsUnique();
 

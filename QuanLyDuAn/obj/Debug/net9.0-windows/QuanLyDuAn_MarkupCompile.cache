@@ -10,11 +10,11 @@ none
 false
 TRACE;DEBUG;NET;NET9_0;NETCOREAPP
 D:\TTTN\Cty\Project\QuanLyDuAnTrenWindows\QuanLyDuAn\App.xaml
-162089118114
+17-516009920
 
-38981812440
+422045609717
 248-1802873058
-Forms\AddCongViec.xaml;Forms\AddNhanVien.xaml;Forms\BaoCao.xaml;Forms\ChiTietTienDo.xaml;Forms\DanhSachCongViec.xaml;Forms\DanhSachNhanVien.xaml;Forms\Edit_DuAn.xaml;Forms\Edit_Luong.xaml;Forms\KPI.xaml;Forms\Login.xaml;Forms\Luong.xaml;Forms\MainWindow.xaml;Forms\ProjectsControl.xaml;Forms\ThongTinCongViec.xaml;Forms\ThongTinNhanVien.xaml;Forms\TrangChu.xaml;
+Forms\AddCongViec.xaml;Forms\AddNhanVien.xaml;Forms\AdjustBaseSalary.xaml;Forms\BaoCao.xaml;Forms\ChiTietTienDo.xaml;Forms\DanhSachCongViec.xaml;Forms\DanhSachNhanVien.xaml;Forms\Edit_DuAn.xaml;Forms\Edit_Luong.xaml;Forms\KPI.xaml;Forms\Login.xaml;Forms\Luong.xaml;Forms\MainWindow.xaml;Forms\ProjectsControl.xaml;Forms\ThongTinCongViec.xaml;Forms\ThongTinNhanVien.xaml;Forms\TrangChu.xaml;
 
 False
 

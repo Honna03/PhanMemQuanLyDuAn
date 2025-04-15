@@ -11,5 +11,8 @@ public partial class Quyen
 
     public string? QMoTa { get; set; }
 
+    public decimal QLuongCoBan { get; set; }
+
+    public virtual ICollection<LichSuCapNhatLuong> LichSuCapNhatLuongs { get; set; } = new List<LichSuCapNhatLuong>();
     public virtual ICollection<NhanVien> NhanViens { get; set; } = new List<NhanVien>();
 }

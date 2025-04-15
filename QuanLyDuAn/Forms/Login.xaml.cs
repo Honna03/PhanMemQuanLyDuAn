@@ -27,7 +27,7 @@ namespace QuanLyDuAn.Forms
 
             if (nhanVien != null)
             {
-                MainWindow mainWindow = new MainWindow(nhanVien.NvId);
+                MainWindow mainWindow = new MainWindow(nhanVien.NvTaiKhoan);
                 mainWindow.Show();
                 this.Close();
             }

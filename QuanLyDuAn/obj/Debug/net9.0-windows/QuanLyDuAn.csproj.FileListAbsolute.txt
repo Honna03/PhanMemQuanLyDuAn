@@ -1,9 +1,11 @@
 D:\TTTN\Cty\Project\QuanLyDuAnTrenWindows\QuanLyDuAn\obj\Debug\net9.0-windows\QuanLyDuAn.csproj.AssemblyReference.cache
 D:\TTTN\Cty\Project\QuanLyDuAnTrenWindows\QuanLyDuAn\obj\Debug\net9.0-windows\Forms\DanhSachNhanVien.baml
 D:\TTTN\Cty\Project\QuanLyDuAnTrenWindows\QuanLyDuAn\obj\Debug\net9.0-windows\Forms\Edit_DuAn.baml
+D:\TTTN\Cty\Project\QuanLyDuAnTrenWindows\QuanLyDuAn\obj\Debug\net9.0-windows\Forms\MainWindow.baml
 D:\TTTN\Cty\Project\QuanLyDuAnTrenWindows\QuanLyDuAn\obj\Debug\net9.0-windows\Forms\ProjectsControl.baml
 D:\TTTN\Cty\Project\QuanLyDuAnTrenWindows\QuanLyDuAn\obj\Debug\net9.0-windows\Forms\AddCongViec.g.cs
 D:\TTTN\Cty\Project\QuanLyDuAnTrenWindows\QuanLyDuAn\obj\Debug\net9.0-windows\Forms\AddNhanVien.g.cs
+D:\TTTN\Cty\Project\QuanLyDuAnTrenWindows\QuanLyDuAn\obj\Debug\net9.0-windows\Forms\AdjustBaseSalary.g.cs
 D:\TTTN\Cty\Project\QuanLyDuAnTrenWindows\QuanLyDuAn\obj\Debug\net9.0-windows\Forms\BaoCao.g.cs
 D:\TTTN\Cty\Project\QuanLyDuAnTrenWindows\QuanLyDuAn\obj\Debug\net9.0-windows\Forms\ChiTietTienDo.g.cs
 D:\TTTN\Cty\Project\QuanLyDuAnTrenWindows\QuanLyDuAn\obj\Debug\net9.0-windows\Forms\DanhSachCongViec.g.cs
@@ -12,7 +14,7 @@ D:\TTTN\Cty\Project\QuanLyDuAnTrenWindows\QuanLyDuAn\obj\Debug\net9.0-windows\Fo
 D:\TTTN\Cty\Project\QuanLyDuAnTrenWindows\QuanLyDuAn\obj\Debug\net9.0-windows\Forms\Edit_Luong.g.cs
 D:\TTTN\Cty\Project\QuanLyDuAnTrenWindows\QuanLyDuAn\obj\Debug\net9.0-windows\Forms\KPI.g.cs
 D:\TTTN\Cty\Project\QuanLyDuAnTrenWindows\QuanLyDuAn\obj\Debug\net9.0-windows\Forms\Login.g.cs
-D:\TTTN\Cty\Project\QuanLyDuAnTrenWindows\QuanLyDuAn\obj\Debug\net9.0-windows\Forms\Luong.g.cs
+D:\TTTN\Cty\Project\QuanLyDuAnTrenWindows\QuanLyDuAn\obj\Debug\net9.0-windows\Forms\MainWindow.g.cs
 D:\TTTN\Cty\Project\QuanLyDuAnTrenWindows\QuanLyDuAn\obj\Debug\net9.0-windows\Forms\ProjectsControl.g.cs
 D:\TTTN\Cty\Project\QuanLyDuAnTrenWindows\QuanLyDuAn\obj\Debug\net9.0-windows\Forms\ThongTinCongViec.g.cs
 D:\TTTN\Cty\Project\QuanLyDuAnTrenWindows\QuanLyDuAn\obj\Debug\net9.0-windows\Forms\ThongTinNhanVien.g.cs
@@ -20,8 +22,7 @@ D:\TTTN\Cty\Project\QuanLyDuAnTrenWindows\QuanLyDuAn\obj\Debug\net9.0-windows\Fo
 D:\TTTN\Cty\Project\QuanLyDuAnTrenWindows\QuanLyDuAn\obj\Debug\net9.0-windows\App.g.cs
 D:\TTTN\Cty\Project\QuanLyDuAnTrenWindows\QuanLyDuAn\obj\Debug\net9.0-windows\QuanLyDuAn_MarkupCompile.cache
 D:\TTTN\Cty\Project\QuanLyDuAnTrenWindows\QuanLyDuAn\obj\Debug\net9.0-windows\QuanLyDuAn_MarkupCompile.lref
-D:\TTTN\Cty\Project\QuanLyDuAnTrenWindows\QuanLyDuAn\obj\Debug\net9.0-windows\Forms\MainWindow.baml
-D:\TTTN\Cty\Project\QuanLyDuAnTrenWindows\QuanLyDuAn\obj\Debug\net9.0-windows\Forms\MainWindow.g.cs
+D:\TTTN\Cty\Project\QuanLyDuAnTrenWindows\QuanLyDuAn\obj\Debug\net9.0-windows\Forms\Luong.g.cs
 D:\TTTN\Cty\Project\QuanLyDuAnTrenWindows\QuanLyDuAn\bin\Debug\net9.0-windows\QuanLyDuAn.exe
 D:\TTTN\Cty\Project\QuanLyDuAnTrenWindows\QuanLyDuAn\bin\Debug\net9.0-windows\QuanLyDuAn.dll.config
 D:\TTTN\Cty\Project\QuanLyDuAnTrenWindows\QuanLyDuAn\bin\Debug\net9.0-windows\QuanLyDuAn.deps.json
@@ -218,6 +219,7 @@ D:\TTTN\Cty\Project\QuanLyDuAnTrenWindows\QuanLyDuAn\bin\Debug\net9.0-windows\ru
 D:\TTTN\Cty\Project\QuanLyDuAnTrenWindows\QuanLyDuAn\bin\Debug\net9.0-windows\runtimes\win\lib\net6.0\System.Runtime.Caching.dll
 D:\TTTN\Cty\Project\QuanLyDuAnTrenWindows\QuanLyDuAn\obj\Debug\net9.0-windows\Forms\AddCongViec.baml
 D:\TTTN\Cty\Project\QuanLyDuAnTrenWindows\QuanLyDuAn\obj\Debug\net9.0-windows\Forms\AddNhanVien.baml
+D:\TTTN\Cty\Project\QuanLyDuAnTrenWindows\QuanLyDuAn\obj\Debug\net9.0-windows\Forms\AdjustBaseSalary.baml
 D:\TTTN\Cty\Project\QuanLyDuAnTrenWindows\QuanLyDuAn\obj\Debug\net9.0-windows\Forms\BaoCao.baml
 D:\TTTN\Cty\Project\QuanLyDuAnTrenWindows\QuanLyDuAn\obj\Debug\net9.0-windows\Forms\ChiTietTienDo.baml
 D:\TTTN\Cty\Project\QuanLyDuAnTrenWindows\QuanLyDuAn\obj\Debug\net9.0-windows\Forms\DanhSachCongViec.baml

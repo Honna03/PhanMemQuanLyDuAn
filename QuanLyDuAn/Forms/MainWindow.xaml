@@ -142,7 +142,7 @@
                     <Button x:Name="NotificationButton" Background="Transparent" BorderThickness="0" Padding="0" Margin="0,0,10,0">
                         <TextBlock Text="🔔" Foreground="White" FontSize="22" VerticalAlignment="Center"/>
                     </Button>
-                    <TextBlock x:Name="UserNameTextBlock" Text="Admin" Foreground="White" FontSize="14" VerticalAlignment="Center" MaxWidth="200" TextTrimming="CharacterEllipsis" Margin="0,0,10,0"/>
+                    <TextBlock x:Name="UserName" Text="Admin" Foreground="White" FontSize="14" VerticalAlignment="Center" MaxWidth="200" TextTrimming="CharacterEllipsis" Margin="0,0,10,0"/>
                     <Button x:Name="UserButton" Background="Transparent" BorderThickness="0" Padding="0" Click="UserButton_Click">
                         <TextBlock x:Name="i_User" Text="👤" Foreground="White" FontSize="22" VerticalAlignment="Center"/>
                         <Button.ContextMenu>

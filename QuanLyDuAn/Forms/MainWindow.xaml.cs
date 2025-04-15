@@ -17,21 +17,24 @@ namespace QuanLyDuAn
         private ProjectsControl _projectsControl;
         private int _currentUserId;
         private string _currentUserName;
-
-        public MainWindow(int userId)
+        public static string nguoidangnhap;
+        public MainWindow(string tenTaiKhoan)
         {
             InitializeComponent();
             _context = new ThucTapQuanLyDuAnContext();
             MainContent.Content = new TrangChu();
 
-            _currentUserId = userId;
-            var user = _context.NhanViens.FirstOrDefault(n => n.NvId == userId);
-            _currentUserName = user != null ? user.NvTen : "Admin";
+            /*  _currentUserId = userId;
+              var user = _context.NhanViens.FirstOrDefault(n => n.NvId == userId);
+              _currentUserName = user != null ? user.NvTen : "Admin";
 
-            if (UserNameTextBlock != null)
-            {
-                UserNameTextBlock.Text = _currentUserName;
-            }
+              if (UserNameTextBlock != null)
+              {
+                  UserNameTextBlock.Text = _currentUserName;
+              }*/
+            
+            UserName.Text = tenTaiKhoan;
+            nguoidangnhap = UserName.Text;
 
             timer = new DispatcherTimer();
             timer.Interval = TimeSpan.FromSeconds(1);

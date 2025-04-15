@@ -181,10 +181,68 @@ namespace QuanLyDuAn.Forms
                     BaseFont baseFont = BaseFont.CreateFont("c:\\windows\\fonts\\times.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
                     Font titleFont = new Font(baseFont, 16, Font.BOLD);
                     Font normalFont = new Font(baseFont, 12);
+                    Font smallFont = new Font(baseFont, 10); // Font nhỏ hơn cho thông tin công ty
+
+                    // Lấy thông tin công ty
+                    string companyName = "", companyDescription = "", companyAddress = "", companyPhone = "", companyEmail = "", companyLogoPath = "";
+                    using (SqlConnection conn = new SqlConnection(connectionString))
+                    {
+                        conn.Open();
+                        string companyQuery = "SELECT TOP 1 cty_Ten, cty_MoTa, cty_DiaChi, cty_SDT, cty_Email, cty_Logo FROM ThongTinCongTy";
+                        using (SqlCommand cmd = new SqlCommand(companyQuery, conn))
+                        {
+                            SqlDataReader reader = cmd.ExecuteReader();
+                            if (reader.Read())
+                            {
+                                companyName = reader["cty_Ten"].ToString();
+                                companyDescription = reader["cty_MoTa"].ToString();
+                                companyAddress = reader["cty_DiaChi"].ToString();
+                                companyPhone = reader["cty_SDT"].ToString();
+                                companyEmail = reader["cty_Email"].ToString();
+                                companyLogoPath = reader["cty_Logo"].ToString();
+                            }
+                            reader.Close();
+                        }
+                    }
+
+                    // Tạo bảng để chứa logo và thông tin công ty trên cùng một hàng
+                    PdfPTable headerTable = new PdfPTable(2);
+                    headerTable.WidthPercentage = 100;
+                    headerTable.SetWidths(new float[] { 1f, 3f }); // Logo chiếm 25%, thông tin công ty chiếm 75%
+
+                    // Thêm logo (nếu có)
+                    PdfPCell logoCell = new PdfPCell();
+                    logoCell.Border = Rectangle.NO_BORDER;
+                    if (!string.IsNullOrEmpty(companyLogoPath) && File.Exists(companyLogoPath))
+                    {
+                        iTextSharp.text.Image logo = iTextSharp.text.Image.GetInstance(companyLogoPath);
+                        logo.ScaleToFit(80f, 80f); // Giảm kích thước logo để tiết kiệm không gian
+                        logoCell.AddElement(logo);
+                    }
+                    else
+                    {
+                        logoCell.AddElement(new Paragraph("Không có logo", smallFont));
+                    }
+                    headerTable.AddCell(logoCell);
+
+                    // Thêm thông tin công ty
+                    PdfPCell companyInfoCell = new PdfPCell();
+                    companyInfoCell.Border = Rectangle.NO_BORDER;
+                    companyInfoCell.AddElement(new Paragraph(companyName, titleFont) { Alignment = Element.ALIGN_LEFT });
+                    companyInfoCell.AddElement(new Paragraph($"Mô tả: {companyDescription}", smallFont) { Alignment = Element.ALIGN_LEFT });
+                    companyInfoCell.AddElement(new Paragraph($"Địa chỉ: {companyAddress}", smallFont) { Alignment = Element.ALIGN_LEFT });
+                    companyInfoCell.AddElement(new Paragraph($"Số điện thoại: {companyPhone}", smallFont) { Alignment = Element.ALIGN_LEFT });
+                    companyInfoCell.AddElement(new Paragraph($"Email: {companyEmail}", smallFont) { Alignment = Element.ALIGN_LEFT });
+                    headerTable.AddCell(companyInfoCell);
+
+                    document.Add(headerTable);
+
+                    // Thêm dòng phân cách mỏng
+                    document.Add(new Paragraph(" ", normalFont) { SpacingAfter = 5f });
 
                     // Tiêu đề
                     document.Add(new Paragraph("Báo Cáo Tiến Độ Dự Án", titleFont) { Alignment = Element.ALIGN_CENTER });
-                    document.Add(new Paragraph(" ", normalFont)); // Dòng trống
+                    document.Add(new Paragraph(" ", normalFont) { SpacingAfter = 5f }); // Giảm khoảng cách
 
                     // Thông tin dự án
                     document.Add(new Paragraph("Thông Tin Dự Án", normalFont) { Alignment = Element.ALIGN_LEFT });
@@ -194,14 +252,14 @@ namespace QuanLyDuAn.Forms
                     document.Add(new Paragraph($"Ngày kết thúc dự kiến: {EndDate.Text}", normalFont));
                     document.Add(new Paragraph($"Trạng thái: {ProjectStatus.Text}", normalFont));
                     document.Add(new Paragraph($"Người tạo: {CreatorName.Text}", normalFont));
-                    document.Add(new Paragraph(" ", normalFont)); // Dòng trống
+                    document.Add(new Paragraph(" ", normalFont) { SpacingAfter = 5f }); // Giảm khoảng cách
 
                     // Tiến độ dự án
                     document.Add(new Paragraph("Tiến Độ Dự Án", normalFont));
                     document.Add(new Paragraph($"Phần trăm hoàn thành: {ProgressText.Text}", normalFont));
                     document.Add(new Paragraph($"Tổng số công việc: {TotalTasks.Text}", normalFont));
                     document.Add(new Paragraph($"Công việc hoàn thành: {TasksCompleted.Text}", normalFont));
-                    document.Add(new Paragraph(" ", normalFont)); // Dòng trống
+                    document.Add(new Paragraph(" ", normalFont) { SpacingAfter = 5f }); // Giảm khoảng cách
 
                     // Danh sách công việc
                     document.Add(new Paragraph("Danh Sách Công Việc", normalFont));
@@ -218,18 +276,17 @@ namespace QuanLyDuAn.Forms
                     {
                         table.AddCell(new PdfPCell(new Phrase(row["TaskCode"].ToString(), normalFont)));
                         table.AddCell(new PdfPCell(new Phrase(row["TaskName"].ToString(), normalFont)));
-                        table.AddCell(new PdfPCell(new Phrase(row["StartDate"].ToString(), normalFont)));
                         table.AddCell(new PdfPCell(new Phrase(row["EndDate"].ToString(), normalFont)));
                         table.AddCell(new PdfPCell(new Phrase(row["Status"].ToString(), normalFont)));
                         table.AddCell(new PdfPCell(new Phrase(row["AssignedTo"].ToString(), normalFont)));
                     }
                     document.Add(table);
-                    document.Add(new Paragraph(" ", normalFont)); // Dòng trống
+                    document.Add(new Paragraph(" ", normalFont) { SpacingAfter = 5f }); // Giảm khoảng cách
 
                     // Tài nguyên
                     document.Add(new Paragraph("Tài Nguyên", normalFont));
                     document.Add(new Paragraph($"Số nhân sự tham gia: {TeamSize.Text}", normalFont));
-                    document.Add(new Paragraph(" ", normalFont)); // Dòng trống
+                    document.Add(new Paragraph(" ", normalFont) { SpacingAfter = 5f }); // Giảm khoảng cách
 
                     // Ghi chú
                     document.Add(new Paragraph("Ghi Chú", normalFont));

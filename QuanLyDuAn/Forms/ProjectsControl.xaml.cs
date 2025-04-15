@@ -26,16 +26,13 @@ namespace QuanLyDuAn.Controls
         {
             _projects = projects ?? new List<DuAn>();
             _allTasks = allTasks ?? new List<CongViec>();
-            StatusFilterComboBox.ItemsSource = statuses ?? new List<TrangThai>();
-            CreatorFilterComboBox.ItemsSource = creators ?? new List<Creator>();
             LoadPage();
             UpdatePieChart();
         }
 
         private void LoadPage()
         {
-            var filteredProjects = ApplyFilters();
-            var pagedProjects = filteredProjects
+            var pagedProjects = _projects
                 .Skip((_currentPage - 1) * PageSize)
                 .Take(PageSize)
                 .ToList();
@@ -49,35 +46,7 @@ namespace QuanLyDuAn.Controls
                 System.Diagnostics.Debug.WriteLine("ProjectsDataGrid is null in LoadPage.");
             }
 
-            UpdatePaginationInfo(filteredProjects.Count);
-        }
-
-        private List<DuAn> ApplyFilters()
-        {
-            if (_projects == null)
-            {
-                _projects = new List<DuAn>();
-            }
-
-            var filtered = _projects.ToList();
-
-            if (StatusFilterComboBox.SelectedValue is TrangThai selectedStatus)
-            {
-                filtered = filtered.Where(p => p.TtMa == selectedStatus.TtMa).ToList();
-            }
-
-            if (CreatorFilterComboBox.SelectedValue is Creator selectedCreator)
-            {
-                filtered = filtered.Where(p => p.NvIdNguoiTao == selectedCreator.NvId).ToList();
-            }
-
-            if (!string.IsNullOrWhiteSpace(SearchTextBox.Text) && SearchTextBox.Text != "Tìm kiếm...")
-            {
-                string searchText = SearchTextBox.Text.ToLower();
-                filtered = filtered.Where(p => p.DaTen.ToLower().Contains(searchText)).ToList();
-            }
-
-            return filtered;
+            UpdatePaginationInfo(_projects.Count);
         }
 
         private void UpdatePieChart()
@@ -154,36 +123,6 @@ namespace QuanLyDuAn.Controls
             }
         }
 
-        private void StatusFilterComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            _currentPage = 1;
-            LoadPage();
-        }
-
-        private void CreatorFilterComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            _currentPage = 1;
-            LoadPage();
-        }
-
-        private void SearchTextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            _currentPage = 1;
-            LoadPage();
-        }
-
-        private void RefreshButton_Click(object sender, RoutedEventArgs e)
-        {
-            StatusFilterComboBox.SelectedIndex = -1;
-            CreatorFilterComboBox.SelectedIndex = -1;
-            if (SearchTextBox != null)
-            {
-                SearchTextBox.Text = "Tìm kiếm...";
-            }
-            _currentPage = 1;
-            LoadPage();
-        }
-
         private void PreviousPageButton_Click(object sender, RoutedEventArgs e)
         {
             if (_currentPage > 1)
@@ -195,12 +134,17 @@ namespace QuanLyDuAn.Controls
 
         private void NextPageButton_Click(object sender, RoutedEventArgs e)
         {
-            var filteredCount = ApplyFilters().Count;
-            if (_currentPage < Math.Ceiling((double)filteredCount / PageSize))
+            if (_currentPage < Math.Ceiling((double)_projects.Count / PageSize))
             {
                 _currentPage++;
                 LoadPage();
             }
+        }
+
+        private void RefreshButton_Click(object sender, RoutedEventArgs e)
+        {
+            // Logic làm mới sẽ được xử lý bởi MainWindow.xaml.cs thông qua sự kiện
+            RefreshRequested?.Invoke(this, EventArgs.Empty);
         }
 
         private void AddProjectButton_Click(object sender, RoutedEventArgs e)
@@ -258,6 +202,7 @@ namespace QuanLyDuAn.Controls
         }
 
         public event EventHandler AddProjectRequested;
+        public event EventHandler RefreshRequested;
         public event EventHandler<ProjectEventArgs> EditProjectRequested;
         public event EventHandler<ProjectEventArgs> DeleteProjectRequested;
         public event EventHandler<ProjectEventArgs> ViewDetailsRequested;

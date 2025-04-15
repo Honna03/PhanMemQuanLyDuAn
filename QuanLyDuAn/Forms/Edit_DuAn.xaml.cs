@@ -16,6 +16,7 @@ namespace QuanLyDuAn.Controls
     {
         public bool IsReadOnly { get; set; }
         private readonly ThucTapQuanLyDuAnContext _context;
+        private readonly int _currentUserId;
         private DuAn _project;
         private List<TaskWrapper> _tasks = new List<TaskWrapper>();
         private List<NhanVienThamGiaDuAn> _members = new List<NhanVienThamGiaDuAn>();
@@ -24,10 +25,15 @@ namespace QuanLyDuAn.Controls
 
         public event Action ProjectSaved;
 
-        public Edit_DuAn(int? daId, ThucTapQuanLyDuAnContext context)
+        public Edit_DuAn(int? daId, ThucTapQuanLyDuAnContext context, int currentUserId)
         {
             InitializeComponent();
             _context = context ?? throw new ArgumentNullException(nameof(context));
+            _currentUserId = currentUserId;
+            if (_currentUserId <= 0)
+            {
+                throw new ArgumentException("Current user ID must be greater than 0.", nameof(currentUserId));
+            }
             InitializeAsync(daId);
         }
 
@@ -40,7 +46,6 @@ namespace QuanLyDuAn.Controls
         {
             try
             {
-                // Load project data
                 _project = daId.HasValue
                     ? await _context.DuAns
                         .Include(d => d.NhanVienThamGiaDuAns).ThenInclude(n => n.Nv)
@@ -55,50 +60,36 @@ namespace QuanLyDuAn.Controls
                     return;
                 }
 
-                // Update title
                 TitleTextBlock.Text = daId.HasValue ? "Chỉnh sửa dự án" : "Thêm dự án";
 
-                // Set default creator for new projects
                 if (_project.DaId == 0)
                 {
-                    if (CurrentUser.NvId <= 0)
-                    {
-                        MessageBox.Show("Không thể xác định người dùng hiện tại!", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
-                        return;
-                    }
-                    _project.NvIdNguoiTao = CurrentUser.NvId;
+                    _project.NvIdNguoiTao = _currentUserId;
                     _project.DaBatDau = DateTime.Now;
                 }
 
-                // Load dropdown data
                 StatusComboBox.ItemsSource = await _context.TrangThais.ToListAsync();
                 MemberComboBox.ItemsSource = await _context.NhanViens.ToListAsync();
                 RoleComboBox.ItemsSource = await _context.VaiTros.ToListAsync();
                 CreatorComboBox.ItemsSource = await _context.NhanViens.ToListAsync();
                 TaskStatusComboBox.ItemsSource = await _context.TrangThais.ToListAsync();
 
-                // Load members
                 if (_project.NhanVienThamGiaDuAns != null)
                 {
                     _members = _project.NhanVienThamGiaDuAns.ToList();
                     MembersListView.ItemsSource = _members;
                 }
 
-                // Load tasks
                 if (_project.NhanVienThamGiaDuAns != null)
                 {
                     var allTasks = _project.NhanVienThamGiaDuAns.SelectMany(n => n.CongViecs).ToList();
-                    _tasks = allTasks.Select(t => new TaskWrapper(t) { IsCompleted = t.TtMa == "ht" }).ToList();
+                    _tasks = allTasks.Select(t => new TaskWrapper(t)).ToList();
                     TasksListView.ItemsSource = _tasks;
                 }
 
-                // Calculate progress
                 CalculateProgress();
-
-                // Bind data to UI
                 DataContext = _project;
 
-                // Set read-only mode if needed
                 if (IsReadOnly)
                 {
                     NameTextBox.IsReadOnly = true;
@@ -227,16 +218,15 @@ namespace QuanLyDuAn.Controls
                     TtMa = TaskStatusComboBox.SelectedValue.ToString(),
                     CvBatDau = TaskStartDatePicker.SelectedDate ?? DateTime.Now,
                     CvKetThuc = TaskEndDatePicker.SelectedDate,
-                    NvIdNguoiTao = CurrentUser.NvId,
+                    NvIdNguoiTao = _currentUserId,
                     CvPath = _selectedFilePath,
                     CvFile = _selectedFilePath != null ? Path.GetFileName(_selectedFilePath) : null
                 };
 
                 _context.CongViecs.Add(task);
-                _tasks.Add(new TaskWrapper(task) { IsCompleted = task.TtMa == "ht" });
-                TasksListView.ItemsSource = _tasks.ToList(); // Refresh ListView
+                _tasks.Add(new TaskWrapper(task));
+                TasksListView.ItemsSource = _tasks.ToList();
 
-                // Reset input fields
                 TaskNameTextBox.Text = "Tên công việc";
                 TaskStatusComboBox.SelectedIndex = -1;
                 TaskStartDatePicker.SelectedDate = null;
@@ -333,7 +323,6 @@ namespace QuanLyDuAn.Controls
         {
             try
             {
-                // Validate input
                 if (string.IsNullOrWhiteSpace(_project.DaTen))
                 {
                     MessageBox.Show("Tên dự án không được để trống!", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -365,7 +354,6 @@ namespace QuanLyDuAn.Controls
                     return;
                 }
 
-                // Validate status
                 var trangThai = await _context.TrangThais.FirstOrDefaultAsync(t => t.TtMa == _project.TtMa);
                 if (trangThai == null)
                 {
@@ -373,7 +361,7 @@ namespace QuanLyDuAn.Controls
                     return;
                 }
 
-                if (_project.DaId == 0) // New project
+                if (_project.DaId == 0)
                 {
                     var nhanVien = await _context.NhanViens.FirstOrDefaultAsync(n => n.NvId == _project.NvIdNguoiTao);
                     if (nhanVien == null)
@@ -386,7 +374,6 @@ namespace QuanLyDuAn.Controls
                     _context.DuAns.Add(_project);
                     await _context.SaveChangesAsync();
 
-                    // Update DaId for members and tasks
                     foreach (var member in _members)
                     {
                         member.DaId = _project.DaId;
@@ -399,7 +386,7 @@ namespace QuanLyDuAn.Controls
                     }
                     await _context.SaveChangesAsync();
                 }
-                else // Update existing project
+                else
                 {
                     var existingProject = await _context.DuAns.FirstOrDefaultAsync(d => d.DaId == _project.DaId);
                     if (existingProject == null)
@@ -435,16 +422,13 @@ namespace QuanLyDuAn.Controls
             ProjectSaved?.Invoke();
         }
 
-        // Thêm phương thức xử lý tải file
         private void DownloadFile_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                // Lấy Hyperlink và đường dẫn file từ Tag
                 Hyperlink hyperlink = sender as Hyperlink;
                 string filePath = hyperlink?.Tag as string;
 
-                // Kiểm tra đường dẫn có hợp lệ không
                 if (string.IsNullOrEmpty(filePath))
                 {
                     MessageBox.Show("Không có file để tải!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
@@ -457,17 +441,15 @@ namespace QuanLyDuAn.Controls
                     return;
                 }
 
-                // Mở SaveFileDialog để người dùng chọn nơi lưu file
                 SaveFileDialog saveFileDialog = new SaveFileDialog
                 {
-                    FileName = Path.GetFileName(filePath), // Tên file mặc định
-                    Filter = "All Files (*.*)|*.*", // Bộ lọc file
+                    FileName = Path.GetFileName(filePath),
+                    Filter = "All Files (*.*)|*.*",
                     Title = "Chọn nơi lưu file"
                 };
 
                 if (saveFileDialog.ShowDialog() == true)
                 {
-                    // Sao chép file từ đường dẫn gốc đến vị trí người dùng chọn
                     File.Copy(filePath, saveFileDialog.FileName, true);
                     MessageBox.Show("Tải file thành công!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Information);
                 }
@@ -512,11 +494,5 @@ namespace QuanLyDuAn.Controls
             Task = task;
             IsCompleted = task.TtMa == "ht";
         }
-    }
-
-    public static class CurrentUser
-    {
-        public static int NvId { get; set; }
-        public static string NvTen { get; set; }
     }
 }

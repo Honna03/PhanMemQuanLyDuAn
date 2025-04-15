@@ -64,9 +64,8 @@
                 </Setter.Value>
             </Setter>
         </Style>
-
-
     </Window.Resources>
+
     <Grid Background="{StaticResource MyGradientBrush}">
         <!-- Grid chính chia Sidebar và Main Content -->
         <Grid.ColumnDefinitions>
@@ -137,7 +136,6 @@
         </StackPanel>
 
         <!-- Main Content -->
-        <!-- Main Content -->
         <Grid Grid.Column="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="50"/>
@@ -162,33 +160,13 @@
                 <!-- Hiển thị giờ (giữa) -->
                 <TextBlock x:Name="CurrentTime" Grid.Column="1" Foreground="White" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Center"/>
 
-                <!-- Nút "Thêm dự án", chuông thông báo, tên người dùng, icon user (bên phải) -->
+                <!-- Chuông thông báo, tên người dùng, icon user (bên phải) -->
                 <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="10,0">
-                    <Button x:Name="btn_AddDuAn" Background="{StaticResource MyGradientBrush}" Foreground="White" BorderThickness="0" Padding="8,4" Margin="0,0,10,0" Click="btn_AddDuAn_Click">
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="+" FontSize="16" FontWeight="Bold" VerticalAlignment="Center" Margin="0,0,5,0"/>
-                            <TextBlock Text="Thêm dự án" FontSize="14" VerticalAlignment="Center"/>
-                        </StackPanel>
-                        <Button.Style>
-                            <Style TargetType="Button">
-                                <Setter Property="Background" Value="{StaticResource MyGradientBrush}"/>
-                                <Setter Property="Foreground" Value="White"/>
-                                <Setter Property="BorderThickness" Value="0"/>
-                                <Style.Triggers>
-                                    <Trigger Property="IsMouseOver" Value="True">
-                                        <Setter Property="Background" Value="#80C4E9"/>
-                                    </Trigger>
-                                </Style.Triggers>
-                            </Style>
-                        </Button.Style>
-                    </Button>
                     <!-- Chuông thông báo -->
                     <Button x:Name="NotificationButton" Background="Transparent" BorderThickness="0" Padding="0" Margin="0,0,10,0">
                         <TextBlock Text="🔔" Foreground="White" FontSize="22" VerticalAlignment="Center"/>
                     </Button>
-                    <TextBlock x:Name="UserName" Text="aaâaaaaaaadfasdfasdfsdffasfsfsadfsadfasdfbbbaa"
-                Foreground="White" FontSize="14" VerticalAlignment="Center"
-                MaxWidth="200" TextTrimming="CharacterEllipsis" Margin="0,0,10,0"/>
+                    <TextBlock x:Name="UserNameTextBlock" Text="Admin" Foreground="White" FontSize="14" VerticalAlignment="Center" MaxWidth="200" TextTrimming="CharacterEllipsis" Margin="0,0,10,0"/>
                     <Button x:Name="UserButton" Background="Transparent" BorderThickness="0" Padding="0" Click="UserButton_Click">
                         <TextBlock x:Name="i_User" Text="👤" Foreground="White" FontSize="22" VerticalAlignment="Center"/>
                         <Button.ContextMenu>

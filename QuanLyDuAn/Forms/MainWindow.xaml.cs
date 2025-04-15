@@ -6,23 +6,32 @@ using System;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media;
 using System.Windows.Threading;
 
 namespace QuanLyDuAn
 {
     public partial class MainWindow : Window
     {
-        private const string PlaceholderText = "Tìm kiếm...";
         private DispatcherTimer timer;
         private readonly ThucTapQuanLyDuAnContext _context;
         private ProjectsControl _projectsControl;
+        private int _currentUserId;
+        private string _currentUserName;
 
-        public MainWindow()
+        public MainWindow(int userId)
         {
             InitializeComponent();
             _context = new ThucTapQuanLyDuAnContext();
             MainContent.Content = new TrangChu();
+
+            _currentUserId = userId;
+            var user = _context.NhanViens.FirstOrDefault(n => n.NvId == userId);
+            _currentUserName = user != null ? user.NvTen : "Admin";
+
+            if (UserNameTextBlock != null)
+            {
+                UserNameTextBlock.Text = _currentUserName;
+            }
 
             timer = new DispatcherTimer();
             timer.Interval = TimeSpan.FromSeconds(1);
@@ -54,7 +63,6 @@ namespace QuanLyDuAn
                 var creators = _context.NhanViens
                     .Select(n => new Creator { NvId = n.NvId, Name = n.NvTen })
                     .ToList();
-                // Lấy tất cả công việc, bao gồm thông tin dự án và trạng thái
                 var allTasks = _context.CongViecs
                     .Include(c => c.Da)
                     .Include(c => c.TtMaNavigation)
@@ -64,6 +72,7 @@ namespace QuanLyDuAn
                 _projectsControl.SetProjects(projects, statuses, creators, allTasks);
 
                 _projectsControl.AddProjectRequested += ProjectsControl_AddProjectRequested;
+                _projectsControl.RefreshRequested += ProjectsControl_RefreshRequested;
                 _projectsControl.EditProjectRequested += ProjectsControl_EditProjectRequested;
                 _projectsControl.DeleteProjectRequested += ProjectsControl_DeleteProjectRequested;
                 _projectsControl.ViewDetailsRequested += ProjectsControl_ViewDetailsRequested;
@@ -97,7 +106,7 @@ namespace QuanLyDuAn
         {
             var window = new Window
             {
-                Content = new Edit_DuAn(null, _context),
+                Content = new Edit_DuAn(null, _context, _currentUserId),
                 WindowStartupLocation = WindowStartupLocation.CenterScreen
             };
             window.Closed += async (s, args) =>
@@ -108,11 +117,16 @@ namespace QuanLyDuAn
             window.ShowDialog();
         }
 
+        private void ProjectsControl_RefreshRequested(object sender, EventArgs e)
+        {
+            ReloadProjectsAsync();
+        }
+
         private void ProjectsControl_EditProjectRequested(object sender, ProjectEventArgs e)
         {
             var window = new Window
             {
-                Content = new Edit_DuAn(e.DaId, _context),
+                Content = new Edit_DuAn(e.DaId, _context, _currentUserId),
                 WindowStartupLocation = WindowStartupLocation.CenterScreen
             };
             window.Closed += async (s, args) =>
@@ -159,31 +173,11 @@ namespace QuanLyDuAn
         {
             var window = new Window
             {
-                Content = new Edit_DuAn(e.DaId, _context) { IsReadOnly = true },
+                Content = new Edit_DuAn(e.DaId, _context, _currentUserId) { IsReadOnly = true },
                 WindowStartupLocation = WindowStartupLocation.CenterScreen
             };
             window.Closed += (s, args) => _projectsControl.OverlayGrid.Visibility = Visibility.Collapsed;
             window.ShowDialog();
-        }
-
-        private void SearchBox_GotFocus(object sender, RoutedEventArgs e)
-        {
-            TextBox textBox = sender as TextBox;
-            if (textBox.Text == PlaceholderText)
-            {
-                textBox.Text = string.Empty;
-                textBox.Foreground = Brushes.White;
-            }
-        }
-
-        private void SearchBox_LostFocus(object sender, RoutedEventArgs e)
-        {
-            TextBox textBox = sender as TextBox;
-            if (string.IsNullOrWhiteSpace(textBox.Text))
-            {
-                textBox.Text = PlaceholderText;
-                textBox.Foreground = Brushes.Gray;
-            }
         }
 
         private void btn_NhanVien_Click(object sender, RoutedEventArgs e)
@@ -238,16 +232,6 @@ namespace QuanLyDuAn
             subMenuPanel.Visibility = Visibility.Collapsed;
         }
 
-        private void btn_AddDuAn_Click(object sender, RoutedEventArgs e)
-        {
-            var window = new Window
-            {
-                Content = new Edit_DuAn(null, _context),
-                WindowStartupLocation = WindowStartupLocation.CenterScreen
-            };
-            window.Show();
-        }
-
         private void btn_Luong_Click(object sender, RoutedEventArgs e)
         {
             MainContent.Content = new QuanLyDuAn.Forms.Luong();
@@ -271,6 +255,24 @@ namespace QuanLyDuAn
             if (result == MessageBoxResult.Yes)
             {
                 this.Close();
+            }
+        }
+
+        private void SearchBox_GotFocus(object sender, RoutedEventArgs e)
+        {
+            if (sender is TextBox searchBox && searchBox.Text == "Tìm kiếm...")
+            {
+                searchBox.Text = "";
+                searchBox.Foreground = System.Windows.Media.Brushes.Black;
+            }
+        }
+
+        private void SearchBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (sender is TextBox searchBox && string.IsNullOrWhiteSpace(searchBox.Text))
+            {
+                searchBox.Text = "Tìm kiếm...";
+                searchBox.Foreground = System.Windows.Media.Brushes.Gray;
             }
         }
     }

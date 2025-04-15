@@ -3,12 +3,24 @@
   "WorkspaceRootPath": "D:\\Thuctap\\PhanMemQuanLyDuAn\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{609535E4-5219-4C7E-94CA-1D34431D5C15}|QuanLyDuAn\\QuanLyDuAn.csproj|d:\\thuctap\\phanmemquanlyduan\\quanlyduan\\forms\\edit_duan.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{609535E4-5219-4C7E-94CA-1D34431D5C15}|QuanLyDuAn\\QuanLyDuAn.csproj|solutionrelative:quanlyduan\\forms\\edit_duan.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{609535E4-5219-4C7E-94CA-1D34431D5C15}|QuanLyDuAn\\QuanLyDuAn.csproj|d:\\thuctap\\phanmemquanlyduan\\quanlyduan\\forms\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{609535E4-5219-4C7E-94CA-1D34431D5C15}|QuanLyDuAn\\QuanLyDuAn.csproj|solutionrelative:quanlyduan\\forms\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{609535E4-5219-4C7E-94CA-1D34431D5C15}|QuanLyDuAn\\QuanLyDuAn.csproj|d:\\thuctap\\phanmemquanlyduan\\quanlyduan\\forms\\edit_duan.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{609535E4-5219-4C7E-94CA-1D34431D5C15}|QuanLyDuAn\\QuanLyDuAn.csproj|solutionrelative:quanlyduan\\forms\\edit_duan.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+      "AbsoluteMoniker": "D:0:0:{609535E4-5219-4C7E-94CA-1D34431D5C15}|QuanLyDuAn\\QuanLyDuAn.csproj|d:\\thuctap\\phanmemquanlyduan\\quanlyduan\\forms\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{609535E4-5219-4C7E-94CA-1D34431D5C15}|QuanLyDuAn\\QuanLyDuAn.csproj|solutionrelative:quanlyduan\\forms\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{609535E4-5219-4C7E-94CA-1D34431D5C15}|QuanLyDuAn\\QuanLyDuAn.csproj|d:\\thuctap\\phanmemquanlyduan\\quanlyduan\\forms\\login.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{609535E4-5219-4C7E-94CA-1D34431D5C15}|QuanLyDuAn\\QuanLyDuAn.csproj|solutionrelative:quanlyduan\\forms\\login.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{609535E4-5219-4C7E-94CA-1D34431D5C15}|QuanLyDuAn\\QuanLyDuAn.csproj|d:\\thuctap\\phanmemquanlyduan\\quanlyduan\\forms\\login.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{609535E4-5219-4C7E-94CA-1D34431D5C15}|QuanLyDuAn\\QuanLyDuAn.csproj|solutionrelative:quanlyduan\\forms\\login.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{609535E4-5219-4C7E-94CA-1D34431D5C15}|QuanLyDuAn\\QuanLyDuAn.csproj|d:\\thuctap\\phanmemquanlyduan\\quanlyduan\\forms\\edit_duan.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{609535E4-5219-4C7E-94CA-1D34431D5C15}|QuanLyDuAn\\QuanLyDuAn.csproj|solutionrelative:quanlyduan\\forms\\edit_duan.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{609535E4-5219-4C7E-94CA-1D34431D5C15}|QuanLyDuAn\\QuanLyDuAn.csproj|d:\\thuctap\\phanmemquanlyduan\\quanlyduan\\forms\\projectscontrol.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -19,36 +31,28 @@
       "RelativeMoniker": "D:0:0:{609535E4-5219-4C7E-94CA-1D34431D5C15}|QuanLyDuAn\\QuanLyDuAn.csproj|solutionrelative:quanlyduan\\forms\\projectscontrol.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{609535E4-5219-4C7E-94CA-1D34431D5C15}|QuanLyDuAn\\QuanLyDuAn.csproj|d:\\thuctap\\phanmemquanlyduan\\quanlyduan\\forms\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{609535E4-5219-4C7E-94CA-1D34431D5C15}|QuanLyDuAn\\QuanLyDuAn.csproj|solutionrelative:quanlyduan\\forms\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{609535E4-5219-4C7E-94CA-1D34431D5C15}|QuanLyDuAn\\QuanLyDuAn.csproj|d:\\thuctap\\phanmemquanlyduan\\quanlyduan\\forms\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{609535E4-5219-4C7E-94CA-1D34431D5C15}|QuanLyDuAn\\QuanLyDuAn.csproj|solutionrelative:quanlyduan\\forms\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{609535E4-5219-4C7E-94CA-1D34431D5C15}|QuanLyDuAn\\QuanLyDuAn.csproj|d:\\thuctap\\phanmemquanlyduan\\quanlyduan\\forms\\login.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{609535E4-5219-4C7E-94CA-1D34431D5C15}|QuanLyDuAn\\QuanLyDuAn.csproj|solutionrelative:quanlyduan\\forms\\login.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{609535E4-5219-4C7E-94CA-1D34431D5C15}|QuanLyDuAn\\QuanLyDuAn.csproj|d:\\thuctap\\phanmemquanlyduan\\quanlyduan\\forms\\login.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{609535E4-5219-4C7E-94CA-1D34431D5C15}|QuanLyDuAn\\QuanLyDuAn.csproj|solutionrelative:quanlyduan\\forms\\login.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{609535E4-5219-4C7E-94CA-1D34431D5C15}|QuanLyDuAn\\QuanLyDuAn.csproj|d:\\thuctap\\phanmemquanlyduan\\quanlyduan\\models\\nhanvien.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{609535E4-5219-4C7E-94CA-1D34431D5C15}|QuanLyDuAn\\QuanLyDuAn.csproj|solutionrelative:quanlyduan\\models\\nhanvien.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{609535E4-5219-4C7E-94CA-1D34431D5C15}|QuanLyDuAn\\QuanLyDuAn.csproj|d:\\thuctap\\phanmemquanlyduan\\quanlyduan\\quanlyduan.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{609535E4-5219-4C7E-94CA-1D34431D5C15}|QuanLyDuAn\\QuanLyDuAn.csproj|solutionrelative:quanlyduan\\quanlyduan.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
     },
     {
       "AbsoluteMoniker": "D:0:0:{609535E4-5219-4C7E-94CA-1D34431D5C15}|QuanLyDuAn\\QuanLyDuAn.csproj|d:\\thuctap\\phanmemquanlyduan\\quanlyduan\\models\\congviec.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{609535E4-5219-4C7E-94CA-1D34431D5C15}|QuanLyDuAn\\QuanLyDuAn.csproj|solutionrelative:quanlyduan\\models\\congviec.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{609535E4-5219-4C7E-94CA-1D34431D5C15}|QuanLyDuAn\\QuanLyDuAn.csproj|d:\\thuctap\\phanmemquanlyduan\\quanlyduan\\models\\phancongcongviec.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{609535E4-5219-4C7E-94CA-1D34431D5C15}|QuanLyDuAn\\QuanLyDuAn.csproj|solutionrelative:quanlyduan\\models\\phancongcongviec.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{609535E4-5219-4C7E-94CA-1D34431D5C15}|QuanLyDuAn\\QuanLyDuAn.csproj|d:\\thuctap\\phanmemquanlyduan\\quanlyduan\\models\\creator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{609535E4-5219-4C7E-94CA-1D34431D5C15}|QuanLyDuAn\\QuanLyDuAn.csproj|solutionrelative:quanlyduan\\models\\creator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{609535E4-5219-4C7E-94CA-1D34431D5C15}|QuanLyDuAn\\QuanLyDuAn.csproj|d:\\thuctap\\phanmemquanlyduan\\quanlyduan\\models\\creatorfilteritem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{609535E4-5219-4C7E-94CA-1D34431D5C15}|QuanLyDuAn\\QuanLyDuAn.csproj|solutionrelative:quanlyduan\\models\\creatorfilteritem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{609535E4-5219-4C7E-94CA-1D34431D5C15}|QuanLyDuAn\\QuanLyDuAn.csproj|d:\\thuctap\\phanmemquanlyduan\\quanlyduan\\models\\nhanvien.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{609535E4-5219-4C7E-94CA-1D34431D5C15}|QuanLyDuAn\\QuanLyDuAn.csproj|solutionrelative:quanlyduan\\models\\nhanvien.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{609535E4-5219-4C7E-94CA-1D34431D5C15}|QuanLyDuAn\\QuanLyDuAn.csproj|d:\\thuctap\\phanmemquanlyduan\\quanlyduan\\models\\phancongcongviec.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{609535E4-5219-4C7E-94CA-1D34431D5C15}|QuanLyDuAn\\QuanLyDuAn.csproj|solutionrelative:quanlyduan\\models\\phancongcongviec.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{609535E4-5219-4C7E-94CA-1D34431D5C15}|QuanLyDuAn\\QuanLyDuAn.csproj|d:\\thuctap\\phanmemquanlyduan\\quanlyduan\\models\\usersettings.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -57,10 +61,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{609535E4-5219-4C7E-94CA-1D34431D5C15}|QuanLyDuAn\\QuanLyDuAn.csproj|d:\\thuctap\\phanmemquanlyduan\\quanlyduan\\models\\nhanvienthamgiaduan.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{609535E4-5219-4C7E-94CA-1D34431D5C15}|QuanLyDuAn\\QuanLyDuAn.csproj|solutionrelative:quanlyduan\\models\\nhanvienthamgiaduan.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{609535E4-5219-4C7E-94CA-1D34431D5C15}|QuanLyDuAn\\QuanLyDuAn.csproj|d:\\thuctap\\phanmemquanlyduan\\quanlyduan\\quanlyduan.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
-      "RelativeMoniker": "D:0:0:{609535E4-5219-4C7E-94CA-1D34431D5C15}|QuanLyDuAn\\QuanLyDuAn.csproj|solutionrelative:quanlyduan\\quanlyduan.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
     },
     {
       "AbsoluteMoniker": "D:0:0:{609535E4-5219-4C7E-94CA-1D34431D5C15}|QuanLyDuAn\\QuanLyDuAn.csproj|d:\\thuctap\\phanmemquanlyduan\\quanlyduan\\models\\thuctapquanlyduancontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -107,11 +107,11 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 5,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 7,
               "Title": "QuanLyDuAn.csproj",
               "DocumentMoniker": "D:\\Thuctap\\PhanMemQuanLyDuAn\\QuanLyDuAn\\QuanLyDuAn.csproj",
               "RelativeDocumentMoniker": "QuanLyDuAn\\QuanLyDuAn.csproj",
@@ -120,7 +120,8 @@
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAACAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
               "WhenOpened": "2025-04-10T09:37:17.152Z",
-              "IsPinned": true
+              "IsPinned": true,
+              "EditorCaption": ""
             },
             {
               "$type": "Bookmark",
@@ -128,13 +129,64 @@
             },
             {
               "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Login.xaml",
+              "DocumentMoniker": "D:\\Thuctap\\PhanMemQuanLyDuAn\\QuanLyDuAn\\Forms\\Login.xaml",
+              "RelativeDocumentMoniker": "QuanLyDuAn\\Forms\\Login.xaml",
+              "ToolTip": "D:\\Thuctap\\PhanMemQuanLyDuAn\\QuanLyDuAn\\Forms\\Login.xaml",
+              "RelativeToolTip": "QuanLyDuAn\\Forms\\Login.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2025-04-15T02:40:01.493Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Login.xaml.cs",
+              "DocumentMoniker": "D:\\Thuctap\\PhanMemQuanLyDuAn\\QuanLyDuAn\\Forms\\Login.xaml.cs",
+              "RelativeDocumentMoniker": "QuanLyDuAn\\Forms\\Login.xaml.cs",
+              "ToolTip": "D:\\Thuctap\\PhanMemQuanLyDuAn\\QuanLyDuAn\\Forms\\Login.xaml.cs",
+              "RelativeToolTip": "QuanLyDuAn\\Forms\\Login.xaml.cs",
+              "ViewState": "AgIAAEAAAAAAAAAAAAA5wFsAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-15T02:21:50.314Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "ProjectsControl.xaml.cs",
+              "DocumentMoniker": "D:\\Thuctap\\PhanMemQuanLyDuAn\\QuanLyDuAn\\Forms\\ProjectsControl.xaml.cs",
+              "RelativeDocumentMoniker": "QuanLyDuAn\\Forms\\ProjectsControl.xaml.cs",
+              "ToolTip": "D:\\Thuctap\\PhanMemQuanLyDuAn\\QuanLyDuAn\\Forms\\ProjectsControl.xaml.cs",
+              "RelativeToolTip": "QuanLyDuAn\\Forms\\ProjectsControl.xaml.cs",
+              "ViewState": "AgIAAJ4AAAAAAAAAAIA7wLIAAAAZAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-15T02:13:15.067Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "MainWindow.xaml.cs",
+              "DocumentMoniker": "D:\\Thuctap\\PhanMemQuanLyDuAn\\QuanLyDuAn\\Forms\\MainWindow.xaml.cs",
+              "RelativeDocumentMoniker": "QuanLyDuAn\\Forms\\MainWindow.xaml.cs",
+              "ToolTip": "D:\\Thuctap\\PhanMemQuanLyDuAn\\QuanLyDuAn\\Forms\\MainWindow.xaml.cs",
+              "RelativeToolTip": "QuanLyDuAn\\Forms\\MainWindow.xaml.cs",
+              "ViewState": "AgIAAP0AAAAAAAAAAAAcwBYBAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-15T02:12:36.379Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
               "Title": "Edit_DuAn.xaml.cs",
               "DocumentMoniker": "D:\\Thuctap\\PhanMemQuanLyDuAn\\QuanLyDuAn\\Forms\\Edit_DuAn.xaml.cs",
               "RelativeDocumentMoniker": "QuanLyDuAn\\Forms\\Edit_DuAn.xaml.cs",
-              "ToolTip": "D:\\Thuctap\\PhanMemQuanLyDuAn\\QuanLyDuAn\\Forms\\Edit_DuAn.xaml.cs*",
-              "RelativeToolTip": "QuanLyDuAn\\Forms\\Edit_DuAn.xaml.cs*",
-              "ViewState": "AgIAAPIBAAAAAAAAAAA+wAkCAAABAAAAAAAAAA==",
+              "ToolTip": "D:\\Thuctap\\PhanMemQuanLyDuAn\\QuanLyDuAn\\Forms\\Edit_DuAn.xaml.cs",
+              "RelativeToolTip": "QuanLyDuAn\\Forms\\Edit_DuAn.xaml.cs",
+              "ViewState": "AgIAAOYAAAAAAAAAAAD4v/EBAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-04-10T22:39:48.048Z",
               "EditorCaption": ""
@@ -142,93 +194,54 @@
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "Edit_DuAn.xaml",
-              "DocumentMoniker": "D:\\Thuctap\\PhanMemQuanLyDuAn\\QuanLyDuAn\\Forms\\Edit_DuAn.xaml",
-              "RelativeDocumentMoniker": "QuanLyDuAn\\Forms\\Edit_DuAn.xaml",
-              "ToolTip": "D:\\Thuctap\\PhanMemQuanLyDuAn\\QuanLyDuAn\\Forms\\Edit_DuAn.xaml*",
-              "RelativeToolTip": "QuanLyDuAn\\Forms\\Edit_DuAn.xaml*",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2025-04-10T21:44:37.504Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "ProjectsControl.xaml.cs",
-              "DocumentMoniker": "D:\\Thuctap\\PhanMemQuanLyDuAn\\QuanLyDuAn\\Forms\\ProjectsControl.xaml.cs",
-              "RelativeDocumentMoniker": "QuanLyDuAn\\Forms\\ProjectsControl.xaml.cs",
-              "ToolTip": "D:\\Thuctap\\PhanMemQuanLyDuAn\\QuanLyDuAn\\Forms\\ProjectsControl.xaml.cs*",
-              "RelativeToolTip": "QuanLyDuAn\\Forms\\ProjectsControl.xaml.cs*",
-              "ViewState": "AgIAAPcAAAAAAAAAAAAuwA4BAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-07T11:05:29.348Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "ProjectsControl.xaml",
-              "DocumentMoniker": "D:\\Thuctap\\PhanMemQuanLyDuAn\\QuanLyDuAn\\Forms\\ProjectsControl.xaml",
-              "RelativeDocumentMoniker": "QuanLyDuAn\\Forms\\ProjectsControl.xaml",
-              "ToolTip": "D:\\Thuctap\\PhanMemQuanLyDuAn\\QuanLyDuAn\\Forms\\ProjectsControl.xaml*",
-              "RelativeToolTip": "QuanLyDuAn\\Forms\\ProjectsControl.xaml*",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2025-04-10T16:20:22.606Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "MainWindow.xaml.cs",
-              "DocumentMoniker": "D:\\Thuctap\\PhanMemQuanLyDuAn\\QuanLyDuAn\\Forms\\MainWindow.xaml.cs",
-              "RelativeDocumentMoniker": "QuanLyDuAn\\Forms\\MainWindow.xaml.cs",
-              "ToolTip": "D:\\Thuctap\\PhanMemQuanLyDuAn\\QuanLyDuAn\\Forms\\MainWindow.xaml.cs*",
-              "RelativeToolTip": "QuanLyDuAn\\Forms\\MainWindow.xaml.cs*",
-              "ViewState": "AgIAAP0AAAAAAAAAAAAuwBQBAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-10T15:18:46.631Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
               "Title": "MainWindow.xaml",
               "DocumentMoniker": "D:\\Thuctap\\PhanMemQuanLyDuAn\\QuanLyDuAn\\Forms\\MainWindow.xaml",
               "RelativeDocumentMoniker": "QuanLyDuAn\\Forms\\MainWindow.xaml",
-              "ToolTip": "D:\\Thuctap\\PhanMemQuanLyDuAn\\QuanLyDuAn\\Forms\\MainWindow.xaml*",
-              "RelativeToolTip": "QuanLyDuAn\\Forms\\MainWindow.xaml*",
+              "ToolTip": "D:\\Thuctap\\PhanMemQuanLyDuAn\\QuanLyDuAn\\Forms\\MainWindow.xaml",
+              "RelativeToolTip": "QuanLyDuAn\\Forms\\MainWindow.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
               "WhenOpened": "2025-04-10T15:49:14.019Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "Login.xaml.cs",
-              "DocumentMoniker": "D:\\Thuctap\\PhanMemQuanLyDuAn\\QuanLyDuAn\\Forms\\Login.xaml.cs",
-              "RelativeDocumentMoniker": "QuanLyDuAn\\Forms\\Login.xaml.cs",
-              "ToolTip": "D:\\Thuctap\\PhanMemQuanLyDuAn\\QuanLyDuAn\\Forms\\Login.xaml.cs*",
-              "RelativeToolTip": "QuanLyDuAn\\Forms\\Login.xaml.cs*",
-              "ViewState": "AgIAADUAAAAAAAAAAAAuwEwAAAABAAAAAAAAAA==",
+              "DocumentIndex": 8,
+              "Title": "CongViec.cs",
+              "DocumentMoniker": "D:\\Thuctap\\PhanMemQuanLyDuAn\\QuanLyDuAn\\Models\\CongViec.cs",
+              "RelativeDocumentMoniker": "QuanLyDuAn\\Models\\CongViec.cs",
+              "ToolTip": "D:\\Thuctap\\PhanMemQuanLyDuAn\\QuanLyDuAn\\Models\\CongViec.cs",
+              "RelativeToolTip": "QuanLyDuAn\\Models\\CongViec.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAAsAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-11T17:02:16.777Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-11T16:37:23.623Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "Login.xaml",
-              "DocumentMoniker": "D:\\Thuctap\\PhanMemQuanLyDuAn\\QuanLyDuAn\\Forms\\Login.xaml",
-              "RelativeDocumentMoniker": "QuanLyDuAn\\Forms\\Login.xaml",
-              "ToolTip": "D:\\Thuctap\\PhanMemQuanLyDuAn\\QuanLyDuAn\\Forms\\Login.xaml*",
-              "RelativeToolTip": "QuanLyDuAn\\Forms\\Login.xaml*",
+              "DocumentIndex": 9,
+              "Title": "Creator.cs",
+              "DocumentMoniker": "D:\\Thuctap\\PhanMemQuanLyDuAn\\QuanLyDuAn\\Models\\Creator.cs",
+              "RelativeDocumentMoniker": "QuanLyDuAn\\Models\\Creator.cs",
+              "ToolTip": "D:\\Thuctap\\PhanMemQuanLyDuAn\\QuanLyDuAn\\Models\\Creator.cs",
+              "RelativeToolTip": "QuanLyDuAn\\Models\\Creator.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-12T05:39:23.874Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "ProjectsControl.xaml",
+              "DocumentMoniker": "D:\\Thuctap\\PhanMemQuanLyDuAn\\QuanLyDuAn\\Forms\\ProjectsControl.xaml",
+              "RelativeDocumentMoniker": "QuanLyDuAn\\Forms\\ProjectsControl.xaml",
+              "ToolTip": "D:\\Thuctap\\PhanMemQuanLyDuAn\\QuanLyDuAn\\Forms\\ProjectsControl.xaml",
+              "RelativeToolTip": "QuanLyDuAn\\Forms\\ProjectsControl.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2025-04-10T16:19:39.672Z",
+              "WhenOpened": "2025-04-10T16:20:22.606Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 10,
               "Title": "CreatorFilterItem.cs",
               "DocumentMoniker": "D:\\Thuctap\\PhanMemQuanLyDuAn\\QuanLyDuAn\\Models\\CreatorFilterItem.cs",
               "RelativeDocumentMoniker": "QuanLyDuAn\\Models\\CreatorFilterItem.cs",
@@ -240,7 +253,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 11,
               "Title": "NhanVien.cs",
               "DocumentMoniker": "D:\\Thuctap\\PhanMemQuanLyDuAn\\QuanLyDuAn\\Models\\NhanVien.cs",
               "RelativeDocumentMoniker": "QuanLyDuAn\\Models\\NhanVien.cs",
@@ -248,24 +261,11 @@
               "RelativeToolTip": "QuanLyDuAn\\Models\\NhanVien.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-10T20:31:52.874Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-10T20:31:52.874Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "CongViec.cs",
-              "DocumentMoniker": "D:\\Thuctap\\PhanMemQuanLyDuAn\\QuanLyDuAn\\Models\\CongViec.cs",
-              "RelativeDocumentMoniker": "QuanLyDuAn\\Models\\CongViec.cs",
-              "ToolTip": "D:\\Thuctap\\PhanMemQuanLyDuAn\\QuanLyDuAn\\Models\\CongViec.cs",
-              "RelativeToolTip": "QuanLyDuAn\\Models\\CongViec.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAvwAgAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-11T16:37:23.623Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 12,
               "Title": "PhanCongCongViec.cs",
               "DocumentMoniker": "D:\\Thuctap\\PhanMemQuanLyDuAn\\QuanLyDuAn\\Models\\PhanCongCongViec.cs",
               "RelativeDocumentMoniker": "QuanLyDuAn\\Models\\PhanCongCongViec.cs",
@@ -277,7 +277,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 14,
               "Title": "NhanVienThamGiaDuAn.cs",
               "DocumentMoniker": "D:\\Thuctap\\PhanMemQuanLyDuAn\\QuanLyDuAn\\Models\\NhanVienThamGiaDuAn.cs",
               "RelativeDocumentMoniker": "QuanLyDuAn\\Models\\NhanVienThamGiaDuAn.cs",
@@ -289,7 +289,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 13,
               "Title": "UserSettings.cs",
               "DocumentMoniker": "D:\\Thuctap\\PhanMemQuanLyDuAn\\QuanLyDuAn\\Models\\UserSettings.cs",
               "RelativeDocumentMoniker": "QuanLyDuAn\\Models\\UserSettings.cs",

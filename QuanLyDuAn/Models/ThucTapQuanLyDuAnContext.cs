@@ -34,6 +34,8 @@ public partial class ThucTapQuanLyDuAnContext : DbContext
 
     public virtual DbSet<Quyen> Quyens { get; set; }
 
+    public virtual DbSet<ThongTinCongTy> ThongTinCongTies { get; set; }
+
     public virtual DbSet<TrangThai> TrangThais { get; set; }
 
     public virtual DbSet<VaiTro> VaiTros { get; set; }
@@ -42,7 +44,6 @@ public partial class ThucTapQuanLyDuAnContext : DbContext
     {
         optionsBuilder.UseSqlServer(ConfigurationManager.ConnectionStrings["QLDAConnection"].ConnectionString);
     }
-
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<CapNhatCongViec>(entity =>
@@ -241,7 +242,7 @@ public partial class ThucTapQuanLyDuAnContext : DbContext
 
             entity.ToTable("NhanVien", tb => tb.HasTrigger("TRG_DeleteNhanVien"));
 
-            entity.HasIndex(e => e.NvTaiKhoan, "UQ__NhanVien__3360C9D25A2A008C").IsUnique();
+            entity.HasIndex(e => e.NvTaiKhoan, "UQ__NhanVien__3360C9D2CAB78C2B").IsUnique();
 
             entity.Property(e => e.NvId).HasColumnName("nv_ID");
             entity.Property(e => e.NvDiaChi)
@@ -361,6 +362,35 @@ public partial class ThucTapQuanLyDuAnContext : DbContext
             entity.Property(e => e.QTen)
                 .HasMaxLength(50)
                 .HasColumnName("q_Ten");
+        });
+
+        modelBuilder.Entity<ThongTinCongTy>(entity =>
+        {
+            entity.HasKey(e => e.CtyId);
+
+            entity.ToTable("ThongTinCongTy");
+
+            entity.Property(e => e.CtyId).HasColumnName("cty_ID");
+            entity.Property(e => e.CtyDiaChi)
+                .HasMaxLength(200)
+                .HasColumnName("cty_DiaChi");
+            entity.Property(e => e.CtyEmail)
+                .HasMaxLength(100)
+                .IsUnicode(false)
+                .HasColumnName("cty_Email");
+            entity.Property(e => e.CtyLogo)
+                .HasMaxLength(500)
+                .HasColumnName("cty_Logo");
+            entity.Property(e => e.CtyMoTa)
+                .HasMaxLength(500)
+                .HasColumnName("cty_MoTa");
+            entity.Property(e => e.CtySdt)
+                .HasMaxLength(30)
+                .IsUnicode(false)
+                .HasColumnName("cty_SDT");
+            entity.Property(e => e.CtyTen)
+                .HasMaxLength(100)
+                .HasColumnName("cty_Ten");
         });
 
         modelBuilder.Entity<TrangThai>(entity =>

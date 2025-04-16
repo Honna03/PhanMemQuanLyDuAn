@@ -3,24 +3,20 @@
   "WorkspaceRootPath": "D:\\ThucTapTotNghiep\\ProjectZomboid\\PhanMemQuanLyDuAn\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{609535E4-5219-4C7E-94CA-1D34431D5C15}|QuanLyDuAn\\QuanLyDuAn.csproj|d:\\thuctaptotnghiep\\projectzomboid\\phanmemquanlyduan\\quanlyduan\\forms\\luong.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{609535E4-5219-4C7E-94CA-1D34431D5C15}|QuanLyDuAn\\QuanLyDuAn.csproj|solutionrelative:quanlyduan\\forms\\luong.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{609535E4-5219-4C7E-94CA-1D34431D5C15}|QuanLyDuAn\\QuanLyDuAn.csproj|d:\\thuctaptotnghiep\\projectzomboid\\phanmemquanlyduan\\quanlyduan\\forms\\adjustbasesalary.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{609535E4-5219-4C7E-94CA-1D34431D5C15}|QuanLyDuAn\\QuanLyDuAn.csproj|solutionrelative:quanlyduan\\forms\\adjustbasesalary.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+      "AbsoluteMoniker": "D:0:0:{609535E4-5219-4C7E-94CA-1D34431D5C15}|QuanLyDuAn\\QuanLyDuAn.csproj|d:\\thuctaptotnghiep\\projectzomboid\\phanmemquanlyduan\\quanlyduan\\forms\\luong.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{609535E4-5219-4C7E-94CA-1D34431D5C15}|QuanLyDuAn\\QuanLyDuAn.csproj|solutionrelative:quanlyduan\\forms\\luong.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{609535E4-5219-4C7E-94CA-1D34431D5C15}|QuanLyDuAn\\QuanLyDuAn.csproj|d:\\thuctaptotnghiep\\projectzomboid\\phanmemquanlyduan\\quanlyduan\\forms\\adjustbasesalary.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{609535E4-5219-4C7E-94CA-1D34431D5C15}|QuanLyDuAn\\QuanLyDuAn.csproj|solutionrelative:quanlyduan\\forms\\adjustbasesalary.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{609535E4-5219-4C7E-94CA-1D34431D5C15}|QuanLyDuAn\\QuanLyDuAn.csproj|d:\\thuctaptotnghiep\\projectzomboid\\phanmemquanlyduan\\quanlyduan\\forms\\luong.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{609535E4-5219-4C7E-94CA-1D34431D5C15}|QuanLyDuAn\\QuanLyDuAn.csproj|solutionrelative:quanlyduan\\forms\\luong.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{609535E4-5219-4C7E-94CA-1D34431D5C15}|QuanLyDuAn\\QuanLyDuAn.csproj|d:\\thuctaptotnghiep\\projectzomboid\\phanmemquanlyduan\\quanlyduan\\forms\\adjustbasesalary.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{609535E4-5219-4C7E-94CA-1D34431D5C15}|QuanLyDuAn\\QuanLyDuAn.csproj|solutionrelative:quanlyduan\\forms\\adjustbasesalary.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\ThucTapTotNghiep\\ProjectZomboid\\PhanMemQuanLyDuAn\\QuanLyDuAn\\Models\\ThucTapQuanLyDuAnContext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:QuanLyDuAn\\Models\\ThucTapQuanLyDuAnContext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{609535E4-5219-4C7E-94CA-1D34431D5C15}|QuanLyDuAn\\QuanLyDuAn.csproj|d:\\thuctaptotnghiep\\projectzomboid\\phanmemquanlyduan\\quanlyduan\\forms\\luong.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{609535E4-5219-4C7E-94CA-1D34431D5C15}|QuanLyDuAn\\QuanLyDuAn.csproj|solutionrelative:quanlyduan\\forms\\luong.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{609535E4-5219-4C7E-94CA-1D34431D5C15}|QuanLyDuAn\\QuanLyDuAn.csproj|d:\\thuctaptotnghiep\\projectzomboid\\phanmemquanlyduan\\quanlyduan\\forms\\baocao.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -33,6 +29,10 @@
     {
       "AbsoluteMoniker": "D:0:0:{609535E4-5219-4C7E-94CA-1D34431D5C15}|QuanLyDuAn\\QuanLyDuAn.csproj|d:\\thuctaptotnghiep\\projectzomboid\\phanmemquanlyduan\\quanlyduan\\forms\\chitietnhanvien.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
       "RelativeMoniker": "D:0:0:{609535E4-5219-4C7E-94CA-1D34431D5C15}|QuanLyDuAn\\QuanLyDuAn.csproj|solutionrelative:quanlyduan\\forms\\chitietnhanvien.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{609535E4-5219-4C7E-94CA-1D34431D5C15}|QuanLyDuAn\\QuanLyDuAn.csproj|d:\\thuctaptotnghiep\\projectzomboid\\phanmemquanlyduan\\quanlyduan\\models\\thuctapquanlyduancontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{609535E4-5219-4C7E-94CA-1D34431D5C15}|QuanLyDuAn\\QuanLyDuAn.csproj|solutionrelative:quanlyduan\\models\\thuctapquanlyduancontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -42,7 +42,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 5,
+          "SelectedChildIndex": 4,
           "Children": [
             {
               "$type": "Bookmark",
@@ -58,32 +58,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "AdjustBaseSalary.xaml.cs",
-              "DocumentMoniker": "D:\\ThucTapTotNghiep\\ProjectZomboid\\PhanMemQuanLyDuAn\\QuanLyDuAn\\Forms\\AdjustBaseSalary.xaml.cs",
-              "RelativeDocumentMoniker": "QuanLyDuAn\\Forms\\AdjustBaseSalary.xaml.cs",
-              "ToolTip": "D:\\ThucTapTotNghiep\\ProjectZomboid\\PhanMemQuanLyDuAn\\QuanLyDuAn\\Forms\\AdjustBaseSalary.xaml.cs",
-              "RelativeToolTip": "QuanLyDuAn\\Forms\\AdjustBaseSalary.xaml.cs",
-              "ViewState": "AgIAACIAAAAAAAAAAAAIwEMAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-15T08:46:34.352Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "AdjustBaseSalary.xaml",
-              "DocumentMoniker": "D:\\ThucTapTotNghiep\\ProjectZomboid\\PhanMemQuanLyDuAn\\QuanLyDuAn\\Forms\\AdjustBaseSalary.xaml",
-              "RelativeDocumentMoniker": "QuanLyDuAn\\Forms\\AdjustBaseSalary.xaml",
-              "ToolTip": "D:\\ThucTapTotNghiep\\ProjectZomboid\\PhanMemQuanLyDuAn\\QuanLyDuAn\\Forms\\AdjustBaseSalary.xaml",
-              "RelativeToolTip": "QuanLyDuAn\\Forms\\AdjustBaseSalary.xaml",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2025-04-15T08:46:09.53Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 3,
               "Title": "Luong.xaml",
               "DocumentMoniker": "D:\\ThucTapTotNghiep\\ProjectZomboid\\PhanMemQuanLyDuAn\\QuanLyDuAn\\Forms\\Luong.xaml",
               "RelativeDocumentMoniker": "QuanLyDuAn\\Forms\\Luong.xaml",
@@ -95,55 +70,32 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "ThucTapQuanLyDuAnContext.cs",
-              "DocumentMoniker": "D:\\ThucTapTotNghiep\\ProjectZomboid\\PhanMemQuanLyDuAn\\QuanLyDuAn\\Models\\ThucTapQuanLyDuAnContext.cs",
-              "RelativeDocumentMoniker": "QuanLyDuAn\\Models\\ThucTapQuanLyDuAnContext.cs",
-              "ToolTip": "D:\\ThucTapTotNghiep\\ProjectZomboid\\PhanMemQuanLyDuAn\\QuanLyDuAn\\Models\\ThucTapQuanLyDuAnContext.cs",
-              "RelativeToolTip": "QuanLyDuAn\\Models\\ThucTapQuanLyDuAnContext.cs",
-              "ViewState": "AgIAACYAAAAAAAAAAAAywDcAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-15T08:37:27.241Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 0,
               "Title": "Luong.xaml.cs",
               "DocumentMoniker": "D:\\ThucTapTotNghiep\\ProjectZomboid\\PhanMemQuanLyDuAn\\QuanLyDuAn\\Forms\\Luong.xaml.cs",
               "RelativeDocumentMoniker": "QuanLyDuAn\\Forms\\Luong.xaml.cs",
               "ToolTip": "D:\\ThucTapTotNghiep\\ProjectZomboid\\PhanMemQuanLyDuAn\\QuanLyDuAn\\Forms\\Luong.xaml.cs",
               "RelativeToolTip": "QuanLyDuAn\\Forms\\Luong.xaml.cs",
-              "ViewState": "AgIAAN0AAAAAAAAAAAAIwOwAAAAJAAAAAAAAAA==",
+              "ViewState": "AgIAABkBAAAAAAAAAADwvzQBAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-04-15T08:36:01.304Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 5,
               "Title": "BaoCao.xaml",
               "DocumentMoniker": "D:\\ThucTapTotNghiep\\ProjectZomboid\\PhanMemQuanLyDuAn\\QuanLyDuAn\\Forms\\BaoCao.xaml",
               "RelativeDocumentMoniker": "QuanLyDuAn\\Forms\\BaoCao.xaml",
               "ToolTip": "D:\\ThucTapTotNghiep\\ProjectZomboid\\PhanMemQuanLyDuAn\\QuanLyDuAn\\Forms\\BaoCao.xaml",
               "RelativeToolTip": "QuanLyDuAn\\Forms\\BaoCao.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2025-04-15T06:24:28.203Z"
+              "WhenOpened": "2025-04-15T06:24:28.203Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "ChiTietNhanVien.xaml",
-              "DocumentMoniker": "D:\\ThucTapTotNghiep\\ProjectZomboid\\PhanMemQuanLyDuAn\\QuanLyDuAn\\Forms\\ChiTietNhanVien.xaml",
-              "RelativeDocumentMoniker": "QuanLyDuAn\\Forms\\ChiTietNhanVien.xaml",
-              "ToolTip": "D:\\ThucTapTotNghiep\\ProjectZomboid\\PhanMemQuanLyDuAn\\QuanLyDuAn\\Forms\\ChiTietNhanVien.xaml",
-              "RelativeToolTip": "QuanLyDuAn\\Forms\\ChiTietNhanVien.xaml",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2025-04-15T06:24:26.933Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 4,
               "Title": "BaoCao.xaml.cs",
               "DocumentMoniker": "D:\\ThucTapTotNghiep\\ProjectZomboid\\PhanMemQuanLyDuAn\\QuanLyDuAn\\Forms\\BaoCao.xaml.cs",
               "RelativeDocumentMoniker": "QuanLyDuAn\\Forms\\BaoCao.xaml.cs",
@@ -153,6 +105,54 @@
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-04-15T06:17:16.891Z",
               "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "AdjustBaseSalary.xaml.cs",
+              "DocumentMoniker": "D:\\ThucTapTotNghiep\\ProjectZomboid\\PhanMemQuanLyDuAn\\QuanLyDuAn\\Forms\\AdjustBaseSalary.xaml.cs",
+              "RelativeDocumentMoniker": "QuanLyDuAn\\Forms\\AdjustBaseSalary.xaml.cs",
+              "ToolTip": "D:\\ThucTapTotNghiep\\ProjectZomboid\\PhanMemQuanLyDuAn\\QuanLyDuAn\\Forms\\AdjustBaseSalary.xaml.cs",
+              "RelativeToolTip": "QuanLyDuAn\\Forms\\AdjustBaseSalary.xaml.cs",
+              "ViewState": "AgIAAEYAAAAAAAAAAADwv2EAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-15T08:46:34.352Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "AdjustBaseSalary.xaml",
+              "DocumentMoniker": "D:\\ThucTapTotNghiep\\ProjectZomboid\\PhanMemQuanLyDuAn\\QuanLyDuAn\\Forms\\AdjustBaseSalary.xaml",
+              "RelativeDocumentMoniker": "QuanLyDuAn\\Forms\\AdjustBaseSalary.xaml",
+              "ToolTip": "D:\\ThucTapTotNghiep\\ProjectZomboid\\PhanMemQuanLyDuAn\\QuanLyDuAn\\Forms\\AdjustBaseSalary.xaml",
+              "RelativeToolTip": "QuanLyDuAn\\Forms\\AdjustBaseSalary.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2025-04-15T08:46:09.53Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "ThucTapQuanLyDuAnContext.cs",
+              "DocumentMoniker": "D:\\ThucTapTotNghiep\\ProjectZomboid\\PhanMemQuanLyDuAn\\QuanLyDuAn\\Models\\ThucTapQuanLyDuAnContext.cs",
+              "RelativeDocumentMoniker": "QuanLyDuAn\\Models\\ThucTapQuanLyDuAnContext.cs",
+              "ToolTip": "D:\\ThucTapTotNghiep\\ProjectZomboid\\PhanMemQuanLyDuAn\\QuanLyDuAn\\Models\\ThucTapQuanLyDuAnContext.cs",
+              "RelativeToolTip": "QuanLyDuAn\\Models\\ThucTapQuanLyDuAnContext.cs",
+              "ViewState": "AgIAACYAAAAAAAAAAAAywDcAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-15T08:37:27.241Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "ChiTietNhanVien.xaml",
+              "DocumentMoniker": "D:\\ThucTapTotNghiep\\ProjectZomboid\\PhanMemQuanLyDuAn\\QuanLyDuAn\\Forms\\ChiTietNhanVien.xaml",
+              "RelativeDocumentMoniker": "QuanLyDuAn\\Forms\\ChiTietNhanVien.xaml",
+              "ToolTip": "D:\\ThucTapTotNghiep\\ProjectZomboid\\PhanMemQuanLyDuAn\\QuanLyDuAn\\Forms\\ChiTietNhanVien.xaml",
+              "RelativeToolTip": "QuanLyDuAn\\Forms\\ChiTietNhanVien.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2025-04-15T06:24:26.933Z"
             }
           ]
         }

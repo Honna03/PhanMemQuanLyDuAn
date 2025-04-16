@@ -4,7 +4,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using QuanLyDuAn.Models; // Namespace của DbContext*/
+using QuanLyDuAn.Models;
 using Microsoft.EntityFrameworkCore;
 using ClosedXML.Excel;
 using System.IO;
@@ -68,9 +68,9 @@ namespace QuanLyDuAn.Forms
                                     SDT = nv.NvSdt,
                                     DiaChi = nv.NvDiaChi,
                                     LuongCoBan = nv.NvLuongCoBan,
-                                    KPI = k != null ? (k.KpiPhanTram ?? 0) : 0, // Sửa lỗi: decimal? -> decimal
-                                    PhuCap = l != null ? (l.LuongPhuCap ?? 0) : 0, // Sửa lỗi: decimal? -> decimal
-                                    TongLuong = l != null ? (l.LuongThucNhan ?? 0) : 0 // Sửa lỗi: decimal? -> decimal
+                                    KPI = k != null ? (k.KpiPhanTram ?? 0) : 0,
+                                    PhuCap = l != null ? (l.LuongPhuCap ?? 0) : 0,
+                                    TongLuong = l != null ? (l.LuongThucNhan ?? 0) : 0
                                 };
 
                     _luongList = query.ToList();
@@ -185,7 +185,6 @@ namespace QuanLyDuAn.Forms
                 Owner = Window.GetWindow(this)
             };
 
-            // Chuyển đổi chuỗi "MM/yyyy" thành DateTime (gán ngày mặc định là 1)
             DateTime thangNam;
             if (string.IsNullOrEmpty(luong.ThangNam))
             {
@@ -232,6 +231,11 @@ namespace QuanLyDuAn.Forms
             };
 
             var adjustBaseSalaryForm = new AdjustBaseSalary();
+            // Đăng ký sự kiện SalaryAdjusted để reload dữ liệu khi lưu thành công
+            adjustBaseSalaryForm.SalaryAdjusted += (s, args) =>
+            {
+                LoadData();
+            };
             window.Content = adjustBaseSalaryForm;
             window.ShowDialog();
         }

@@ -18,6 +18,7 @@
     <None Remove="icon\delete.png" />
     <None Remove="icon\down.png" />
     <None Remove="icon\exit.png" />
+    <None Remove="icon\info.png" />
     <None Remove="icon\job.png" />
     <None Remove="icon\kpi.png" />
     <None Remove="icon\logout.png" />
@@ -69,6 +70,9 @@
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
     <Resource Include="icon\down.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="icon\info.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
     <Resource Include="icon\job.png">

@@ -59,7 +59,7 @@
             <TextBox Grid.Row="9" Grid.Column="0" x:Name="txtEmail" Background="White" Foreground="Black" 
             BorderBrush="#E0E0E0" BorderThickness="1" Padding="5" Margin="0,0,40,5"/>
 
-           
+
             <!-- Cột 2 -->
             <!-- Địa chỉ -->
             <TextBlock Grid.Row="0" Grid.Column="1" Text="Địa chỉ" Foreground="Black" FontSize="14" Margin="20,15,20,0"/>
@@ -156,9 +156,9 @@
             SelectionMode="Single"
             BorderBrush="#E0E0E0" BorderThickness="1"
             GridLinesVisibility="Horizontal" HorizontalGridLinesBrush="#E0E0E0"
-            RowBackground="White" AlternatingRowBackground="#F9F9F9">
+            RowBackground="White" AlternatingRowBackground="#F9F9F9" MouseDoubleClick="dgCongViec_MouseDoubleClick">
                 <DataGrid.Columns>
-                    
+
                     <DataGridTextColumn Header="Mã công việc" Binding="{Binding Path=CvId}" Width="*" IsReadOnly="True">
                         <DataGridTextColumn.ElementStyle>
                             <Style TargetType="TextBlock">
@@ -225,7 +225,7 @@
                 <ColumnDefinition Width="50" />
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-                
+
             <!-- Định nghĩa các hàng -->
             <Grid.RowDefinitions>
                 <RowDefinition Height="60"/>
@@ -234,7 +234,7 @@
             <Button x:Name="btnSua" Grid.Row="0" Grid.Column="0" Background="#D2691E" Foreground="White"  Margin="0,0,0,0" FontSize="24" FontWeight="Bold" Click="btnSua_Click">
                 <StackPanel Orientation="Horizontal">
                     <Image Source="/icon/compose.png" Width="20" Height="20" Margin="0,0,10,0"/>
-                    
+
                     <TextBlock Text="Sửa" VerticalAlignment="Center"/>
                 </StackPanel>
             </Button>
@@ -263,7 +263,7 @@
             <Button x:Name="btnThoat" Grid.Row="0" Grid.Column="8" Background="#D3D3D3" Foreground="White"  Margin="0,0,0,0" FontSize="24" FontWeight="Bold">
                 <StackPanel Orientation="Horizontal">
                     <Image Source="/icon/close.png" Width="20" Height="20" Margin="0,0,10,0"/>
-                    
+
                     <TextBlock Text="Thoát" VerticalAlignment="Center"/>
                 </StackPanel>
             </Button>

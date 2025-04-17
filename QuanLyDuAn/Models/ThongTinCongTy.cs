@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace QuanLyDuAn.Models;
 
 public partial class ThongTinCongTy
 {
+    [Key]
     public int CtyId { get; set; }
 
     public string CtyTen { get; set; } = null!;

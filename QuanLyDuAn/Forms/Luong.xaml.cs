@@ -8,6 +8,7 @@ using QuanLyDuAn.Models; // Namespace của DbContext*/
 using Microsoft.EntityFrameworkCore;
 using ClosedXML.Excel;
 using System.IO;
+using QuanLyDuAn.functions;
 
 namespace QuanLyDuAn.Forms
 {
@@ -68,9 +69,9 @@ namespace QuanLyDuAn.Forms
                                     SDT = nv.NvSdt,
                                     DiaChi = nv.NvDiaChi,
                                     LuongCoBan = nv.NvLuongCoBan,
-                                    KPI = k != null ? (k.KpiPhanTram ?? 0) : 0, // Sửa lỗi: decimal? -> decimal
-                                    PhuCap = l != null ? (l.LuongPhuCap ?? 0) : 0, // Sửa lỗi: decimal? -> decimal
-                                    TongLuong = l != null ? (l.LuongThucNhan ?? 0) : 0 // Sửa lỗi: decimal? -> decimal
+                                    KPI = k != null ? (k.KpiPhanTram ?? 0) : 0,
+                                    PhuCap = l != null ? (l.LuongPhuCap ?? 0) : 0,
+                                    TongLuong = l != null ? (l.LuongThucNhan ?? 0) : 0
                                 };
 
                     _luongList = query.ToList();
@@ -232,6 +233,11 @@ namespace QuanLyDuAn.Forms
             };
 
             var adjustBaseSalaryForm = new AdjustBaseSalary();
+            // Đăng ký sự kiện SalaryAdjusted để reload dữ liệu khi lưu thành công
+            adjustBaseSalaryForm.SalaryAdjusted += (s, args) =>
+            {
+                LoadData();
+            };
             window.Content = adjustBaseSalaryForm;
             window.ShowDialog();
         }
@@ -299,6 +305,57 @@ namespace QuanLyDuAn.Forms
             catch (Exception ex)
             {
                 MessageBox.Show($"Lỗi khi xuất Excel: {ex.Message}", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+        // Thêm phương thức Search để hỗ trợ tìm kiếm từ MainWindow
+        public void Search(string query)
+        {
+            try
+            {
+                query = RemoveDiacritics.RemoveDiacriticsMethod(query?.Trim().ToLower() ?? string.Empty);
+
+                if (string.IsNullOrEmpty(query))
+                {
+                    if (dpSearchMonthYear.SelectedDate.HasValue)
+                    {
+                        DateTime selectedDate = dpSearchMonthYear.SelectedDate.Value;
+                        string monthYear = selectedDate.ToString("MM/yyyy");
+                        _luongList = _originalLuongList.FindAll(x => x.ThangNam == monthYear);
+                    }
+                    else
+                    {
+                        _luongList = new List<LuongViewModel>(_originalLuongList);
+                    }
+                }
+                else
+                {
+                    _luongList = _originalLuongList.Where(luong =>
+                    {
+                        var maNhanVienNormalized = RemoveDiacritics.RemoveDiacriticsMethod(luong.MaNhanVien?.Trim().ToLower() ?? string.Empty);
+                        var hoTenNhanVienNormalized = RemoveDiacritics.RemoveDiacriticsMethod(luong.HoTenNhanVien?.Trim().ToLower() ?? string.Empty);
+                        var emailNormalized = RemoveDiacritics.RemoveDiacriticsMethod(luong.Email?.Trim().ToLower() ?? string.Empty);
+                        var sdtNormalized = RemoveDiacritics.RemoveDiacriticsMethod(luong.SDT?.Trim().ToLower() ?? string.Empty);
+                        var diaChiNormalized = RemoveDiacritics.RemoveDiacriticsMethod(luong.DiaChi?.Trim().ToLower() ?? string.Empty);
+                        var thangNamNormalized = RemoveDiacritics.RemoveDiacriticsMethod(luong.ThangNam?.Trim().ToLower() ?? string.Empty);
+
+                        return maNhanVienNormalized.Contains(query, StringComparison.OrdinalIgnoreCase) ||
+                               hoTenNhanVienNormalized.Contains(query, StringComparison.OrdinalIgnoreCase) ||
+                               emailNormalized.Contains(query, StringComparison.OrdinalIgnoreCase) ||
+                               sdtNormalized.Contains(query, StringComparison.OrdinalIgnoreCase) ||
+                               diaChiNormalized.Contains(query, StringComparison.OrdinalIgnoreCase) ||
+                               thangNamNormalized.Contains(query, StringComparison.OrdinalIgnoreCase);
+                    }).ToList();
+
+                    dpSearchMonthYear.SelectedDate = null;
+                }
+
+                int totalRecords = _luongList.Count;
+                _currentPage = 1;
+                UpdatePagination();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Lỗi khi tìm kiếm: {ex.Message}", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
     }

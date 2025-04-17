@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using DocumentFormat.OpenXml.Office2016.Drawing.ChartDrawing;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Win32;
 using QuanLyDuAn.Models;
 using System;
@@ -15,6 +16,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using QuanLyDuAn.Services;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace QuanLyDuAn.Forms
 {
@@ -26,19 +29,64 @@ namespace QuanLyDuAn.Forms
         ThucTapQuanLyDuAnContext context = new ThucTapQuanLyDuAnContext();
         List<Models.TrangThai> trangThai = new List<TrangThai>();
         List<Models.NhanVien> nhanVien = new List<NhanVien>();
-
+        List<Models.DuAn> duAn = new List<DuAn>();
         public event EventHandler CongViecDeleted;
 
         private string _CvMa;
         private dynamic? congViec;
+
+        public static int idDaAn;
+        public static int idCongViec;
+        public static int idNguoiNhan;
         public ThongTinCongViec(string CvMa)
         {
             InitializeComponent();
             _CvMa = CvMa;
         }
-        public ThongTinCongViec()
+        //public ThongTinCongViec()
+        //{
+        //    InitializeComponent();
+        //    LoadCapNhat();
+        //}
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            InitializeComponent();
+            LoadCongViec();
+            LoadTrangThai();
+            LoadNhanVien();
+            LoadDuAn();
+            LoadCapNhat();
+            False();
+
+            string tenTaiKhoan;
+            tenTaiKhoan = MainWindow.nguoidangnhap;
+            int nguoiNhancbo = (cbNguoiNhan.SelectedValue as int?) ?? -1;
+            int duAncbo = (int)cboDuAn.SelectedValue;
+
+            var NguoiNhan = (from nv in context.NhanViens
+                             join pc in context.PhanCongCongViecs on nv.NvId equals pc.NvId
+                             where nv.NvTaiKhoan == tenTaiKhoan
+                             select nv.NvId).Distinct().FirstOrDefault();
+
+            var VaiTro = (from nv in context.NhanViens
+                          join tg in context.NhanVienThamGiaDuAns on nv.NvId equals tg.NvId
+                          where nv.NvTaiKhoan == tenTaiKhoan && tg.DaId == duAncbo
+                          select tg.VtMa).Distinct().FirstOrDefault();
+
+            if (nguoiNhancbo != NguoiNhan)
+            {
+                btnCapNhat.Visibility = Visibility.Collapsed;
+            }
+
+            if (VaiTro != "ql")
+            {
+                btnSua.Visibility = Visibility.Collapsed;
+                btnLuu.Visibility = Visibility.Collapsed;
+                btnXoa.Visibility = Visibility.Collapsed;
+                btnHuy.Visibility = Visibility.Collapsed;
+                btnHoanThanh.Visibility = Visibility.Collapsed;
+                btnPhanCong.Visibility = Visibility.Collapsed;
+            }
         }
         private void False()
         {
@@ -47,7 +95,7 @@ namespace QuanLyDuAn.Forms
             txtMoTa.IsEnabled = false;
             txtNgayBD.IsEnabled = false;
             txtNgayKT.IsEnabled = false;
-            txtDuAn.IsEnabled = false;
+            cboDuAn.IsEnabled = false;
             txtNguoiTao.IsEnabled = false;
             cbNguoiNhan.IsEnabled = false;
             cbTrangThai.IsEnabled = false;
@@ -61,6 +109,7 @@ namespace QuanLyDuAn.Forms
             btnMoFile.IsEnabled = true;
             btnXoa.IsEnabled = true;
             btnSua.IsEnabled = true;
+            btnHoanThanh.IsEnabled = dgCapNhat.Items.Count > 0;
         }
 
         private void True()
@@ -76,8 +125,43 @@ namespace QuanLyDuAn.Forms
             btnMoFile.IsEnabled = false;
             btnXoa.IsEnabled = false;
             btnSua.IsEnabled = false;
+            btnHoanThanh.IsEnabled = false;
         }
-        private void LoadCongViec()
+
+        public void LoadCapNhat()
+        {
+            int cvID = int.Parse(txtMaCV.Text.Substring(2));
+            var ketQua = context.CapNhatCongViecs
+            .Where(c => c.CvId == cvID)
+            .Select(c => new { c.CnId, c.CnMoTa, c.CnThoiGian })
+            .ToList();
+            dgCapNhat.ItemsSource = ketQua;
+        }
+        private void LoadLoadCapNhat(object sender, EventArgs e)
+        {
+            LoadCapNhat();
+        }
+
+        private void LoadLoadCongViec(object sender, EventArgs e)
+        {
+            LoadCongViec();
+
+
+            string tenTaiKhoan;
+            tenTaiKhoan = MainWindow.nguoidangnhap;
+            int nguoiNhancbo = (cbNguoiNhan.SelectedValue as int?) ?? -1;
+
+            var NguoiNhan = (from nv in context.NhanViens
+                             join pc in context.PhanCongCongViecs on nv.NvId equals pc.NvId
+                             where nv.NvTaiKhoan == tenTaiKhoan
+                             select nv.NvId).Distinct().FirstOrDefault();
+
+            if (nguoiNhancbo != NguoiNhan)
+            {
+                btnCapNhat.Visibility = Visibility.Collapsed;
+            }
+        }
+        public void LoadCongViec()
         {
             congViec = (from cv in context.CongViecs
                         join da in context.DuAns on cv.DaId equals da.DaId
@@ -92,7 +176,7 @@ namespace QuanLyDuAn.Forms
                         {
                             CvMa = cv.CvMa,
                             CvTen = cv.CvTen,
-                            DaTen = da.DaTen,
+                            DaTen = cv.DaId,
                             CvMoTa = cv.CvMoTa,
                             CvBatDau = cv.CvBatDau,
                             CvKetThuc = cv.CvKetThuc,
@@ -125,12 +209,12 @@ namespace QuanLyDuAn.Forms
                 txtNgayKT.Text = congViec.CvKetThuc?.ToString("dd/MM/yyyy") ?? "";
                 txtNgayHoanThanh.Text = congViec.ThoiGianHoanThanh?.ToString("dd/MM/yyyy") ?? "";
 
-                txtDuAn.Text = congViec.DaTen;
                 txtNguoiTao.Text = congViec.NguoiTao;
                 txtFIle.Text = congViec.cvFile;
                 txtPath.Text = congViec.cvPath;
 
                 cbTrangThai.SelectedValue = congViec.TtMa;
+
                 //if (congViec.NvID.HasValue) { 
                 //    cbNguoiNhan.SelectedValue = congViec.NvID.Value;
                 //}
@@ -145,6 +229,16 @@ namespace QuanLyDuAn.Forms
                 else
                 {
                     cbNguoiNhan.SelectedIndex = -1;
+                }
+                ///asdasdasdas
+
+                if (congViec.DaTen != null)
+                {
+                    cboDuAn.SelectedValue = (int)congViec.DaTen;
+                }
+                else
+                {
+                    cboDuAn.SelectedIndex = -1;
                 }
 
             }
@@ -172,6 +266,15 @@ namespace QuanLyDuAn.Forms
             if (selectedTrangThai != null)
             {
                 string maTrangThai = selectedTrangThai.TtMa;
+
+                if (maTrangThai == "ht") // hoặc selectedTrangThai.TtTen == "Hoàn thành"
+                {
+                    btnCapNhat.IsEnabled = false;
+                }
+                else
+                {
+                    btnCapNhat.IsEnabled = true;
+                }
             }
         }
 
@@ -198,6 +301,22 @@ namespace QuanLyDuAn.Forms
             if (selectedNhanVien != null)
             {
                 int idNhanVien = (int)selectedNhanVien.NvId;
+            }
+        }
+
+        private void LoadDuAn()
+        {
+            duAn = context.DuAns.Where(da => da.NhanVienThamGiaDuAns.Any(tg => tg.CongViecs.Any(cv => cv.CvMa == _CvMa))).ToList();
+            cboDuAn.ItemsSource = duAn;
+            cboDuAn.DisplayMemberPath = "DaTen";
+            cboDuAn.SelectedValuePath = "DaId";
+        }
+        private void cboDuAn_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var selectedDuAn = cboDuAn.SelectionBoxItem as DuAn;
+            if (selectedDuAn != null)
+            {
+                int idDuAn = (int)selectedDuAn.DaId;
             }
         }
 
@@ -241,13 +360,7 @@ namespace QuanLyDuAn.Forms
             }
         }
 
-        private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
-            LoadCongViec();
-            LoadTrangThai();
-            LoadNhanVien();
-            False();
-        }
+
 
         private void btnHuy_Click(object sender, RoutedEventArgs e)
         {
@@ -344,5 +457,75 @@ namespace QuanLyDuAn.Forms
                 this.Close();
             }
         }
+
+        private void btnCapNhat_Click(object sender, RoutedEventArgs e)
+        {
+            idNguoiNhan = (int)cbNguoiNhan.SelectedValue;
+            idDaAn = (int)cboDuAn.SelectedValue;
+            int idCV = int.Parse(txtMaCV.Text.Substring(2));
+            idCongViec = idCV;
+            CapNhatCongViec capNhatCongViec = new CapNhatCongViec();
+            capNhatCongViec.CapNhatAdded += LoadLoadCapNhat;
+            capNhatCongViec.ShowDialog();
+        }
+
+        private void dgCapNhat_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            var selectedCapNhat = (dynamic)dgCapNhat.SelectedItem;
+            if (selectedCapNhat != null)
+            {
+                ThongTinCapNhat thongTinCapNhat = new ThongTinCapNhat(selectedCapNhat.CnId);
+                thongTinCapNhat.ShowDialog();
+            }
+        }
+
+        private void btnPhanCong_Click(object sender, RoutedEventArgs e)
+        {
+            if (cbNguoiNhan.SelectedValue != null)
+            {
+                idNguoiNhan = (int)cbNguoiNhan.SelectedValue;
+            }
+            else
+            {
+                idNguoiNhan = -1; // hoặc giá trị mặc định anh muốn
+            }
+            idDaAn = (int)cboDuAn.SelectedValue;
+            int idCV = int.Parse(txtMaCV.Text.Substring(2));
+            idCongViec = idCV;
+            PhanCongCongViec phanCongCongViec = new PhanCongCongViec();
+            phanCongCongViec.PhanCongAdded += LoadLoadCongViec;
+            phanCongCongViec.ShowDialog();
+        }
+
+        private void btnHoanThanh_Click(object sender, RoutedEventArgs e)
+        {
+            var result = MessageBox.Show(
+           "Bạn có chắc chắn muốn đánh dấu công việc này là HOÀN THÀNH?",
+           "Xác nhận hoàn thành",
+           MessageBoxButton.YesNo,
+           MessageBoxImage.Question);
+
+            if (result == MessageBoxResult.Yes)
+            {
+                int idCV = int.Parse(txtMaCV.Text.Substring(2));
+                idCongViec = idCV;
+
+                int id = (int)cboDuAn.SelectedValue;
+                DateOnly? ngayCapNhatCuoi = context.CapNhatCongViecs
+                .Where(cn => cn.DaId == id)
+                .Max(cn => (DateTime?)cn.CnThoiGian)
+                ?.ToDateOnly();
+
+                Models.CongViec congViec = context.CongViecs.Find(idCongViec, id);
+                congViec.TtMa = "ht";
+                congViec.CvThoiGianHoanThanh = ngayCapNhatCuoi;
+                context.CongViecs.Update(congViec);
+                context.SaveChanges();
+                MessageBox.Show("Công việc đã được cập nhật là HOÀN THÀNH.", "Thành công", MessageBoxButton.OK, MessageBoxImage.Information);
+                LoadCongViec();
+                btnHoanThanh.IsEnabled = false;
+            }
+        }
+
     }
 }

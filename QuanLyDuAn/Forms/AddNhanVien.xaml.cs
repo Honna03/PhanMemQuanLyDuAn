@@ -35,10 +35,17 @@ namespace QuanLyDuAn.Forms
         private void LoadQuyen()        //bo cmt
         {
             //Lấy danh sách quyền từ CSDL
-                quyen = context.Quyens.ToList();
+            //quyen = context.Quyens.ToList();
 
             // Gán danh sách quyền vào ComboBox
-            cbQuyen.ItemsSource = quyen;
+            var quyenn = (from q in context.Quyens
+                          select new
+                          {
+                              QMa = q.QMa,
+                              QTen = q.QTen,
+                          }).ToList();
+            // Gán danh sách quyền vào ComboBox
+            cbQuyen.ItemsSource = quyenn;
             cbQuyen.DisplayMemberPath = "QTen";  // Hiển thị tên quyền
             cbQuyen.SelectedValuePath = "QMa";  // Lưu mã quyền khi chọn
         }

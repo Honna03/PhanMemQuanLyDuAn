@@ -169,7 +169,7 @@
                 <TextBlock Text="Mật khẩu" Foreground="{StaticResource TextColor}" FontSize="16" Margin="0,20,0,5"/>
                 <Grid>
                     <PasswordBox x:Name="PasswordBox" Style="{StaticResource PasswordBoxStyle}" Tag="Normal"/>
-                    <TextBox x:Name="PasswordTextBox" Style="{StaticResource TextBoxStyle}" Visibility="Collapsed" Tag="Normal"/>
+                    <TextBox x:Name="PasswordTextBox" Style="{StaticResource TextBoxStyle}" Visibility="Collapsed" Tag="Normal" />
                     <Button x:Name="ShowPasswordButton" Width="20" Height="20" HorizontalAlignment="Right" Margin="0,0,10,0" Background="Transparent" BorderThickness="0" Click="ShowPasswordButton_Click">
                         <Button.Content>
                             <TextBlock x:Name="TogglePasswordIcon" Text="👁️" Foreground="{StaticResource TextColor}"/>
@@ -177,20 +177,15 @@
                     </Button>
                 </Grid>
 
-                <!-- Remember Me and Forget Password -->
-                <Grid Margin="0,10,0,0">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-                    <!-- <CheckBox x:Name="RememberMeCheckBox" Grid.Column="0" Content="Ghi nhớ tôi" Style="{StaticResource CheckBoxStyle}"/>-->
-                    <TextBlock Grid.Column="1" Text="Quên mật khẩu?" Style="{StaticResource LinkStyle}" 
-                               HorizontalAlignment="Right"/>
-                </Grid>
+                
 
                 <!-- Login Button -->
                 <Button x:Name="btn_Login" Content="ĐĂNG NHẬP" Style="{StaticResource ButtonStyle}" Margin="0,30,0,10" Height="50" Width="200" 
                         MouseEnter="btn_Login_MouseEnter" MouseLeave="btn_Login_MouseLeave" Click="btn_Login_Click"/>
+
+                <!-- Loading Indicator -->
+                <ProgressBar x:Name="LoadingIndicator" IsIndeterminate="True" Width="100" Height="5" Margin="0,10,0,0" 
+                             Visibility="Collapsed" Foreground="{StaticResource PrimaryColor}"/>
             </StackPanel>
         </Grid>
     </Border>

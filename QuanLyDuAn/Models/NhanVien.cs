@@ -32,6 +32,7 @@ public partial class NhanVien
     public virtual ICollection<DuAn> DuAns { get; set; } = new List<DuAn>();
 
     public virtual ICollection<Kpi> Kpis { get; set; } = new List<Kpi>();
+    public virtual ICollection<LichSuCapNhatLuong> LichSuCapNhatLuongs { get; set; } = new List<LichSuCapNhatLuong>();
 
     public virtual ICollection<Luong> Luongs { get; set; } = new List<Luong>();
 

@@ -8,6 +8,12 @@
     <Compile Update="Forms\AddNhanVien.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Forms\AddThongTin.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Forms\CapNhatCongViec.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Forms\ChiTietTienDo.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -27,6 +33,21 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Forms\ProjectsControl.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Forms\PhanCongCongViec.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Forms\ProjectsControl.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Forms\ThongTin.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Forms\ThongTinCapNhat.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Forms\ThongTinChiTiet.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Forms\ThongTinCongViec.xaml.cs">

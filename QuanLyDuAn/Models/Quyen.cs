@@ -10,7 +10,6 @@ public partial class Quyen
     public string QTen { get; set; } = null!;
 
     public string? QMoTa { get; set; }
-
     public decimal QLuongCoBan { get; set; }
 
     public virtual ICollection<LichSuCapNhatLuong> LichSuCapNhatLuongs { get; set; } = new List<LichSuCapNhatLuong>();

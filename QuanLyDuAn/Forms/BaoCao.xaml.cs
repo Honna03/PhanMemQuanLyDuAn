@@ -276,6 +276,7 @@ namespace QuanLyDuAn.Forms
                     {
                         table.AddCell(new PdfPCell(new Phrase(row["TaskCode"].ToString(), normalFont)));
                         table.AddCell(new PdfPCell(new Phrase(row["TaskName"].ToString(), normalFont)));
+                        table.AddCell(new PdfPCell(new Phrase(row["StartDate"].ToString(), normalFont)));
                         table.AddCell(new PdfPCell(new Phrase(row["EndDate"].ToString(), normalFont)));
                         table.AddCell(new PdfPCell(new Phrase(row["Status"].ToString(), normalFont)));
                         table.AddCell(new PdfPCell(new Phrase(row["AssignedTo"].ToString(), normalFont)));

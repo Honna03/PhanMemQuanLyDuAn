@@ -12,7 +12,6 @@ public partial class CongViec
     public string CvTen { get; set; } = null!;
 
     public string? CvMoTa { get; set; }
-
     public DateOnly? CvBatDau { get; set; }
 
     public DateOnly? CvKetThuc { get; set; }
@@ -20,7 +19,6 @@ public partial class CongViec
     public string? CvFile { get; set; }
 
     public string? CvPath { get; set; }
-
     public DateOnly? CvThoiGianHoanThanh { get; set; }
 
     public int NvIdNguoiTao { get; set; }

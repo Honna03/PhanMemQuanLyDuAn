@@ -9,6 +9,7 @@ using QuanLyDuAn.Models;
 using ClosedXML.Excel;
 using Microsoft.Win32;
 using System.IO;
+using QuanLyDuAn.functions;
 
 namespace QuanLyDuAn.Forms
 {
@@ -16,7 +17,7 @@ namespace QuanLyDuAn.Forms
     {
         private ThucTapQuanLyDuAnContext _context = new ThucTapQuanLyDuAnContext();
         private int currentPage = 1;
-        private int recordsPerPage = 10;
+        private int recordsPerPage = 30;
         private int totalRecords = 0;
         private List<KPIViewModel> kpiData;
         private List<KPIViewModel> allKpiData; // Lưu toàn bộ dữ liệu cho việc xuất Excel và tìm kiếm
@@ -38,32 +39,32 @@ namespace QuanLyDuAn.Forms
 
         private void LoadAllKPIData()
         {
-             try
-              {
-                  // Load toàn bộ dữ liệu KPI không phụ thuộc vào khoảng thời gian
-                  var query = from kpi in _context.Kpis
-                              join nv in _context.NhanViens on kpi.NvId equals nv.NvId
-                              orderby kpi.KpiThangNam descending
-                              select new KPIViewModel
-                              {
-                                  MaNhanVien = nv.NvMa,
-                                  HoTenNhanVien = nv.NvTen,
-                                  GioiTinh = nv.NvGioiTinh,
-                                  SDT = nv.NvSdt,
-                                  Email = nv.NvEmail,
-                                  TaiKhoan = nv.NvTaiKhoan,
-                                  ThoiGianKPI = kpi.KpiThangNam,
-                                  PhanTramKPI = kpi.KpiPhanTram
-                              };
+            try
+            {
+                // Load toàn bộ dữ liệu KPI không phụ thuộc vào khoảng thời gian
+                var query = from kpi in _context.Kpis
+                            join nv in _context.NhanViens on kpi.NvId equals nv.NvId
+                            orderby kpi.KpiThangNam descending
+                            select new KPIViewModel
+                            {
+                                MaNhanVien = nv.NvMa,
+                                HoTenNhanVien = nv.NvTen,
+                                GioiTinh = nv.NvGioiTinh,
+                                SDT = nv.NvSdt,
+                                Email = nv.NvEmail,
+                                TaiKhoan = nv.NvTaiKhoan,
+                                ThoiGianKPI = kpi.KpiThangNam,
+                                PhanTramKPI = kpi.KpiPhanTram
+                            };
 
-                  // Lưu toàn bộ dữ liệu cho việc tìm kiếm
-                  completeKpiData = query.ToList();
-              }
-              catch (Exception ex)
-              {
-                  MessageBox.Show($"Lỗi khi tải toàn bộ dữ liệu KPI: {ex.Message}", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
-              }
-            
+                // Lưu toàn bộ dữ liệu cho việc tìm kiếm
+                completeKpiData = query.ToList();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Lỗi khi tải toàn bộ dữ liệu KPI: {ex.Message}", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+
         }
 
         private void LoadLatestMonthData()
@@ -147,7 +148,6 @@ namespace QuanLyDuAn.Forms
         {
             int totalPages = (int)Math.Ceiling((double)totalRecords / recordsPerPage);
 
-            // Cập nhật thông tin phân trang
             txtPaginationKPI.Text = $"{currentPage} trong {totalPages}";
 
             // Cập nhật trạng thái các nút điều hướng
@@ -329,13 +329,13 @@ namespace QuanLyDuAn.Forms
         }
 
         // Thêm phương thức Search để hỗ trợ tìm kiếm từ MainWindow
-        public void Search(string searchText)
+        public void Search(string query)
         {
             try
             {
-                searchText = searchText?.ToLower() ?? string.Empty;
+                query = RemoveDiacritics.RemoveDiacriticsMethod(query?.Trim().ToLower() ?? string.Empty);
 
-                if (string.IsNullOrEmpty(searchText))
+                if (string.IsNullOrEmpty(query))
                 {
                     // Nếu từ khóa rỗng và có lọc theo ngày
                     if (dpStartDate.SelectedDate.HasValue && dpEndDate.SelectedDate.HasValue)
@@ -353,11 +353,17 @@ namespace QuanLyDuAn.Forms
                 {
                     // Tìm kiếm trong toàn bộ dữ liệu, không phụ thuộc vào bộ lọc ngày tháng
                     filteredKpiData = completeKpiData.Where(kpi =>
-                        (kpi.MaNhanVien?.ToLower().Contains(searchText) ?? false) ||
-                        (kpi.HoTenNhanVien?.ToLower().Contains(searchText) ?? false) ||
-                        (kpi.SDT?.ToLower().Contains(searchText) ?? false) ||
-                        (kpi.TaiKhoan?.ToLower().Contains(searchText) ?? false)
-                    ).ToList();
+                    {
+                        var maNhanVienNormalized = RemoveDiacritics.RemoveDiacriticsMethod(kpi.MaNhanVien?.Trim().ToLower() ?? string.Empty);
+                        var hoTenNhanVienNormalized = RemoveDiacritics.RemoveDiacriticsMethod(kpi.HoTenNhanVien?.Trim().ToLower() ?? string.Empty);
+                        var sdtNormalized = RemoveDiacritics.RemoveDiacriticsMethod(kpi.SDT?.Trim().ToLower() ?? string.Empty);
+                        var taiKhoanNormalized = RemoveDiacritics.RemoveDiacriticsMethod(kpi.TaiKhoan?.Trim().ToLower() ?? string.Empty);
+
+                        return maNhanVienNormalized.Contains(query, StringComparison.OrdinalIgnoreCase) ||
+                               hoTenNhanVienNormalized.Contains(query, StringComparison.OrdinalIgnoreCase) ||
+                               sdtNormalized.Contains(query, StringComparison.OrdinalIgnoreCase) ||
+                               taiKhoanNormalized.Contains(query, StringComparison.OrdinalIgnoreCase);
+                    }).ToList();
 
                     // Bỏ qua bộ lọc ngày tháng khi đang tìm kiếm
                     dpStartDate.SelectedDate = null;
@@ -381,16 +387,17 @@ namespace QuanLyDuAn.Forms
         }
     }
 
+
     public class KPIViewModel
-    {
-        public int STT { get; set; }
-        public string MaNhanVien { get; set; }
-        public string HoTenNhanVien { get; set; }
-        public string GioiTinh { get; set; }
-        public string SDT { get; set; }
-        public string Email { get; set; }
-        public string TaiKhoan { get; set; }
-        public DateOnly? ThoiGianKPI { get; set; }
-        public decimal? PhanTramKPI { get; set; }
+        {
+            public int STT { get; set; }
+            public string MaNhanVien { get; set; }
+            public string HoTenNhanVien { get; set; }
+            public string GioiTinh { get; set; }
+            public string SDT { get; set; }
+            public string Email { get; set; }
+            public string TaiKhoan { get; set; }
+            public DateOnly? ThoiGianKPI { get; set; }
+            public decimal? PhanTramKPI { get; set; }
+        }
     }
-}

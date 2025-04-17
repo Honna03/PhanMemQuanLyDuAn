@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using System.Configuration;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace QuanLyDuAn.Models;
 
@@ -15,7 +16,6 @@ public partial class ThucTapQuanLyDuAnContext : DbContext
         : base(options)
     {
     }
-
     public virtual DbSet<CapNhatCongViec> CapNhatCongViecs { get; set; }
 
     public virtual DbSet<CongViec> CongViecs { get; set; }
@@ -35,7 +35,8 @@ public partial class ThucTapQuanLyDuAnContext : DbContext
     public virtual DbSet<Quyen> Quyens { get; set; }
     public virtual DbSet<ThongBao> ThongBaos { get; set; }
     public virtual DbSet<TrangThai> TrangThais { get; set; }
-
+    public virtual DbSet<ThongTinCongTy> ThongTinCongTies { get; set; }
+    public virtual DbSet<LichSuCapNhatLuong> LichSuCapNhatLuongs { get; set; }
     public virtual DbSet<VaiTro> VaiTros { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -77,6 +78,18 @@ public partial class ThucTapQuanLyDuAnContext : DbContext
                 .HasForeignKey(d => new { d.CvId, d.DaId, d.NvId })
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_CapNhatCongViec_PhanCongCongViec");
+
+
+            // Cấu hình converter cho DateOnly? sang DateTime
+            var dateOnlyConverter = new ValueConverter<DateOnly?, DateTime?>(
+                dateOnly => dateOnly.HasValue ? dateOnly.Value.ToDateTime(TimeOnly.MinValue) : (DateTime?)null,
+                dateTime => dateTime.HasValue ? DateOnly.FromDateTime(dateTime.Value) : (DateOnly?)null
+            );
+
+            modelBuilder.Entity<ThongBao>()
+                .Property(tb => tb.TbThoiGian)
+                .HasConversion(dateOnlyConverter)
+                .HasColumnType("date"); // Rõ ràng kiểu cột là date
         });
 
         modelBuilder.Entity<CongViec>(entity =>
@@ -211,6 +224,40 @@ public partial class ThucTapQuanLyDuAnContext : DbContext
                 .HasForeignKey(d => d.NvId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_KPI_NhanVien");
+        });
+
+        modelBuilder.Entity<LichSuCapNhatLuong>(entity =>
+        {
+            entity.HasKey(e => e.LsId);
+
+            entity.ToTable("LichSuCapNhatLuong");
+
+            entity.HasIndex(e => new { e.NvId, e.QMa }, "IX_LichSuCapNhatLuong_nv_ID_q_Ma");
+
+            entity.Property(e => e.LsId).HasColumnName("ls_ID");
+            entity.Property(e => e.LuongCu)
+                .HasColumnType("decimal(15, 2)")
+                .HasColumnName("luongCu");
+            entity.Property(e => e.LuongMoi)
+                .HasColumnType("decimal(15, 2)")
+                .HasColumnName("luongMoi");
+            entity.Property(e => e.NvId).HasColumnName("nv_ID");
+            entity.Property(e => e.QMa)
+                .HasMaxLength(15)
+                .IsUnicode(false)
+                .HasColumnName("q_Ma");
+            entity.Property(e => e.ThoiGianCapNhat)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime")
+                .HasColumnName("thoiGianCapNhat");
+
+            entity.HasOne(d => d.Nv).WithMany(p => p.LichSuCapNhatLuongs)
+                .HasForeignKey(d => d.NvId)
+                .HasConstraintName("FK_LichSuCapNhatLuong_NhanVien");
+
+            entity.HasOne(d => d.QMaNavigation).WithMany(p => p.LichSuCapNhatLuongs)
+                .HasForeignKey(d => d.QMa)
+                .HasConstraintName("FK_LichSuCapNhatLuong_Quyen");
         });
 
         modelBuilder.Entity<Luong>(entity =>
@@ -413,6 +460,36 @@ public partial class ThucTapQuanLyDuAnContext : DbContext
                   .HasForeignKey(d => new { d.CvId, d.DaId })
                   .HasConstraintName("FK_ThongBao_CongViec");
         });
+
+        modelBuilder.Entity<ThongTinCongTy>(entity =>
+        {
+            entity.HasKey(e => e.CtyId);
+
+            entity.ToTable("ThongTinCongTy");
+
+            entity.Property(e => e.CtyId).HasColumnName("cty_ID");
+            entity.Property(e => e.CtyDiaChi)
+                .HasMaxLength(200)
+                .HasColumnName("cty_DiaChi");
+            entity.Property(e => e.CtyEmail)
+                .HasMaxLength(100)
+                .IsUnicode(false)
+                .HasColumnName("cty_Email");
+            entity.Property(e => e.CtyLogo)
+                .HasMaxLength(500)
+                .HasColumnName("cty_Logo");
+            entity.Property(e => e.CtyMoTa)
+                .HasMaxLength(500)
+                .HasColumnName("cty_MoTa");
+            entity.Property(e => e.CtySdt)
+                .HasMaxLength(30)
+                .IsUnicode(false)
+                .HasColumnName("cty_SDT");
+            entity.Property(e => e.CtyTen)
+                .HasMaxLength(100)
+                .HasColumnName("cty_Ten");
+        });
+
         modelBuilder.Entity<TrangThai>(entity =>
         {
             entity.HasKey(e => e.TtMa);

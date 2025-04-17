@@ -22,8 +22,8 @@ namespace QuanLyDuAn.Forms
     /// </summary>
     public partial class ThongTinNhanVien : Window
     {
-        ThucTapQuanLyDuAnContext context = new ThucTapQuanLyDuAnContext(); 
-        List<Models.Quyen> quyen = new List<Models.Quyen>(); 
+        ThucTapQuanLyDuAnContext context = new ThucTapQuanLyDuAnContext();
+        List<Models.Quyen> quyen = new List<Models.Quyen>();
 
         public event EventHandler NhanVienDeleted;
 
@@ -130,7 +130,24 @@ namespace QuanLyDuAn.Forms
         }
         public void LoadNhanVien()  //bo cmt
         {
-            var nhanVien = context.NhanViens.Include(nv => nv.QMaNavigation).Where(nv => nv.NvMa == _NvMa).FirstOrDefault();
+            //var nhanVien = context.NhanViens.Include(nv => nv.QMaNavigation).Where(nv => nv.NvMa == _NvMa).FirstOrDefault();
+            var nhanVien = (from nv in context.NhanViens
+                           join q in context.Quyens on nv.QMa equals q.QMa
+                           select new
+                           {
+                               NvId = nv.NvId,
+                               NvMa = nv.NvMa,
+                               NvTen = nv.NvTen,
+                               NvGioiTinh = nv.NvGioiTinh,
+                               NvNgaySinh = nv.NvNgaySinh,
+                               NvSdt = nv.NvSdt,
+                               NvDiaChi = nv.NvDiaChi,
+                               NvEmail = nv.NvEmail,
+                               NvTaiKhoan = nv.NvTaiKhoan,
+                               NvMatKhau = nv.NvMatKhau,
+                               NvLuongCoBan = nv.NvLuongCoBan,
+                               QMa = nv.QMa,
+                           }).FirstOrDefault();
             if (nhanVien != null)
             {
                 // Hiển thị thông tin nhân viên vào các TextBox
@@ -163,10 +180,14 @@ namespace QuanLyDuAn.Forms
         private void LoadQuyen()   //bo cmt
         {
             // Lấy danh sách quyền từ CSDL
-            quyen = context.Quyens.ToList();
-
+            //quyen = context.Quyens.ToList();
+            var quyenn = (from q in context.Quyens
+                         select new {
+                             QMa = q.QMa,
+                             QTen = q.QTen,
+                             }).ToList();
             // Gán danh sách quyền vào ComboBox
-            cbQuyen.ItemsSource = quyen;
+            cbQuyen.ItemsSource = quyenn;
             cbQuyen.DisplayMemberPath = "QTen";  // Hiển thị tên quyền
             cbQuyen.SelectedValuePath = "QMa";  // Lưu mã quyền khi chọn
         }
@@ -314,6 +335,19 @@ namespace QuanLyDuAn.Forms
                 dgCongViec.ItemsSource = congViec;
             }
 
+        }
+
+        private void dgCongViec_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            var selectCongViec = (dynamic)dgCongViec.SelectedItem;
+
+            if (selectCongViec != null)
+            {
+                // Mở Form B và truyền mã nhân viên
+                ThongTinCongViec thongTinCongViec = new ThongTinCongViec(selectCongViec.CvMa);
+                //thongTinCongViec.CongViecDeleted += LoadLoadCongViec;
+                thongTinCongViec.Show();
+            }
         }
     }
 }

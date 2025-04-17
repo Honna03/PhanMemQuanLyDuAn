@@ -8,6 +8,7 @@ using Microsoft.SqlServer.Server;
 using QuanLyDuAn.Forms;
 using System.Windows.Input;
 using QuanLyDuAn.Models; // bo cmt
+using QuanLyDuAn.functions;
 
 namespace QuanLyDuAn.Controls
 {
@@ -18,14 +19,13 @@ namespace QuanLyDuAn.Controls
         //private List<NhanVien> danhSachNhanVien = new List<NhanVien>();
         private int currentPageNhanVien = 1;
         private int pageSizeNhanVien = 10; // Số bản ghi mỗi trang
-        private int totalPagesNhanVien;
+        private int totalRecords = 0;
+        private List<dynamic> filteredNhanVien;
 
         public DanhSachNhanVien()
         {
             InitializeComponent();
             LoadNhanVien();
-            UpdateTotalRecords();
-            UpdatePaginationNhanVien();
         }
 
         // Xử lý nút Thêm nhân viên
@@ -44,11 +44,30 @@ namespace QuanLyDuAn.Controls
 
         public void LoadNhanVien()         //bo cmt
         {
-            nhanVien = context.NhanViens.Include(nv => nv.QMaNavigation).ToList();
-            dgNhanVien.ItemsSource = nhanVien;
-            totalPagesNhanVien = (int)Math.Ceiling((double)nhanVien.Count / pageSizeNhanVien);
-            HienThiNhanVienTheoTrang(currentPageNhanVien);
-            UpdateTotalRecords();
+            // nhanVien = context.NhanViens.Include(nv => nv.QMaNavigation).ToList();
+            // dgNhanVien.ItemsSource = nhanVien;
+            var result = from nv in context.NhanViens
+                         join q in context.Quyens on nv.QMa equals q.QMa
+                         select new
+                         {
+                             nv.NvId,
+                             nv.NvMa,
+                             nv.NvTen,
+                             nv.NvGioiTinh,
+                             nv.NvNgaySinh,
+                             nv.NvSdt,
+                             nv.NvEmail,
+                             nv.NvTaiKhoan,
+                             nv.NvMatKhau,
+                             nv.NvLuongCoBan,
+                             q.QTen
+                         };
+            var resultlist  = result.ToList();
+            dgNhanVien.ItemsSource = resultlist;
+            filteredNhanVien = resultlist.Cast<dynamic>().ToList();
+            totalRecords = filteredNhanVien.Count;
+            currentPageNhanVien = 1;
+            UpdatePagedData();
         }
 
         // Cập nhật tổng số bản ghi
@@ -75,9 +94,10 @@ namespace QuanLyDuAn.Controls
         // Cập nhật thông tin phân trang
         private void UpdatePaginationNhanVien()
         {
-            txtPaginationNhanVien.Text = $"{currentPageNhanVien} trong {totalPagesNhanVien}";
+            int totalPages = (int)Math.Ceiling((double)totalRecords / pageSizeNhanVien);
+            txtPaginationNhanVien.Text = $"{currentPageNhanVien} trong {totalPages}";
             btnPrevPageNhanVien.IsEnabled = currentPageNhanVien > 1;
-            btnNextPageNhanVien.IsEnabled = currentPageNhanVien < totalPagesNhanVien;
+            btnNextPageNhanVien.IsEnabled = currentPageNhanVien < totalPages;
         }
 
         // Xử lý nút Trang trước
@@ -86,17 +106,18 @@ namespace QuanLyDuAn.Controls
             if (currentPageNhanVien > 1)
             {
                 currentPageNhanVien--;
-                HienThiNhanVienTheoTrang(currentPageNhanVien);
+                UpdatePagedData();
             }
         }
 
         // Xử lý nút Trang sau
         private void btnNextPageNhanVien_Click(object sender, RoutedEventArgs e)
         {
-            if (currentPageNhanVien < totalPagesNhanVien)
+            int totalPages = (int)Math.Ceiling((double)totalRecords / pageSizeNhanVien);
+            if (currentPageNhanVien < totalPages)
             {
                 currentPageNhanVien++;
-                HienThiNhanVienTheoTrang(currentPageNhanVien);
+                UpdatePagedData();
             }
         }
 
@@ -116,6 +137,76 @@ namespace QuanLyDuAn.Controls
                 ThongTinNhanVien.NhanVienDeleted += LoadLoadNhanVien;
                 ThongTinNhanVien.Show();
             }
+        }
+
+        // Hàm tìm kiếm nhân viên
+        public void Search(string query)
+        {
+            try
+            {
+                query = RemoveDiacritics.RemoveDiacriticsMethod(query?.Trim().ToLower() ?? string.Empty);
+
+                if (string.IsNullOrEmpty(query))
+                {
+                    LoadNhanVien(); // Tải lại toàn bộ danh sách nếu query rỗng
+                }
+                else
+                {
+                    filteredNhanVien = filteredNhanVien.Where(nv =>
+                    {
+                        var nvMaNormalized = RemoveDiacritics.RemoveDiacriticsMethod(nv.NvMa?.Trim().ToLower() ?? string.Empty);
+                        var nvTenNormalized = RemoveDiacritics.RemoveDiacriticsMethod(nv.NvTen?.Trim().ToLower() ?? string.Empty);
+                        var nvEmailNormalized = RemoveDiacritics.RemoveDiacriticsMethod(nv.NvEmail?.Trim().ToLower() ?? string.Empty);
+                        var nvSdtNormalized = RemoveDiacritics.RemoveDiacriticsMethod(nv.NvSdt?.Trim().ToLower() ?? string.Empty);
+                        var nvTaiKhoanNormalized = RemoveDiacritics.RemoveDiacriticsMethod(nv.NvTaiKhoan?.Trim().ToLower() ?? string.Empty);
+                        var qTenNormalized = RemoveDiacritics.RemoveDiacriticsMethod(nv.QTen?.Trim().ToLower() ?? string.Empty);
+
+                        return nvMaNormalized.Contains(query, StringComparison.OrdinalIgnoreCase) ||
+                               nvTenNormalized.Contains(query, StringComparison.OrdinalIgnoreCase) ||
+                               nvEmailNormalized.Contains(query, StringComparison.OrdinalIgnoreCase) ||
+                               nvSdtNormalized.Contains(query, StringComparison.OrdinalIgnoreCase) ||
+                               nvTaiKhoanNormalized.Contains(query, StringComparison.OrdinalIgnoreCase) ||
+                               qTenNormalized.Contains(query, StringComparison.OrdinalIgnoreCase) ||
+                               nv.NvNgaySinh.ToString("dd/MM/yyyy").ToLower().Contains(query, StringComparison.OrdinalIgnoreCase);
+                    }).ToList();
+
+                    totalRecords = filteredNhanVien.Count;
+                    currentPageNhanVien = 1;
+                    UpdatePagedData();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Lỗi khi tìm kiếm: {ex.Message}", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        // Cập nhật dữ liệu phân trang
+        private void UpdatePagedData()
+        {
+            var pagedNhanVien = filteredNhanVien
+                .Skip((currentPageNhanVien - 1) * pageSizeNhanVien)
+                .Take(pageSizeNhanVien)
+                .Select((nv, index) => new
+                {
+                    STT = (currentPageNhanVien - 1) * pageSizeNhanVien + index + 1,
+                    nv.NvId,
+                    nv.NvMa,
+                    nv.NvTen,
+                    nv.NvGioiTinh,
+                    nv.NvNgaySinh,
+                    nv.NvSdt,
+                    nv.NvEmail,
+                    nv.NvTaiKhoan,
+                    nv.NvMatKhau,
+                    nv.NvLuongCoBan,
+                    nv.QTen
+                })
+                .ToList();
+
+            dgNhanVien.ItemsSource = pagedNhanVien;
+            UpdateTotalRecords();
+            UpdatePaginationNhanVien();
         }
     }
 }

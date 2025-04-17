@@ -9,7 +9,7 @@ public partial class ThongBao
 
     public string TbNoiDung { get; set; } = null!;
 
-    public DateTime? TbThoiGian { get; set; }
+    public DateOnly? TbThoiGian { get; set; }
 
     public bool? TbTinhTrang { get; set; }
 

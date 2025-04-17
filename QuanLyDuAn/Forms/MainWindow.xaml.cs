@@ -1,22 +1,26 @@
-﻿using QuanLyDuAn.Controls;
+﻿using Microsoft.EntityFrameworkCore;
+using QuanLyDuAn.Controls;
 using QuanLyDuAn.Forms;
 using QuanLyDuAn.Models;
-using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
+using System.Windows.Media;
 using System.Windows.Threading;
 
 namespace QuanLyDuAn
 {
     public partial class MainWindow : Window
     {
-        private DispatcherTimer timer;
         private readonly ThucTapQuanLyDuAnContext _context;
+        private readonly DispatcherTimer timer;
+        private readonly int _currentUserId;
+        private readonly string _currentUserName;
         private ProjectsControl _projectsControl;
-        private int _currentUserId;
-        private string _currentUserName;
 
         public MainWindow(int userId)
         {
@@ -27,11 +31,7 @@ namespace QuanLyDuAn
             _currentUserId = userId;
             var user = _context.NhanViens.FirstOrDefault(n => n.NvId == userId);
             _currentUserName = user != null ? user.NvTen : "Admin";
-
-            if (UserNameTextBlock != null)
-            {
-                UserNameTextBlock.Text = _currentUserName;
-            }
+            UserNameTextBlock.Text = _currentUserName;
 
             timer = new DispatcherTimer();
             timer.Interval = TimeSpan.FromSeconds(1);
@@ -41,14 +41,59 @@ namespace QuanLyDuAn
             UpdateCurrentTime();
         }
 
+        private void UpdateCurrentTime()
+        {
+            CurrentTime.Text = DateTime.Now.ToString("HH:mm:ss");
+        }
+
         private void Timer_Tick(object sender, EventArgs e)
         {
             UpdateCurrentTime();
         }
 
-        private void UpdateCurrentTime()
+        private void Logo_Click(object sender, RoutedEventArgs e)
         {
-            CurrentTime.Text = DateTime.Now.ToString("HH:mm:ss");
+            MainContent.Content = new TrangChu();
+        }
+
+        private void btn_QLDA_Click(object sender, RoutedEventArgs e)
+        {
+            LoadProjectsControl();
+        }
+
+        private void btn_QLCV_Click(object sender, RoutedEventArgs e)
+        {
+            MainContent.Content = new DanhSachCongViec();
+        }
+
+        private void btn_QLKPI_Click(object sender, RoutedEventArgs e)
+        {
+            subMenuPanel.Visibility = subMenuPanel.Visibility == Visibility.Visible ? Visibility.Collapsed : Visibility.Visible;
+        }
+
+        private void btn_CongThuc_Click(object sender, RoutedEventArgs e)
+        {
+            MainContent.Content = new KPI();
+        }
+
+        private void btn_KPI_Click(object sender, RoutedEventArgs e)
+        {
+            MainContent.Content = new Edit_KPI();
+        }
+
+        private void btn_NhanVien_Click(object sender, RoutedEventArgs e)
+        {
+            MainContent.Content = new DanhSachNhanVien();
+        }
+
+        private void btn_Luong_Click(object sender, RoutedEventArgs e)
+        {
+            MainContent.Content = new Edit_Luong();
+        }
+
+        private void btn_BaoCao_Click(object sender, RoutedEventArgs e)
+        {
+            MainContent.Content = new BaoCao();
         }
 
         private void LoadProjectsControl()
@@ -85,24 +130,7 @@ namespace QuanLyDuAn
             }
         }
 
-        private async System.Threading.Tasks.Task ReloadProjectsAsync()
-        {
-            var projects = await _context.DuAns
-                .Include(d => d.TtMaNavigation)
-                .Include(d => d.NvIdNguoiTaoNavigation)
-                .ToListAsync();
-            var statuses = await _context.TrangThais.ToListAsync();
-            var creators = await _context.NhanViens
-                .Select(n => new Creator { NvId = n.NvId, Name = n.NvTen })
-                .ToListAsync();
-            var allTasks = await _context.CongViecs
-                .Include(c => c.Da)
-                .Include(c => c.TtMaNavigation)
-                .ToListAsync();
-            _projectsControl.SetProjects(projects, statuses, creators, allTasks);
-        }
-
-        private void ProjectsControl_AddProjectRequested(object sender, EventArgs e)
+        private async void ProjectsControl_AddProjectRequested(object sender, EventArgs e)
         {
             var window = new Window
             {
@@ -117,12 +145,37 @@ namespace QuanLyDuAn
             window.ShowDialog();
         }
 
-        private void ProjectsControl_RefreshRequested(object sender, EventArgs e)
+        private async void ProjectsControl_RefreshRequested(object sender, EventArgs e)
         {
-            ReloadProjectsAsync();
+            await ReloadProjectsAsync();
         }
 
-        private void ProjectsControl_EditProjectRequested(object sender, ProjectEventArgs e)
+        private async Task ReloadProjectsAsync()
+        {
+            try
+            {
+                var projects = await _context.DuAns
+                    .Include(d => d.TtMaNavigation)
+                    .Include(d => d.NvIdNguoiTaoNavigation)
+                    .ToListAsync();
+                var statuses = await _context.TrangThais.ToListAsync();
+                var creators = await _context.NhanViens
+                    .Select(n => new Creator { NvId = n.NvId, Name = n.NvTen })
+                    .ToListAsync();
+                var allTasks = await _context.CongViecs
+                    .Include(c => c.Da)
+                    .Include(c => c.TtMaNavigation)
+                    .ToListAsync();
+
+                _projectsControl.SetProjects(projects, statuses, creators, allTasks);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Lỗi tải lại dữ liệu: {ex.Message}", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private async void ProjectsControl_EditProjectRequested(object sender, ProjectEventArgs e)
         {
             var window = new Window
             {
@@ -180,100 +233,42 @@ namespace QuanLyDuAn
             window.ShowDialog();
         }
 
-        private void btn_NhanVien_Click(object sender, RoutedEventArgs e)
-        {
-            MainContent.Content = new DanhSachNhanVien();
-        }
-
-        private void btn_BaoCao_Click(object sender, RoutedEventArgs e)
-        {
-            MainContent.Content = new BaoCao();
-        }
-
-        private void UserButton_Click(object sender, RoutedEventArgs e)
-        {
-            if (UserButton.ContextMenu != null)
-            {
-                UserButton.ContextMenu.PlacementTarget = UserButton;
-                UserButton.ContextMenu.Placement = System.Windows.Controls.Primitives.PlacementMode.Bottom;
-                UserButton.ContextMenu.IsOpen = true;
-            }
-        }
-
-        private void btn_QLCV_Click(object sender, RoutedEventArgs e)
-        {
-            MainContent.Content = new DanhSachCongViec();
-        }
-
-        private void btn_QLDA_Click(object sender, RoutedEventArgs e)
-        {
-            LoadProjectsControl();
-        }
-
-        private void Logo_Click(object sender, RoutedEventArgs e)
-        {
-            MainContent.Content = new TrangChu();
-        }
-
-        private void btn_QLKPI_Click(object sender, RoutedEventArgs e)
-        {
-            subMenuPanel.Visibility = subMenuPanel.Visibility == Visibility.Collapsed ? Visibility.Visible : Visibility.Collapsed;
-        }
-
-        private void btn_CongThuc_Click(object sender, RoutedEventArgs e)
-        {
-            MainContent.Content = new CongThucKPI();
-            subMenuPanel.Visibility = Visibility.Collapsed;
-        }
-
-        private void btn_KPI_Click(object sender, RoutedEventArgs e)
-        {
-            MainContent.Content = new KPI();
-            subMenuPanel.Visibility = Visibility.Collapsed;
-        }
-
-        private void btn_Luong_Click(object sender, RoutedEventArgs e)
-        {
-            MainContent.Content = new QuanLyDuAn.Forms.Luong();
-        }
-
-        private void btn_DangXuat_Click(object sender, RoutedEventArgs e)
-        {
-            Login loginWindow = new Login();
-            loginWindow.WindowStartupLocation = WindowStartupLocation.CenterScreen;
-            Window parentWindow = Window.GetWindow(sender as DependencyObject);
-            if (parentWindow != null)
-            {
-                parentWindow.Close();
-            }
-            loginWindow.Show();
-        }
-
-        private void btn_Thoat_Click(object sender, RoutedEventArgs e)
-        {
-            MessageBoxResult result = MessageBox.Show("Bạn có chắc thoát không?", "Confirm Exit", MessageBoxButton.YesNo, MessageBoxImage.Question);
-            if (result == MessageBoxResult.Yes)
-            {
-                this.Close();
-            }
-        }
-
         private void SearchBox_GotFocus(object sender, RoutedEventArgs e)
         {
-            if (sender is TextBox searchBox && searchBox.Text == "Tìm kiếm...")
+            if (SearchBox.Text == "Tìm kiếm...")
             {
-                searchBox.Text = "";
-                searchBox.Foreground = System.Windows.Media.Brushes.Black;
+                SearchBox.Text = "";
+                SearchBox.Foreground = Brushes.White;
             }
         }
 
         private void SearchBox_LostFocus(object sender, RoutedEventArgs e)
         {
-            if (sender is TextBox searchBox && string.IsNullOrWhiteSpace(searchBox.Text))
+            if (string.IsNullOrWhiteSpace(SearchBox.Text))
             {
-                searchBox.Text = "Tìm kiếm...";
-                searchBox.Foreground = System.Windows.Media.Brushes.Gray;
+                SearchBox.Text = "Tìm kiếm...";
+                SearchBox.Foreground = Brushes.White;
             }
+        }
+
+        private void UserButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is Button button && button.ContextMenu != null)
+            {
+                button.ContextMenu.IsOpen = true;
+            }
+        }
+
+        private void btn_DangXuat_Click(object sender, RoutedEventArgs e)
+        {
+            Login loginWindow = new Login();
+            loginWindow.Show();
+            Close();
+        }
+
+        private void btn_Thoat_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
         }
     }
 }

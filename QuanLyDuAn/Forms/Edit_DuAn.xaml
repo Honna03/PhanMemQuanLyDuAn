@@ -265,15 +265,6 @@
             <ListView Grid.Row="11" Grid.ColumnSpan="2" x:Name="TasksListView" Margin="0,0,0,10" Height="150">
                 <ListView.View>
                     <GridView>
-                        <GridViewColumn Header="Hoàn thành" Width="60">
-                            <GridViewColumn.CellTemplate>
-                                <DataTemplate>
-                                    <CheckBox IsChecked="{Binding IsCompleted, UpdateSourceTrigger=PropertyChanged}" 
-                                              Checked="CheckBox_Checked" Unchecked="CheckBox_Unchecked" 
-                                              HorizontalAlignment="Center" ToolTip="Đánh dấu hoàn thành"/>
-                                </DataTemplate>
-                            </GridViewColumn.CellTemplate>
-                        </GridViewColumn>
                         <GridViewColumn Header="Tên công việc" DisplayMemberBinding="{Binding Task.CvTen}" Width="120"/>
                         <GridViewColumn Header="Trạng thái" DisplayMemberBinding="{Binding Task.TtMaNavigation.TtTen}" Width="80"/>
                         <GridViewColumn Header="Ngày bắt đầu" DisplayMemberBinding="{Binding Task.CvBatDau, StringFormat=dd/MM/yyyy}" Width="80"/>

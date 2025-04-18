@@ -78,11 +78,21 @@
         </Grid.ColumnDefinitions>
 
         <!-- Sidebar -->
-        <StackPanel Grid.Column="0" Background="{StaticResource MyGradientBrush}" Height="434" VerticalAlignment="Bottom">
-            <Button x:Name="logoButton" Click="Logo_Click" Background="Transparent" BorderThickness="0" HorizontalAlignment="Center" VerticalContentAlignment="Center" Height="39.5">
-                <Image Width="40" Height="40" Source="{Binding CtyLogo, Converter={StaticResource ImageConverter}}" Stretch="Uniform" VerticalAlignment="Top" HorizontalAlignment="Center"/>
+        <Grid Grid.Column="0" Background="{StaticResource MyGradientBrush}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <!-- Chứa logo -->
+                <RowDefinition Height="*"/>
+                <!-- Chứa các nút còn lại -->
+            </Grid.RowDefinitions>
+
+            <!-- Logo căn giữa trong sidebar -->
+            <Button x:Name="logoButton" Grid.Row="0" Click="Logo_Click" Background="Transparent" BorderThickness="0" HorizontalAlignment="Center" VerticalAlignment="Center" Height="80" Width="80" Margin="0,10,0,10">
+                <Image Width="80" Height="80" Source="{Binding CtyLogo, Converter={StaticResource ImageConverter}}" Stretch="Uniform" VerticalAlignment="Center" HorizontalAlignment="Center"/>
             </Button>
-            <StackPanel Margin="0,10,10,10">
+
+            <!-- Các nút khác trong StackPanel -->
+            <StackPanel Grid.Row="1" Margin="0,10,10,10">
                 <Button x:Name="btn_QLDA" Background="Transparent" Foreground="White" BorderThickness="0" Padding="5" HorizontalContentAlignment="Left" FontSize="14" Click="btn_QLDA_Click">
                     <StackPanel Orientation="Horizontal">
                         <Image Source="/icon/task.png" Width="20" Height="20" Margin="0,0,10,0"/>
@@ -110,6 +120,7 @@
                 <Button x:Name="btn_Luong" Background="Transparent" Foreground="White" BorderThickness="0" Padding="5" HorizontalContentAlignment="Left" FontSize="14" Click="btn_Luong_Click">
                     <StackPanel Orientation="Horizontal">
                         <Image Source="/icon/money.png" Width="20" Height="20" Margin="0,0,10,0"/>
+                        <!-- Sửa lỗi Margin -->
                         <TextBlock Text="Lương" VerticalAlignment="Center"/>
                     </StackPanel>
                 </Button>
@@ -120,7 +131,7 @@
                     </StackPanel>
                 </Button>
             </StackPanel>
-        </StackPanel>
+        </Grid>
         <!-- Main Content -->
         <Grid Grid.Column="1">
             <Grid.RowDefinitions>

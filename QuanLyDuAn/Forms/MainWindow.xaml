@@ -213,16 +213,16 @@
                     <TextBlock x:Name="UserName" Text="aaâaaaaaaadfasdfasdfsdffasfsfsadfsadfasdfbbbaa"
                 Foreground="White" FontSize="14" VerticalAlignment="Center"
                 MaxWidth="200" TextTrimming="CharacterEllipsis" Margin="0,0,10,0"/>
-                    <Button x:Name="UserButton" Background="Transparent" BorderThickness="0" Padding="0" Click="UserButton_Click">
+                    <Button x:Name="UserButton" Background="Transparent" BorderThickness="0" Padding="0" Click="UserButton_Click" Width="30">
                         <TextBlock x:Name="i_User" Text="👤" Foreground="White" FontSize="22" VerticalAlignment="Center"/>
                         <Button.ContextMenu>
-                            <ContextMenu Width="120" Placement="Bottom" VerticalOffset="8" HorizontalOffset="11">
+                            <ContextMenu Width="120" Placement="Bottom" VerticalOffset="8" HorizontalOffset="10">
                                 <MenuItem x:Name="btn_DangXuat" Header="Đăng xuất" Margin="5,0,0,10" Click="btn_DangXuat_Click">
                                     <MenuItem.Icon>
                                         <Image Source="/icon/logout.png" Width="20" Height="20" Margin="0,0,15,0"/>
                                     </MenuItem.Icon>
                                 </MenuItem>
-                                <MenuItem x:Name="btn_Thoat" Header="Thoát" Margin="5,0,0,5" Click="btn_Thoat_Click">
+                                <MenuItem x:Name="btn_Thoat" Header="Thoát" Margin="5,0,0,0" Click="btn_Thoat_Click">
                                     <MenuItem.Icon>
                                         <Image Source="/icon/power.png" Width="20" Height="20" Margin="0,0,15,0"/>
                                     </MenuItem.Icon>

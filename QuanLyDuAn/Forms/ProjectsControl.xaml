@@ -97,6 +97,7 @@
         <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="15,10">
             <Button Content="Thêm dự án" Click="AddProjectButton_Click" Margin="0,0,10,0" Background="{StaticResource PrimaryColor}"/>
             <Button Content="Làm mới" Click="RefreshButton_Click" Background="{StaticResource PrimaryColor}"/>
+            <Button Content="In báo báo" Click="Report_Click" Background="{StaticResource PrimaryColor}"/>
         </StackPanel>
 
         <Grid Grid.Row="1">

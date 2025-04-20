@@ -101,7 +101,7 @@
                 </StackPanel>
             </Button>
 
-            <Button x:Name="btnThoat" Grid.Row="0" Grid.Column="8" Background="#D3D3D3" Foreground="White" Margin="0,0,0,0" FontSize="24" FontWeight="Bold" Click="btnThoat_Click">
+            <Button x:Name="btnThoat" Grid.Row="0" Grid.Column="8" Background="#73002A" Foreground="White" Margin="0,0,0,0" FontSize="24" FontWeight="Bold" Click="btnThoat_Click">
                 <StackPanel Orientation="Horizontal">
                     <Image Source="/icon/close.png" Width="20" Height="20" Margin="0,0,10,0"/>
                     <TextBlock Text="Thoát" VerticalAlignment="Center"/>

@@ -29,11 +29,11 @@
                         <StackPanel Orientation="Horizontal" Margin="0,10,0,0" Width="350">
                             <Ellipse Width="100" Height="100" Stroke="Orange" StrokeThickness="10" Fill="Transparent"/>
                             <StackPanel Margin="10,0,0,20" Width="240" Height="130">
-                                <TextBlock Text="34" FontSize="26" FontWeight="Bold" Foreground="Black" HorizontalAlignment="Center" Margin="20,0,0,0"/>
+                                <TextBlock x:Name="TodayTotalTasks" FontSize="26" FontWeight="Bold" Foreground="Black" HorizontalAlignment="Center" Margin="20,0,0,0"/>
                                 <TextBlock Text="công việc" FontSize="16" Foreground="Gray" HorizontalAlignment="Center" Margin="20,0,0,10"/>
-                                <TextBlock Text="23 Đã hoàn thành" FontSize="16" Foreground="Green" Margin="40,0,0,0"/>
-                                <TextBlock Text="6  Sắp đến hạn" FontSize="16" Foreground="Red" Margin="40,0,0,0"/>
-                                <TextBlock Text="0  Quá hạn" FontSize="16" Foreground="Red" Margin="40,0,0,0"/>
+                                <TextBlock x:Name="TodayCompletedTasks" FontSize="16" Foreground="Green" Margin="40,0,0,0"/>
+                                <TextBlock x:Name="TodayNearingDeadlineTasks" FontSize="16" Foreground="Red" Margin="40,0,0,0"/>
+                                <TextBlock x:Name="TodayOverdueTasks" FontSize="16" Foreground="Red" Margin="40,0,0,0"/>
                             </StackPanel>
                         </StackPanel>
                     </StackPanel>
@@ -44,11 +44,11 @@
                         <StackPanel Orientation="Horizontal" Margin="0,10,0,0" Width="351">
                             <Ellipse Width="100" Height="100" Stroke="Red" StrokeThickness="10" Fill="Transparent"/>
                             <StackPanel Margin="10,0,0,20" Width="240" Height="138">
-                                <TextBlock Text="9" FontSize="26" FontWeight="Bold" Foreground="Black" HorizontalAlignment="Center" Margin="20,0,0,0"/>
+                                <TextBlock x:Name="WeekTotalTasks" FontSize="26" FontWeight="Bold" Foreground="Black" HorizontalAlignment="Center" Margin="20,0,0,0"/>
                                 <TextBlock Text="công việc" FontSize="16" Foreground="Gray" HorizontalAlignment="Center" Margin="20,0,0,10"/>
-                                <TextBlock Text="1 Đã hoàn thành" FontSize="16" Foreground="Green" Margin="40,0,0,0"/>
-                                <TextBlock Text="9  Sắp đến hạn" FontSize="16" Foreground="Red" Margin="40,0,0,0"/>
-                                <TextBlock Text="0  Quá hạn" FontSize="16" Foreground="Red" Margin="40,0,0,0"/>
+                                <TextBlock x:Name="WeekCompletedTasks" FontSize="16" Foreground="Green" Margin="40,0,0,0"/>
+                                <TextBlock x:Name="WeekNearingDeadlineTasks" FontSize="16" Foreground="Red" Margin="40,0,0,0"/>
+                                <TextBlock x:Name="WeekOverdueTasks" FontSize="16" Foreground="Red" Margin="40,0,0,0"/>
                             </StackPanel>
                         </StackPanel>
                     </StackPanel>
@@ -63,12 +63,12 @@
                         <StackPanel Orientation="Horizontal" Margin="0,10,0,0" Width="350">
                             <Ellipse Width="100" Height="100" Stroke="Yellow" StrokeThickness="10" Fill="Transparent"/>
                             <StackPanel Margin="10,0,0,20" Width="240">
-                                <TextBlock Text="27" FontSize="26" FontWeight="Bold" Foreground="Black" HorizontalAlignment="Center" Margin="10,0,0,0"/>
+                                <TextBlock x:Name="TodayStatsTotalTasks" FontSize="26" FontWeight="Bold" Foreground="Black" HorizontalAlignment="Center" Margin="10,0,0,0"/>
                                 <TextBlock Text="công việc" FontSize="16" Foreground="Gray" HorizontalAlignment="Center" Margin="10,0,0,10"/>
-                                <TextBlock Text="1 Hoàn thành trước hạn" FontSize="16" Foreground="Green" HorizontalAlignment="Center"/>
-                                <TextBlock Text="0 Hoàn thành đúng hạn" FontSize="16" Foreground="Green" HorizontalAlignment="Center"/>
-                                <TextBlock Text="1 Hoàn thành trễ hạn" FontSize="16" Foreground="Orange" HorizontalAlignment="Center" Margin="-18,0,0,0"/>
-                                <TextBlock Text="3 Quá hạn" FontSize="16" Foreground="Red" HorizontalAlignment="Center" Margin="-95,0,0,0"/>
+                                <TextBlock x:Name="TodayStatsEarly" FontSize="16" Foreground="Green" HorizontalAlignment="Center"/>
+                                <TextBlock x:Name="TodayStatsOnTime" FontSize="16" Foreground="Green" HorizontalAlignment="Center"/>
+                                <TextBlock x:Name="TodayStatsLate" FontSize="16" Foreground="Orange" HorizontalAlignment="Center" Margin="-18,0,0,0"/>
+                                <TextBlock x:Name="TodayStatsOverdue" FontSize="16" Foreground="Red" HorizontalAlignment="Center" Margin="-95,0,0,0"/>
                             </StackPanel>
                         </StackPanel>
                     </StackPanel>
@@ -84,12 +84,12 @@
                         <StackPanel Orientation="Horizontal" Margin="0,10,0,0" Width="350">
                             <Ellipse Width="100" Height="100" Stroke="Blue" StrokeThickness="10" Fill="Transparent"/>
                             <StackPanel Margin="10,0,0,20" Width="240">
-                                <TextBlock Text="44" FontSize="26" FontWeight="Bold" Foreground="Black" HorizontalAlignment="Center" Margin="20,0,0,0"/>
+                                <TextBlock x:Name="ProjectTotal" FontSize="26" FontWeight="Bold" Foreground="Black" HorizontalAlignment="Center" Margin="20,0,0,0"/>
                                 <TextBlock Text="dự án" FontSize="16" Foreground="Gray" HorizontalAlignment="Center" Margin="10,0,0,10"/>
-                                <TextBlock Text="2 Hoàn thành trước hạn" FontSize="16" Foreground="Green" HorizontalAlignment="Center"/>
-                                <TextBlock Text="7 Hoàn thành đúng hạn" FontSize="16" Foreground="Green" HorizontalAlignment="Center"/>
-                                <TextBlock Text="2 Hoàn thành trễ hạn" FontSize="16" Foreground="Orange" HorizontalAlignment="Center" Margin="-18,0,0,0"/>
-                                <TextBlock Text="1 Quá hạn" FontSize="16" Foreground="Red" HorizontalAlignment="Center" Margin="-95,0,0,0"/>
+                                <TextBlock x:Name="ProjectEarly" FontSize="16" Foreground="Green" HorizontalAlignment="Center"/>
+                                <TextBlock x:Name="ProjectOnTime" FontSize="16" Foreground="Green" HorizontalAlignment="Center"/>
+                                <TextBlock x:Name="ProjectLate" FontSize="16" Foreground="Orange" HorizontalAlignment="Center" Margin="-18,0,0,0"/>
+                                <TextBlock x:Name="ProjectOverdue" FontSize="16" Foreground="Red" HorizontalAlignment="Center" Margin="-95,0,0,0"/>
                             </StackPanel>
                         </StackPanel>
                     </StackPanel>

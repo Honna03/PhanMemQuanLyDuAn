@@ -33,7 +33,7 @@ namespace QuanLyDuAn
         {
             InitializeComponent();
             _context = new ThucTapQuanLyDuAnContext();
-            MainContent.Content = new TrangChu();
+            MainContent.Content = new TrangChu(_currentUserId);
 
             /*  _currentUserId = userId;
               var user = _context.NhanViens.FirstOrDefault(n => n.NvId == userId);
@@ -226,6 +226,7 @@ namespace QuanLyDuAn
         {
             if (sender is Button button && button.ContextMenu != null)
             {
+                button.ContextMenu.PlacementTarget = button;
                 button.ContextMenu.IsOpen = true;
             }
         }
@@ -242,7 +243,7 @@ namespace QuanLyDuAn
 
         private void Logo_Click(object sender, RoutedEventArgs e)
         {
-            MainContent.Content = new TrangChu();
+            MainContent.Content = new TrangChu(_currentUserId);
         }
         private void btn_KPI_Click(object sender, RoutedEventArgs e)
         {
@@ -313,7 +314,7 @@ namespace QuanLyDuAn
             }
 
             string searchText = (sender as TextBox)?.Text.ToLower();
-            if (string.IsNullOrWhiteSpace(searchText) || SearchBox.Text == "Tìm kiếm")
+            if (string.IsNullOrWhiteSpace(searchText) || SearchBox.Text == "Tìm kiếm...")
             {
                 searchText = string.Empty;
             }

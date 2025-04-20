@@ -61,6 +61,7 @@ namespace QuanLyDuAn.Controls
                              nv.NvMatKhau,
                              nv.NvLuongCoBan,
                              q.QTen
+                             
                          };
             var resultlist  = result.ToList();
             dgNhanVien.ItemsSource = resultlist;
@@ -130,12 +131,21 @@ namespace QuanLyDuAn.Controls
         {
             var selectNhanVien = dgNhanVien.SelectedItem as NhanVien;
 
-            if (selectNhanVien != null)
+            if (selectNhanVien == null)
             {
-                // Mở Form B và truyền mã nhân viên
+                MessageBox.Show("Không có nhân viên nào được chọn.");
+                return;
+            }
+
+            try
+            {
                 ThongTinNhanVien ThongTinNhanVien = new ThongTinNhanVien(selectNhanVien.NvMa);
                 ThongTinNhanVien.NhanVienDeleted += LoadLoadNhanVien;
                 ThongTinNhanVien.Show();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi khi mở form: " + ex.Message);
             }
         }
 

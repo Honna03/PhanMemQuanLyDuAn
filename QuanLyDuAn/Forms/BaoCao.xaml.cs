@@ -12,7 +12,7 @@ namespace QuanLyDuAn.Forms
 {
     public partial class BaoCao : UserControl
     {
-        private string connectionString = "Data Source=ThanhHuy;Initial Catalog=ThucTap_QuanLyDuAn;Integrated Security=True;Encrypt=True;TrustServerCertificate=True";
+        private string connectionString = "Data Source=HONNA\\BAO;Initial Catalog=ThucTap_QuanLyDuAn;Integrated Security=True;Encrypt=True;TrustServerCertificate=True;User Id=sa;Password=1;";
         private int projectId;
         private DataTable projectInfoTable;
         private DataTable tasksTable;

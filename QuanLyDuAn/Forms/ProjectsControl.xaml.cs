@@ -8,6 +8,7 @@ using System.Windows;
 using System.Windows.Controls;
 using QuanLyDuAn.functions;
 using System.Globalization;
+using QuanLyDuAn.Forms;
 
 namespace QuanLyDuAn.Controls
 {
@@ -33,6 +34,7 @@ namespace QuanLyDuAn.Controls
             InitializeComponent();
             DataContext = this;
         }
+
 
         public void SetProjects(List<DuAn> projects, List<TrangThai> statuses, List<Creator> creators, List<CongViec> allTasks)
         {
@@ -274,6 +276,34 @@ namespace QuanLyDuAn.Controls
             }
 
             UpdatePagingInfo();
+        }
+
+        private void Report_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (ProjectsDataGrid.SelectedItem is DuAn selectedProject)
+                {
+                    int daID = selectedProject.DaId;
+                    Window window = new Window
+                    {
+                        Title = "Báo Cáo Dự Án",
+                        WindowState = WindowState.Maximized,
+                        WindowStartupLocation = WindowStartupLocation.CenterScreen
+                    };
+                    BaoCao baoCao = new BaoCao(daID);
+                    window.Content = baoCao;
+                    window.Show();
+                }
+                else
+                {
+                    MessageBox.Show("Vui lòng chọn một dự án để xem báo cáo!", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Warning);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Không thể mở form báo cáo: {ex.Message}", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
     }
 

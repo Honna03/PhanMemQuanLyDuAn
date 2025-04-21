@@ -25,13 +25,6 @@ namespace QuanLyDuAn.Forms
                 {
                     connection.Open();
 
-                    // Load Today's Tasks
-                    var todayTasks = GetTodayTasks(connection);
-                    TodayTotalTasks.Text = todayTasks.total.ToString();
-                    TodayCompletedTasks.Text = $"{todayTasks.completed} Đã hoàn thành";
-                    TodayNearingDeadlineTasks.Text = $"{todayTasks.nearingDeadline} Sắp đến hạn";
-                    TodayOverdueTasks.Text = $"{todayTasks.overdue} Quá hạn";
-
                     // Load This Week's Tasks
                     var weekTasks = GetWeekTasks(connection);
                     WeekTotalTasks.Text = weekTasks.total.ToString();
@@ -62,38 +55,6 @@ namespace QuanLyDuAn.Forms
             }
         }
 
-        private (int total, int completed, int nearingDeadline, int overdue) GetTodayTasks(SqlConnection connection)
-        {
-            string query = @"
-                SELECT 
-                    COUNT(*) AS Total,
-                    SUM(CASE WHEN cv.tt_Ma = 'ht' THEN 1 ELSE 0 END) AS Completed,
-                    SUM(CASE WHEN cv.tt_Ma IN ('cht', 'dth') AND cv.cv_KetThuc = CAST(GETDATE() AS DATE) THEN 1 ELSE 0 END) AS NearingDeadline,
-                    SUM(CASE WHEN cv.tt_Ma IN ('cht', 'dth') AND cv.cv_KetThuc < CAST(GETDATE() AS DATE) THEN 1 ELSE 0 END) AS Overdue
-                FROM CongViec cv
-                INNER JOIN PhanCongCongViec pc ON cv.cv_ID = pc.cv_ID AND cv.da_ID = pc.da_ID
-                WHERE pc.nv_ID = @UserId
-                AND cv.cv_BatDau <= CAST(GETDATE() AS DATE)";
-
-            using (var command = new SqlCommand(query, connection))
-            {
-                command.Parameters.AddWithValue("@UserId", _userId);
-                using (var reader = command.ExecuteReader())
-                {
-                    if (reader.Read())
-                    {
-                        return (
-                            reader.GetInt32("Total"),
-                            reader.GetInt32("Completed"),
-                            reader.GetInt32("NearingDeadline"),
-                            reader.GetInt32("Overdue")
-                        );
-                    }
-                }
-            }
-            return (0, 0, 0, 0);
-        }
-
         private (int total, int completed, int nearingDeadline, int overdue) GetWeekTasks(SqlConnection connection)
         {
             string query = @"
@@ -115,10 +76,10 @@ namespace QuanLyDuAn.Forms
                     if (reader.Read())
                     {
                         return (
-                            reader.GetInt32("Total"),
-                            reader.GetInt32("Completed"),
-                            reader.GetInt32("NearingDeadline"),
-                            reader.GetInt32("Overdue")
+                            GetSafeInt32(reader, "Total"),
+                            GetSafeInt32(reader, "Completed"),
+                            GetSafeInt32(reader, "NearingDeadline"),
+                            GetSafeInt32(reader, "Overdue")
                         );
                     }
                 }
@@ -148,11 +109,11 @@ namespace QuanLyDuAn.Forms
                     if (reader.Read())
                     {
                         return (
-                            reader.GetInt32("Total"),
-                            reader.GetInt32("Early"),
-                            reader.GetInt32("OnTime"),
-                            reader.GetInt32("Late"),
-                            reader.GetInt32("Overdue")
+                            GetSafeInt32(reader, "Total"),
+                            GetSafeInt32(reader, "Early"),
+                            GetSafeInt32(reader, "OnTime"),
+                            GetSafeInt32(reader, "Late"),
+                            GetSafeInt32(reader, "Overdue")
                         );
                     }
                 }
@@ -181,16 +142,21 @@ namespace QuanLyDuAn.Forms
                     if (reader.Read())
                     {
                         return (
-                            reader.GetInt32("Total"),
-                            reader.GetInt32("Early"),
-                            reader.GetInt32("OnTime"),
-                            reader.GetInt32("Late"),
-                            reader.GetInt32("Overdue")
+                            GetSafeInt32(reader, "Total"),
+                            GetSafeInt32(reader, "Early"),
+                            GetSafeInt32(reader, "OnTime"),
+                            GetSafeInt32(reader, "Late"),
+                            GetSafeInt32(reader, "Overdue")
                         );
                     }
                 }
             }
             return (0, 0, 0, 0, 0);
+        }
+        private int GetSafeInt32(SqlDataReader reader, string column)
+        {
+            int ordinal = reader.GetOrdinal(column);
+            return reader.IsDBNull(ordinal) ? 0 : reader.GetInt32(ordinal);
         }
     }
 }

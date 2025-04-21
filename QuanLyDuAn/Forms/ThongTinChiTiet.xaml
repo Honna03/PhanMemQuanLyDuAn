@@ -94,14 +94,14 @@
                 </StackPanel>
             </Button>
 
-            <Button x:Name="btnHuy" Grid.Row="0" Grid.Column="6" Background="#E6E6FA" Foreground="White" Margin="0,0,0,0" FontSize="24" FontWeight="Bold" Click="btnHuy_Click">
+            <Button x:Name="btnHuy" Grid.Row="0" Grid.Column="6" Background="#9C5110" Foreground="White" Margin="0,0,0,0" FontSize="24" FontWeight="Bold" Click="btnHuy_Click">
                 <StackPanel Orientation="Horizontal">
                     <Image Source="/icon/return.png" Width="20" Height="20" Margin="0,0,10,0"/>
                     <TextBlock Text="Hủy" VerticalAlignment="Center"/>
                 </StackPanel>
             </Button>
 
-            <Button x:Name="btnThoat" Grid.Row="0" Grid.Column="8" Background="#73002A" Foreground="White" Margin="0,0,0,0" FontSize="24" FontWeight="Bold" Click="btnThoat_Click">
+            <Button x:Name="btnThoat" Grid.Row="0" Grid.Column="7" Background="#808080" Foreground="White" Margin="40,0,0,0" FontSize="24" FontWeight="Bold" Click="btnThoat_Click" Grid.ColumnSpan="2">
                 <StackPanel Orientation="Horizontal">
                     <Image Source="/icon/close.png" Width="20" Height="20" Margin="0,0,10,0"/>
                     <TextBlock Text="Thoát" VerticalAlignment="Center"/>

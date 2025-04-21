@@ -177,82 +177,128 @@
                 </DataGrid.Columns>
             </DataGrid>
         </Grid>
-        <Grid Margin="50, 40, 50, 10" VerticalAlignment="Bottom">
+        <Grid Margin="50, 60, 50, 0" VerticalAlignment="Bottom">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="50" />
+                <ColumnDefinition Width="50"/>
                 <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="50" />
+                <ColumnDefinition Width="50"/>
                 <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="50" />
+                <ColumnDefinition Width="50"/>
                 <ColumnDefinition Width="*"/>
-
             </Grid.ColumnDefinitions>
 
-
-            <!-- Định nghĩa các hàng -->
             <Grid.RowDefinitions>
                 <RowDefinition Height="60"/>
                 <RowDefinition Height="25"/>
                 <RowDefinition Height="60"/>
             </Grid.RowDefinitions>
 
-            <Button x:Name="btnSua" Grid.Row="0" Grid.Column="0" Background="#D2691E" Foreground="White"  Margin="0,0,0,0" FontSize="24" FontWeight="Bold" Click="btnSua_Click">
+            <!-- Định nghĩa Style chung cho các nút -->
+            <Grid.Resources>
+                <Style x:Key="CustomButtonStyle" TargetType="Button" BasedOn="{x:Null}">
+                    <Setter Property="Background" Value="{Binding RelativeSource={RelativeSource Self}, Path=Background}"/>
+                    <Setter Property="Foreground" Value="White"/>
+                    <Setter Property="FontSize" Value="24"/>
+                    <Setter Property="FontWeight" Value="Bold"/>
+                    <Setter Property="Padding" Value="10,5"/>
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="Button">
+                                <Border Background="{TemplateBinding Background}" 
+                                BorderBrush="{TemplateBinding BorderBrush}" 
+                                BorderThickness="{TemplateBinding BorderThickness}" 
+                                CornerRadius="5">
+                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Opacity" Value="0.8"/>
+                                        <!-- Hiệu ứng hover -->
+                                    </Trigger>
+                                    <Trigger Property="IsPressed" Value="True">
+                                        <Setter Property="Opacity" Value="0.6"/>
+                                        <!-- Hiệu ứng nhấn -->
+                                    </Trigger>
+                                    <Trigger Property="IsEnabled" Value="False">
+                                        <Setter Property="Background" Value="#99A3A4"/>
+                                        <!-- Màu khi disable -->
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </Grid.Resources>
+
+            <!-- Nút Sửa -->
+            <Button x:Name="btnSua" Grid.Row="0" Grid.Column="0" Background="#D2691E" 
+            Margin="0,0,0,0" Click="btnSua_Click" Style="{StaticResource CustomButtonStyle}">
                 <StackPanel Orientation="Horizontal">
                     <Image Source="/icon/compose.png" Width="20" Height="20" Margin="0,0,10,0"/>
-
                     <TextBlock Text="Sửa" VerticalAlignment="Center"/>
                 </StackPanel>
             </Button>
 
-            <Button x:Name="btnLuu" Grid.Row="0" Grid.Column="2" Background="#008080" Foreground="White" FontSize="24" FontWeight="Bold" Click="btnLuu_Click">
+            <!-- Nút Lưu -->
+            <Button x:Name="btnLuu" Grid.Row="0" Grid.Column="2" Background="#008080" 
+            Click="btnLuu_Click" Style="{StaticResource CustomButtonStyle}">
                 <StackPanel Orientation="Horizontal">
                     <Image Source="/icon/save-instagram.png" Width="20" Height="20" Margin="0,0,10,0"/>
                     <TextBlock Text="Lưu" VerticalAlignment="Center"/>
                 </StackPanel>
             </Button>
 
-            <Button x:Name="btnHuy" Grid.Row="0" Grid.Column="6" Background="#1B8568" Foreground="White"  Margin="0,0,0,0" FontSize="24" FontWeight="Bold" Click="btnHuy_Click">
-                <StackPanel Orientation="Horizontal">
-                    <Image Source="/icon/return.png" Width="20" Height="20" Margin="0,0,10,0"/>
-                    <TextBlock Text="Làm mới" VerticalAlignment="Center"/>
-                </StackPanel>
-            </Button>
-
-            <Button x:Name="btnXoa" Grid.Row="0" Grid.Column="4" Background="#B22222" Foreground="White" FontSize="24" FontWeight="Bold"  Click="btnXoa_Click_1">
+            <!-- Nút Xóa -->
+            <Button x:Name="btnXoa" Grid.Row="0" Grid.Column="4" Background="#B22222" 
+            Click="btnXoa_Click_1" Style="{StaticResource CustomButtonStyle}">
                 <StackPanel Orientation="Horizontal">
                     <Image Source="/icon/delete.png" Width="20" Height="20" Margin="0,0,10,0"/>
                     <TextBlock Text="Xóa" VerticalAlignment="Center"/>
                 </StackPanel>
             </Button>
 
-            <Button x:Name="btnHoanThanh" Grid.Row="2" Grid.Column="0" Background="#2929FF" Foreground="White"  Margin="0,0,0,0" FontSize="24" FontWeight="Bold" Click="btnHoanThanh_Click">
+            <!-- Nút Làm mới -->
+            <Button x:Name="btnHuy" Grid.Row="0" Grid.Column="6" Background="#1B8568" 
+            Margin="0,0,0,0" Click="btnHuy_Click" Style="{StaticResource CustomButtonStyle}">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="/icon/return.png" Width="20" Height="20" Margin="0,0,10,0"/>
+                    <TextBlock Text="Làm mới" VerticalAlignment="Center"/>
+                </StackPanel>
+            </Button>
+
+            <!-- Nút Xác nhận hoàn thành -->
+            <Button x:Name="btnHoanThanh" Grid.Row="2" Grid.Column="0" Background="#2929FF" 
+            Margin="0,0,0,0" Click="btnHoanThanh_Click" Style="{StaticResource CustomButtonStyle}">
                 <StackPanel Orientation="Horizontal">
                     <Image Source="/icon/close.png" Width="20" Height="20" Margin="0,0,10,0"/>
                     <TextBlock Text="Xác nhận hoàn thành" VerticalAlignment="Center"/>
                 </StackPanel>
             </Button>
 
-            <Button x:Name="btnPhanCong" Grid.Row="2" Grid.Column="2" Background="#16166E" Foreground="White"  Margin="0,0,0,0" FontSize="24" FontWeight="Bold" Click="btnPhanCong_Click">
+            <!-- Nút Phân công -->
+            <Button x:Name="btnPhanCong" Grid.Row="2" Grid.Column="2" Background="#16166E" 
+            Margin="0,0,0,0" Click="btnPhanCong_Click" Style="{StaticResource CustomButtonStyle}">
                 <StackPanel Orientation="Horizontal">
                     <Image Source="/icon/close.png" Width="20" Height="20" Margin="0,0,10,0"/>
-
                     <TextBlock Text="Phân công" VerticalAlignment="Center"/>
                 </StackPanel>
             </Button>
 
-            <Button x:Name="btnCapNhat" Grid.Row="2" Grid.Column="4" Background="#754A05" Foreground="White"  Margin="0,0,0,0" FontSize="24" FontWeight="Bold" Click="btnCapNhat_Click">
+            <!-- Nút Cập nhật -->
+            <Button x:Name="btnCapNhat" Grid.Row="2" Grid.Column="4" Background="#754A05" 
+            Margin="0,0,0,0" Click="btnCapNhat_Click" Style="{StaticResource CustomButtonStyle}">
                 <StackPanel Orientation="Horizontal">
                     <Image Source="/icon/close.png" Width="20" Height="20" Margin="0,0,10,0"/>
-
                     <TextBlock Text="Cập nhật" VerticalAlignment="Center"/>
                 </StackPanel>
             </Button>
 
-            <Button x:Name="btnThoat" Grid.Row="2" Grid.Column="6" Background="#73002A" Foreground="White"  Margin="0,0,0,0" FontSize="24" FontWeight="Bold">
+            <!-- Nút Thoát -->
+            <Button x:Name="btnThoat" Grid.Row="2" Grid.Column="6" Background="#808080" 
+            Margin="0,0,0,0" Style="{StaticResource CustomButtonStyle}">
                 <StackPanel Orientation="Horizontal">
                     <Image Source="/icon/close.png" Width="20" Height="20" Margin="0,0,10,0"/>
-
                     <TextBlock Text="Thoát" VerticalAlignment="Center"/>
                 </StackPanel>
             </Button>

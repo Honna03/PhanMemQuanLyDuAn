@@ -165,8 +165,6 @@
                         <Button x:Name="NotificationButton" Background="Transparent" BorderThickness="0" Padding="0" Click="NotificationButton_Click">
                             <TextBlock Text="🔔" Foreground="White" FontSize="22" VerticalAlignment="Center"/>
                         </Button>
-
-                        <!-- Badge đỏ -->
                         <Border x:Name="NotificationBadge" Background="Red" CornerRadius="10" Width="20" Height="20" HorizontalAlignment="Right" VerticalAlignment="Top" Visibility="Collapsed">
                             <TextBlock x:Name="NotificationCountText" Text="0" Foreground="White" FontSize="12" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Border>
@@ -175,36 +173,27 @@
                         <Border Background="White" BorderBrush="Gray" BorderThickness="1" CornerRadius="5" Padding="5" Width="280">
                             <StackPanel>
                                 <TextBlock Text="Thông báo" FontWeight="Bold" FontSize="14" Margin="0,0,0,5"/>
-                                <ListBox x:Name="NotificationList" MaxHeight="300" SelectionChanged="NotificationList_SelectionChanged">
-                                    <ListBox.ItemTemplate>
-                                        <DataTemplate>
-                                            <Border x:Name="ItemBorder" Background="Transparent" Padding="5">
-                                                <StackPanel ToolTip="{Binding TbThoiGian, StringFormat='Thời gian: {0:dd/MM/yyyy}'}">
-                                                    <!-- Nội dung thông báo -->
-                                                    <TextBlock Text="{Binding TbNoiDung}" TextWrapping="Wrap" FontSize="12" FontWeight="SemiBold"/>
-                                                    <!-- Tên công việc -->
-                                                    <TextBlock Text="{Binding TenCongViec, StringFormat='Công việc: {0}'}" FontSize="10" Foreground="Gray" TextWrapping="Wrap" Margin="0,2,0,0"/>
-                                                    <!-- Người gửi -->
-                                                    <TextBlock Text="{Binding TenNguoiGui, StringFormat='Người gửi: {0}'}"
-                                           FontSize="10"
-                                           Foreground="Gray"
-                                           Margin="0,2,0,0"/>
-                                                    <!-- Thời gian -->
-                                                    <TextBlock Text="{Binding TbThoiGian, StringFormat='Thời gian: {0:dd/MM/yyyy}'}"
-                                           FontSize="10"
-                                           Foreground="Gray"
-                                           Margin="0,2,0,0"/>
-                                                </StackPanel>
-                                            </Border>
-                                            <DataTemplate.Triggers>
-                                                <DataTrigger Binding="{Binding TbTinhTrang}" Value="False">
-                                                    <Setter TargetName="ItemBorder" Property="Background" Value="#FFFFF2CC"/>
-                                                    <!-- Màu vàng nhạt -->
-                                                </DataTrigger>
-                                            </DataTemplate.Triggers>
-                                        </DataTemplate>
-                                    </ListBox.ItemTemplate>
-                                </ListBox>
+                                <ScrollViewer VerticalScrollBarVisibility="Auto" MaxHeight="300">
+                                    <ListBox x:Name="NotificationList" SelectionChanged="NotificationList_SelectionChanged" BorderThickness="0">
+                                        <ListBox.ItemTemplate>
+                                            <DataTemplate>
+                                                <Border x:Name="ItemBorder" Background="Transparent" Padding="5">
+                                                    <StackPanel ToolTip="{Binding TbThoiGian, StringFormat='Thời gian: {0:dd/MM/yyyy}'}">
+                                                        <TextBlock Text="{Binding TbNoiDung}" TextWrapping="Wrap" FontSize="12" FontWeight="SemiBold"/>
+                                                        <TextBlock Text="{Binding TenCongViec, StringFormat='Công việc: {0}'}" FontSize="10" Foreground="Gray" TextWrapping="Wrap" Margin="0,2,0,0"/>
+                                                        <TextBlock Text="{Binding TenNguoiGui, StringFormat='Người gửi: {0}'}" FontSize="10" Foreground="Gray" Margin="0,2,0,0"/>
+                                                        <TextBlock Text="{Binding TbThoiGian, StringFormat='Thời gian: {0:dd/MM/yyyy}'}" FontSize="10" Foreground="Gray" Margin="0,2,0,0"/>
+                                                    </StackPanel>
+                                                </Border>
+                                                <DataTemplate.Triggers>
+                                                    <DataTrigger Binding="{Binding TbTinhTrang}" Value="False">
+                                                        <Setter TargetName="ItemBorder" Property="Background" Value="#FFFFF2CC"/>
+                                                    </DataTrigger>
+                                                </DataTemplate.Triggers>
+                                            </DataTemplate>
+                                        </ListBox.ItemTemplate>
+                                    </ListBox>
+                                </ScrollViewer>
                             </StackPanel>
                         </Border>
                     </Popup>

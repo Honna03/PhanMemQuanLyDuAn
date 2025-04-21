@@ -465,6 +465,7 @@ namespace QuanLyDuAn.Forms
             int idCV = int.Parse(txtMaCV.Text.Substring(2));
             idCongViec = idCV;
             CapNhatCongViec capNhatCongViec = new CapNhatCongViec();
+            capNhatCongViec.WindowStartupLocation = WindowStartupLocation.CenterScreen;
             capNhatCongViec.CapNhatAdded += LoadLoadCapNhat;
             capNhatCongViec.ShowDialog();
         }

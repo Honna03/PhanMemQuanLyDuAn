@@ -133,7 +133,8 @@ namespace QuanLyDuAn.Forms
             //var nhanVien = context.NhanViens.Include(nv => nv.QMaNavigation).Where(nv => nv.NvMa == _NvMa).FirstOrDefault();
             var nhanVien = (from nv in context.NhanViens
                            join q in context.Quyens on nv.QMa equals q.QMa
-                           select new
+                            where nv.NvMa == _NvMa
+                            select new
                            {
                                NvId = nv.NvId,
                                NvMa = nv.NvMa,

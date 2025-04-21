@@ -16,6 +16,7 @@ using Microsoft.Data.SqlClient;
 using System.Data;
 using System.Globalization;
 using System.Windows.Data;
+using DocumentFormat.OpenXml.Spreadsheet;
 
 namespace QuanLyDuAn
 {
@@ -29,11 +30,11 @@ namespace QuanLyDuAn
         private string _currentUserName;
         public static string nguoidangnhap;
         private ThongTinCongTy selectedCompany;
+        private string _userRole;
         public MainWindow(string tenTaiKhoan)
         {
             InitializeComponent();
             _context = new ThucTapQuanLyDuAnContext();
-            MainContent.Content = new TrangChu(_currentUserId);
 
             /*  _currentUserId = userId;
               var user = _context.NhanViens.FirstOrDefault(n => n.NvId == userId);
@@ -49,12 +50,16 @@ namespace QuanLyDuAn
             {
                 _currentUserId = user.NvId;
                 _currentUserName = user.NvTen;
+                _userRole = user.QMa;
             }
             else
             {
                 MessageBox.Show("Không tìm thấy thông tin người dùng!", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
+
+
+            MainContent.Content = new TrangChu(_currentUserId);
 
             UserName.Text = tenTaiKhoan;
             nguoidangnhap = UserName.Text;
@@ -65,7 +70,10 @@ namespace QuanLyDuAn
             timer.Start();
 
             UpdateCurrentTime();
+
             LoadNotifications(_currentUserId);
+            UpdateNotificationBadge(_currentUserId);
+            NotificationPopup.IsOpen = true;
 
             ThemKpiThangHienTai();
             LoadLogo();
@@ -85,18 +93,44 @@ namespace QuanLyDuAn
         {
             try
             {
-                var projects = _context.DuAns
-                    .Include(d => d.TtMaNavigation)
-                    .Include(d => d.NvIdNguoiTaoNavigation)
-                    .ToList();
+                List<DuAn> projects;
+                List<CongViec> allTasks;
+                if (_userRole == "nv")
+                {
+                    projects = _context.PhanCongCongViecs
+                        .Include(pc => pc.CongViec)
+                            .ThenInclude(cv => cv.Da)
+                        .Where(pc => pc.NvId == _currentUserId)
+                        .Select(pc => pc.CongViec.Da)
+                        .Distinct()
+                        .Include(da => da.TtMaNavigation)
+                        .Include(da => da.NvIdNguoiTaoNavigation)
+                        .ToList();
+
+                    allTasks = _context.CongViecs
+                        .Include(c => c.Da)
+                        .Include(c => c.TtMaNavigation)
+                        .Where(c => c.PhanCongCongViecs.Any(p => p.NvId == _currentUserId))
+                        .ToList();
+                }
+                else
+                {
+                    projects = _context.DuAns
+                        .Include(d => d.TtMaNavigation)
+                        .Include(d => d.NvIdNguoiTaoNavigation)
+                        .ToList();
+
+                    allTasks = _context.CongViecs
+                        .Include(c => c.Da)
+                        .Include(c => c.TtMaNavigation)
+                        .ToList();
+                }
+
                 var statuses = _context.TrangThais.ToList();
                 var creators = _context.NhanViens
                     .Select(n => new Creator { NvId = n.NvId, Name = n.NvTen })
                     .ToList();
-                var allTasks = _context.CongViecs
-                    .Include(c => c.Da)
-                    .Include(c => c.TtMaNavigation)
-                    .ToList();
+
 
                 _projectsControl = new ProjectsControl();
                 _projectsControl.SetProjects(projects, statuses, creators, allTasks);
@@ -119,19 +153,44 @@ namespace QuanLyDuAn
         {
             try
             {
-                var projects = await _context.DuAns
-                    .Include(d => d.TtMaNavigation)
-                    .Include(d => d.NvIdNguoiTaoNavigation)
-                    .ToListAsync();
+                List<DuAn> projects;
+                List<CongViec> allTasks;
+
+                if (_userRole == "nv")
+                {
+                    projects = await _context.PhanCongCongViecs
+                        .Include(pc => pc.CongViec)
+                            .ThenInclude(cv => cv.Da)
+                        .Where(pc => pc.NvId == _currentUserId)
+                        .Select(pc => pc.CongViec.Da)
+                        .Distinct()
+                        .Include(da => da.TtMaNavigation)
+                        .Include(da => da.NvIdNguoiTaoNavigation)
+                        .ToListAsync();
+
+                    allTasks = await _context.CongViecs
+                        .Include(c => c.Da)
+                        .Include(c => c.TtMaNavigation)
+                        .Where(c => c.PhanCongCongViecs.Any(p => p.NvId == _currentUserId))
+                        .ToListAsync();
+                }
+                else
+                {
+                    projects = await _context.DuAns
+                        .Include(d => d.TtMaNavigation)
+                        .Include(d => d.NvIdNguoiTaoNavigation)
+                        .ToListAsync();
+
+                    allTasks = await _context.CongViecs
+                        .Include(c => c.Da)
+                        .Include(c => c.TtMaNavigation)
+                        .ToListAsync();
+                }
                 var statuses = await _context.TrangThais.ToListAsync();
+
                 var creators = await _context.NhanViens
                     .Select(n => new Creator { NvId = n.NvId, Name = n.NvTen })
                     .ToListAsync();
-                var allTasks = await _context.CongViecs
-                    .Include(c => c.Da)
-                    .Include(c => c.TtMaNavigation)
-                    .ToListAsync();
-
                 _projectsControl.SetProjects(projects, statuses, creators, allTasks);
             }
             catch (Exception ex)
@@ -219,6 +278,11 @@ namespace QuanLyDuAn
 
         private void btn_NhanVien_Click(object sender, RoutedEventArgs e)
         {
+            if ((_userRole ?? "").Trim().ToLower() == "Nhân viên")
+            {
+                MessageBox.Show("Bạn không có quyền truy cập vào chức năng này.");
+                return;
+            }
             MainContent.Content = new DanhSachNhanVien();
         }
 
@@ -247,11 +311,22 @@ namespace QuanLyDuAn
         }
         private void btn_KPI_Click(object sender, RoutedEventArgs e)
         {
+            if ((_userRole ?? "").Trim().ToLower() == "nv")
+            {
+                MessageBox.Show("Bạn không có quyền truy cập vào chức năng này.");
+                return;
+            }
+
             MainContent.Content = new KPI();
         }
 
         private void btn_Luong_Click(object sender, RoutedEventArgs e)
         {
+            if ((_userRole ?? "").Trim().ToLower() == "nv")
+            {
+                MessageBox.Show("Bạn không có quyền truy cập vào chức năng này.");
+                return;
+            }
             MainContent.Content = new QuanLyDuAn.Forms.Luong();
         }
 
@@ -361,7 +436,7 @@ namespace QuanLyDuAn
                             command.CommandType = CommandType.StoredProcedure;
                             command.Parameters.AddWithValue("@nv_ID", nvId);
                             command.Parameters.AddWithValue("@TinhTrang", DBNull.Value); // NULL: lấy tất cả
-                            command.Parameters.AddWithValue("@SoLuong", 50);
+                            command.Parameters.AddWithValue("@SoLuong", 4);
 
                             using (var reader = await command.ExecuteReaderAsync())
                             {
@@ -382,6 +457,7 @@ namespace QuanLyDuAn
                                         TenCongViec = reader.IsDBNull(reader.GetOrdinal("TenCongViec")) ? null : reader.GetString(reader.GetOrdinal("TenCongViec"))
                                     });
                                 }
+                                notifications = notifications.OrderByDescending(n => n.TbThoiGian).Take(5).ToList();
                                 NotificationList.ItemsSource = notifications;
                             }
                         }
@@ -484,17 +560,58 @@ namespace QuanLyDuAn
         {
             if (_currentUserId == nvId)
             {
-                LoadNotifications(nvId);
-                UpdateNotificationBadge(nvId);
+                try
+                {
+                    var currentNotifications = (NotificationList.ItemsSource as IEnumerable<NotificationViewModel>)?.ToList() ?? new List<NotificationViewModel>();
+                    // Tải thông báo mới
+                    using (var context = new ThucTapQuanLyDuAnContext())
+                    {
+                        using (var connection = context.Database.GetDbConnection() as SqlConnection)
+                        {
+                            connection.Open();
+                            using (var command = new SqlCommand("sp_LayDanhSachThongBao", connection))
+                            {
+                                command.CommandType = CommandType.StoredProcedure;
+                                command.Parameters.AddWithValue("@nv_ID", nvId);
+                                command.Parameters.AddWithValue("@TinhTrang", DBNull.Value);
+                                command.Parameters.AddWithValue("@SoLuong", 1); // Lấy 1 thông báo mới nhất
+                                using (var reader = command.ExecuteReader())
+                                {
+                                    if (reader.Read())
+                                    {
+                                        var newNotification = new NotificationViewModel
+                                        {
+                                            TbId = reader.GetInt32(reader.GetOrdinal("tb_ID")),
+                                            TbNoiDung = reader.GetString(reader.GetOrdinal("tb_NoiDung")),
+                                            TbThoiGian = reader.IsDBNull(reader.GetOrdinal("tb_ThoiGian")) ? (DateTime?)null : reader.GetDateTime(reader.GetOrdinal("tb_ThoiGian")),
+                                            TbTinhTrang = reader.GetBoolean(reader.GetOrdinal("tb_TinhTrang")),
+                                            TbLoai = reader.GetString(reader.GetOrdinal("tb_Loai")),
+                                            NvIdNguoiGui = reader.IsDBNull(reader.GetOrdinal("nv_ID_NguoiGui")) ? (int?)null : reader.GetInt32(reader.GetOrdinal("nv_ID_NguoiGui")),
+                                            TenNguoiGui = reader.GetString(reader.GetOrdinal("TenNguoiGui")),
+                                            CvId = reader.IsDBNull(reader.GetOrdinal("cv_ID")) ? (int?)null : reader.GetInt32(reader.GetOrdinal("cv_ID")),
+                                            DaId = reader.IsDBNull(reader.GetOrdinal("da_ID")) ? (int?)null : reader.GetInt32(reader.GetOrdinal("da_ID")),
+                                            TenCongViec = reader.IsDBNull(reader.GetOrdinal("TenCongViec")) ? null : reader.GetString(reader.GetOrdinal("TenCongViec"))
+                                        };
+                                        currentNotifications.Insert(0, newNotification); // Thêm vào đầu danh sách
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    // Giữ tối đa 5 thông báo
+                    currentNotifications = currentNotifications.OrderByDescending(n => n.TbThoiGian).Take(5).ToList();
+                    NotificationList.ItemsSource = currentNotifications;
+                    UpdateNotificationBadge(nvId);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Lỗi khi làm mới thông báo: {ex.Message}", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
             }
         }
 
         private void NotificationButton_Click(object sender, RoutedEventArgs e)
         {
-            LoadNotifications(_currentUserId);
-            UpdateNotificationBadge(_currentUserId);
-
-            // Kiểm tra trạng thái của popup và mở/đóng
             if (NotificationPopup.IsOpen)
             {
                 NotificationPopup.IsOpen = false;
@@ -507,6 +624,11 @@ namespace QuanLyDuAn
 
         private void btn_Infor_Click(object sender, RoutedEventArgs e)
         {
+            if ((_userRole ?? "").Trim().ToLower() == "nv")
+            {
+                MessageBox.Show("Bạn không có quyền truy cập vào chức năng này.");
+                return;
+            }
             MainContent.Content = new ThongTin();
         }
 

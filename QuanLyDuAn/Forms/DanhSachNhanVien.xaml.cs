@@ -129,9 +129,8 @@ namespace QuanLyDuAn.Controls
 
         private void dgNhanVien_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)        //bo cmt
         {
-            var selectNhanVien = dgNhanVien.SelectedItem as NhanVien;
-
-            if (selectNhanVien == null)
+            dynamic selectedItem = dgNhanVien.SelectedItem;
+            if (selectedItem == null)
             {
                 MessageBox.Show("Không có nhân viên nào được chọn.");
                 return;
@@ -139,9 +138,10 @@ namespace QuanLyDuAn.Controls
 
             try
             {
-                ThongTinNhanVien ThongTinNhanVien = new ThongTinNhanVien(selectNhanVien.NvMa);
-                ThongTinNhanVien.NhanVienDeleted += LoadLoadNhanVien;
-                ThongTinNhanVien.Show();
+                string nvMa = selectedItem.NvMa;
+                ThongTinNhanVien thongTinNhanVien = new ThongTinNhanVien(nvMa);
+                thongTinNhanVien.NhanVienDeleted += LoadLoadNhanVien;
+                thongTinNhanVien.Show();
             }
             catch (Exception ex)
             {

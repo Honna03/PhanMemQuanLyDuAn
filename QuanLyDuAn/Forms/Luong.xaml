@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:QuanLyDuAn.Forms"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid Background="#ab99f2">
+    <Grid Background="#2990D9">
         <!-- Tiêu đề -->
         <TextBlock Text="Danh sách Lương" 
                    FontSize="20" FontWeight="Bold" Foreground="White"

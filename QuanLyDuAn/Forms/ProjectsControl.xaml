@@ -87,7 +87,7 @@
             </Setter>
         </Style>
     </UserControl.Resources>
-    <Grid>
+    <Grid Background="#2990D9">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
@@ -133,7 +133,7 @@
 
             <!-- Biểu đồ trạng thái công việc kiểu bánh pizza -->
             <StackPanel Grid.Column="1" Margin="15,10">
-                <TextBlock Text="Trạng thái công việc" FontSize="18" FontWeight="Bold" Foreground="{StaticResource SecondaryColor}" Margin="0,0,0,15" HorizontalAlignment="Center"/>
+                <TextBlock Text="Trạng thái công việc" FontSize="18" FontWeight="Bold" Foreground="{DynamicResource {x:Static SystemColors.ControlLightLightBrushKey}}" Margin="0,0,0,15" HorizontalAlignment="Center"/>
                 <Border CornerRadius="180" Margin="0,0,0,15">
                     <lc:PieChart x:Name="StatusChart" Width="380" Height="380" Margin="0" InnerRadius="120" LegendLocation="Bottom" Hoverable="True" HoverPushOut="20">
                         <lc:PieChart.Series>

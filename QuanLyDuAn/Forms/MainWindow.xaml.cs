@@ -278,7 +278,7 @@ namespace QuanLyDuAn
 
         private void btn_NhanVien_Click(object sender, RoutedEventArgs e)
         {
-            if ((_userRole ?? "").Trim().ToLower() == "Nhân viên")
+            if ((_userRole ?? "").Trim().ToLower() == "nv")
             {
                 MessageBox.Show("Bạn không có quyền truy cập vào chức năng này.");
                 return;
